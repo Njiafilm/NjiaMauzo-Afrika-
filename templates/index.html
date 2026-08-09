@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="sw"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NjiaMauzo Afrika v3</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<header><div class="brand">🌍 NJIAMAUZO <span>AFRIKA</span><small>v3</small></div>
+<nav><button onclick="show('home')">Home</button><button onclick="show('prices')">🌾 Bei</button><button onclick="show('intel')">📊 Profit AI</button><button onclick="show('ai')">🤖 AI</button><button onclick="show('market')">🛒 Soko</button><button onclick="show('account')">👤 Akaunti</button></nav></header>
+<main>
+<section id="home" class="page active">
+<div class="hero"><div class="eyebrow">EAST AFRICA AGRICULTURAL MARKET INTELLIGENCE</div><h1>Nunua kwenye soko sahihi. Uza kwa faida.</h1><p>NjiaMauzo Afrika hukusaidia kulinganisha bei, usafiri, landed cost na faida kati ya masoko.</p><button onclick="show('intel')">📊 Anza Profit Analysis</button></div>
+<div class="stats" id="stats"></div><h2>Bei za Haraka</h2><div class="grid" id="homePrices"></div>
+</section>
+<section id="prices" class="page"><h2>🌾 Bei za Mazao</h2><div class="row"><input id="pq" placeholder="Tafuta zao, soko au nchi" oninput="loadPrices()"><select id="pc" onchange="loadPrices()"><option value="">Nchi zote</option><option>Tanzania</option><option>Kenya</option><option>Uganda</option><option>Rwanda</option><option>Burundi</option></select></div><div class="table"><table><thead><tr><th>Zao</th><th>Soko</th><th>Nchi</th><th>Kununua</th><th>Kuuza</th><th>Usafiri/kg</th><th>Tarehe</th></tr></thead><tbody id="ptable"></tbody></table></div></section>
+<section id="intel" class="page"><h2>📊 AI Price & Profit Intelligence</h2><p>Weka bei ya chanzo, kiasi na gharama nyingine. Mfumo utakadiria soko lenye faida kubwa zaidi.</p>
+<div class="formgrid"><label>Zao<select id="icrop"><option>Ufuta</option><option>Mahindi</option><option>Maharage</option><option>Mpunga</option><option>Korosho</option></select></label><label>Kiasi (kg)<input id="iqty" type="number" value="20000"></label><label>Bei ya kununua/kg<input id="ibuy" type="number" value="3150"></label><label>Gharama nyingine/kg<input id="iextra" type="number" value="0"></label></div><button onclick="analyze()">🔎 Tafuta Soko Bora</button><div id="recommend"></div><div class="table"><table><thead><tr><th>Soko</th><th>Bei</th><th>Usafiri</th><th>Landed/kg</th><th>Faida/kg</th><th>Faida yote</th><th>Margin</th></tr></thead><tbody id="intelTable"></tbody></table></div></section>
+<section id="ai" class="page"><h2>🤖 AI Automatic Product Search + Chatbot</h2><p>Mfano: <b>"Natafuta tani 20 za ufuta Songea chini ya TZS 3,200/kg."</b></p><div class="search"><input id="aiq" placeholder="Andika unachotafuta..."><button onclick="aiSearch()">Tafuta</button></div><div id="interpret"></div><div class="grid" id="results"></div><div class="chat"><div id="chat"></div><div class="search"><input id="chatq" placeholder="Uliza AI kuhusu soko..."><button onclick="chatSend()">Tuma</button></div></div></section>
+<section id="service" class="page">
+<h2>🤝 Huduma ya Kutafutiwa Bidhaa & Masoko</h2>
+<div class="card">
+<p>Andika unachotafuta kwa maelezo yako mwenyewe. Baada ya malipo kuthibitishwa, User Room itafunguliwa na mfumo utaanza automatic search.</p>
+<textarea id="serviceq" rows="4" placeholder="Mfano: Natafuta tani 20 za ufuta Songea, bei chini ya TZS 3,200/kg"></textarea>
+<div class="formgrid">
+<label>Nchi ya malipo<select id="serviceCountry"><option>Tanzania</option><option>Kenya</option><option>Uganda</option><option>Rwanda</option><option>Burundi</option></select></label>
+<label>Namba ya simu ya malipo<input id="servicePhone" placeholder="+255..."></label>
+</div>
+<div id="serviceFee"></div><button onclick="startService()">🚀 Anza Kutafutiwa</button>
+</div>
+<div id="serviceRoom"></div>
+</section>
+<section id="market" class="page"><div class="between"><h2>🛒 Marketplace</h2><button onclick="openListing()">+ Weka Zao</button></div><input id="lq" placeholder="Tafuta bidhaa/eneo" oninput="loadListings()"><div class="grid" id="listings"></div></section>
+<section id="account" class="page"><h2>👤 Akaunti</h2><div id="accountBox" class="card"></div><div class="grid"><div class="card"><h3>🔔 Price Alert</h3><select id="alertCrop"><option>Ufuta</option><option>Mahindi</option><option>Maharage</option><option>Mpunga</option><option>Korosho</option></select><input id="alertPrice" type="number" placeholder="Bei target/kg"><button onclick="createAlert()">Weka Alert</button></div><div class="card"><h3>💳 Huduma ya Kutafutiwa</h3><p>Huduma moja: <b>TZS 1,000</b> au thamani yake katika fedha ya nchi yako.</p><button onclick="show('service')">Omba msaada wa soko</button><small>Malipo yanafunguliwa baada ya kukubali huduma.</small></div></div></section>
+</main><footer>© 2026 NjiaMauzo Afrika • v3 Professional • Demo market data</footer>
+<div id="modal" class="modal"><div class="modalbox"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+<script src="/static/app.js"></script></body></html>
