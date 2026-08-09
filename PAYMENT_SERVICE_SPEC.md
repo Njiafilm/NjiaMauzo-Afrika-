@@ -1,37 +1,51 @@
-# NjiaMauzo Afrika v3.2 — Paid Assisted Search
+# Payment Service Spec — NjiaMauzo Afrika
 
-## Business flow
+## Supported methods (API)
 
-1. Anyone can browse products and markets without paying.
-2. The system asks whether the visitor wants assisted product/market discovery.
-3. If accepted, the user submits a search request.
-4. The service fee is TZS 1,000 as the base price.
-5. The UI may display the equivalent amount in the selected country currency.
-6. A payment is created with status `PENDING`.
-7. Only a trusted server-side payment callback/webhook can change it to `VERIFIED`.
-8. After `VERIFIED`, the user's private `User Room` is unlocked.
-9. The matching engine uses the user's request to find relevant products/markets.
-10. The room remains locked for unverified/failed/expired payments.
+| ID | Name | Typical use |
+|----|------|-------------|
+| MPESA | M-Pesa | TZ / KE mobile money |
+| TIGOPESA | Tigo Pesa | Tanzania |
+| AIRTELMONEY | Airtel Money | East Africa |
+| CARD | Visa / Mastercard | Cards |
+| BANK | Bank transfer | Manual + reference |
+| FLUTTERWAVE | Flutterwave | Multi-method aggregator |
 
-## Security rules
+## Endpoints
 
-- Never trust a browser-submitted `paid=true` flag.
-- Never unlock the User Room based only on a payment screenshot.
-- Verify the transaction with the payment provider or a signed webhook.
-- Store provider transaction ID/reference and prevent duplicate verification.
-- Keep payment secrets in environment variables.
-- Use HTTPS in production.
+### `GET /api/payments/methods`
+List available payment methods.
 
-## Currency
+### `POST /api/payments/initiate`
+```json
+{
+  "amount": 1000,
+  "method": "MPESA",
+  "phone": "+2557...",
+  "email": "user@example.com",
+  "purpose": "SERVICE",
+  "country": "Tanzania"
+}
+```
+Returns `reference`, `status: PENDING`, optional OTP for large amounts.
 
-TZS 1,000 is the canonical service price. Foreign-currency display should be calculated from a configurable FX source. The system should not permanently hard-code foreign equivalents because exchange rates change.
+### `POST /api/payments/confirm`
+```json
+{
+  "reference": "NM-XXXX",
+  "otp": "123456"
+}
+```
+Demo marks payment VERIFIED. Production: trust gateway webhook only.
 
-## Required production environment
+### `GET /api/payments/status/<reference>`
+Poll payment status.
 
-PAYMENT_PROVIDER=
-PAYMENT_API_KEY=
-PAYMENT_API_SECRET=
-PAYMENT_WEBHOOK_SECRET=
-PAYMENT_CALLBACK_URL=
-FX_API_URL=
-FX_API_KEY=
+### `POST /api/service/webhook`
+Gateway callback. Header: `X-Payment-Secret: <PAYMENT_WEBHOOK_SECRET>`
+
+## Production rules
+1. Browser must never set status to VERIFIED.
+2. Only signed webhook (or trusted server-to-server call) confirms money.
+3. Log every event in `payment_events`.
+4. Amounts ≥ TZS 50,000 can require OTP (configurable).

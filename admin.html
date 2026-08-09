@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — NjiaMauzo Afrika Pro</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    .admin-layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+    .admin-sidebar { background: var(--bg-dark); border-right: 1px solid var(--border); padding: 1.5rem 1rem; }
+    .admin-sidebar h2 { font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--primary); }
+    .admin-nav a { display: block; padding: 0.7rem 1rem; border-radius: 8px; color: var(--text-muted); margin-bottom: 0.3rem; transition: all 0.2s; }
+    .admin-nav a:hover, .admin-nav a.active { background: var(--primary-soft); color: var(--primary); }
+    .admin-main { padding: 2rem; overflow-y: auto; }
+    .admin-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .admin-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; text-align: center; }
+    .admin-card .num { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+    .admin-card .label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem; }
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .data-table th, .data-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); text-align: left; }
+    .data-table th { background: var(--bg-dark); color: var(--text-muted); font-weight: 600; }
+    .badge { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-yellow { background: #fef9c3; color: #854d0e; }
+    .action-btn { padding: 0.3rem 0.6rem; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; margin-right: 0.3rem; }
+    .action-btn.verify { background: #dcfce7; color: #166534; }
+    .action-btn.hide { background: #fee2e2; color: #991b1b; }
+    .action-btn.toggle { background: #e0e7ff; color: #3730a3; }
+    @media (max-width: 768px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .admin-sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <h2>🌾 Admin Panel</h2>
+      <nav class="admin-nav">
+        <a href="#" class="active" data-panel="dashboard" onclick="showAdminPanel('dashboard', this)">Dashboard</a>
+        <a href="#" data-panel="users" onclick="showAdminPanel('users', this)">Watumiaji</a>
+        <a href="#" data-panel="listings" onclick="showAdminPanel('listings', this)">Listings</a>
+        <a href="#" data-panel="comments" onclick="showAdminPanel('comments', this)">Maoni</a>
+        <a href="#" data-panel="ai" onclick="showAdminPanel('ai', this)">AI Controller</a>
+        <a href="#" data-panel="prices" onclick="showAdminPanel('prices', this)">Bei</a>
+        <a href="#" data-panel="settings" onclick="showAdminPanel('settings', this)">Settings</a>
+        <a href="/" style="margin-top:2rem;color:var(--primary)">← Rudi Soko</a>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <!-- DASHBOARD -->
+      <div id="panel-dashboard" class="admin-panel active">
+        <h1>Dashboard</h1>
+        <div class="admin-cards" id="dashCards"></div>
+        <h3>Shughuli za Hivi Karibuni</h3>
+        <div id="dashActivity" class="live-feed"></div>
+      </div>
+
+      <!-- USERS -->
+      <div id="panel-users" class="admin-panel">
+        <h1>Watumiaji</h1>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>ID</th><th>Jina</th><th>Email</th><th>Roli</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="usersTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- LISTINGS -->
+      <div id="panel-listings" class="admin-panel">
+        <h1>Listings</h1>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>ID</th><th>Zao</th><th>Bei</th><th>Eneo</th><th>Seller</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="listingsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- COMMENTS -->
+      <div id="panel-comments" class="admin-panel">
+        <h1>Maoni</h1>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>ID</th><th>Mtumiaji</th><th>Zao</th><th>Maoni</th><th>Tarehe</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="commentsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- AI CONTROLLER -->
+      <div id="panel-ai" class="admin-panel">
+        <h1>AI Controller</h1>
+        <p style="color:var(--text-muted);margin-bottom:1rem;">Angalia maswali ya watumiaji na majibu ya AI.</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Mtumiaji</th><th>Swali</th><th>Jibu</th><th>Tarehe</th></tr>
+            </thead>
+            <tbody id="aiLogsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PRICES -->
+      <div id="panel-prices" class="admin-panel">
+        <h1>Ongeza Bei ya Soko</h1>
+        <div class="form-card" style="max-width:500px">
+          <div class="form-group">
+            <label>Zao</label>
+            <input type="text" id="priceCrop" placeholder="Mahindi" />
+          </div>
+          <div class="form-group">
+            <label>Soko</label>
+            <input type="text" id="priceMarket" placeholder="Dar es Salaam" />
+          </div>
+          <div class="form-group">
+            <label>Nchi</label>
+            <select id="priceCountry">
+              <option>Tanzania</option><option>Kenya</option><option>Uganda</option><option>Rwanda</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Bei Kununua</label>
+              <input type="number" id="priceBuy" />
+            </div>
+            <div class="form-group">
+              <label>Bei Kuuza</label>
+              <input type="number" id="priceSell" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Transport /kg</label>
+            <input type="number" id="priceTransport" value="0" />
+          </div>
+          <button class="btn btn-primary" onclick="adminAddPrice()">Hifadhi Bei</button>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div id="panel-settings" class="admin-panel">
+        <h1>Settings</h1>
+        <div class="form-card" style="max-width:500px">
+          <div class="form-group">
+            <label>AI Enabled</label>
+            <select id="setAiEnabled">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>AI Welcome Message</label>
+            <textarea id="setAiWelcome" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Moderation Enabled</label>
+            <select id="setModeration">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="saveSettings()">Hifadhi Settings</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/app.js"></script>
+  <script>
+    // Admin-specific boot
+    document.addEventListener('DOMContentLoaded', async () => {
+      const me = await api('/api/me');
+      if (!me.logged_in || !me.is_admin) {
+        window.location.href = '/';
+        return;
+      }
+      loadDashboard();
+    });
+
+    function showAdminPanel(name, el) {
+      document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+      document.getElementById('panel-' + name).classList.add('active');
+      if (el) el.classList.add('active');
+
+      if (name === 'dashboard') loadDashboard();
+      if (name === 'users') loadAdminUsers();
+      if (name === 'listings') loadAdminListings();
+      if (name === 'comments') loadAdminComments();
+      if (name === 'ai') loadAiLogs();
+      if (name === 'settings') loadSettings();
+    }
+
+    async function loadDashboard() {
+      const d = await api('/api/admin/dashboard');
+      document.getElementById('dashCards').innerHTML = `
+        <div class="admin-card"><div class="num">${d.users}</div><div class="label">Watumiaji</div></div>
+        <div class="admin-card"><div class="num">${d.active_listings}</div><div class="label">Listings Active</div></div>
+        <div class="admin-card"><div class="num">${d.comments}</div><div class="label">Maoni</div></div>
+        <div class="admin-card"><div class="num">${d.likes}</div><div class="label">Likes</div></div>
+        <div class="admin-card"><div class="num">${d.ai_queries}</div><div class="label">AI Queries</div></div>
+        <div class="admin-card"><div class="num">${d.verified_payments}</div><div class="label">Payments</div></div>
+      `;
+      document.getElementById('dashActivity').innerHTML = (d.recent_activity || []).map(a => `
+        <div class="live-item">
+          <span class="live-time">${formatTime(a.created_at)}</span>
+          <strong>${a.user_name || 'System'}</strong> — ${a.message || a.action_type}
+        </div>
+      `).join('') || '<p>Hakuna shughuli bado.</p>';
+    }
+
+    async function loadAdminUsers() {
+      const users = await api('/api/admin/users');
+      document.getElementById('usersTable').innerHTML = users.map(u => `
+        <tr>
+          <td>${u.id}</td>
+          <td>${esc(u.name)} ${u.is_verified ? '✓' : ''}</td>
+          <td>${esc(u.email)}</td>
+          <td><span class="badge badge-blue">${u.role}</span></td>
+          <td>${u.is_active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-red">Disabled</span>'}</td>
+          <td>
+            ${u.role !== 'admin' ? `<button class="action-btn toggle" onclick="toggleUser(${u.id})">${u.is_active ? 'Disable' : 'Enable'}</button>` : ''}
+            ${!u.is_verified ? `<button class="action-btn verify" onclick="verifyUser(${u.id})">Verify</button>` : ''}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function loadAdminListings() {
+      const rows = await api('/api/admin/listings');
+      document.getElementById('listingsTable').innerHTML = rows.map(l => `
+        <tr>
+          <td>${l.id}</td>
+          <td>${esc(l.crop)}</td>
+          <td>${Number(l.price).toLocaleString()} TZS</td>
+          <td>${esc(l.location)}</td>
+          <td>${esc(l.seller_name || '—')}</td>
+          <td>
+            ${l.verified ? '<span class="badge badge-green">Verified</span>' : '<span class="badge badge-yellow">Pending</span>'}
+            ${l.status === 'HIDDEN' ? '<span class="badge badge-red">Hidden</span>' : ''}
+          </td>
+          <td>
+            ${!l.verified ? `<button class="action-btn verify" onclick="verifyListing(${l.id})">Verify</button>` : ''}
+            ${l.status !== 'HIDDEN' ? `<button class="action-btn hide" onclick="hideListing(${l.id})">Hide</button>` : ''}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function loadAdminComments() {
+      const rows = await api('/api/admin/comments');
+      document.getElementById('commentsTable').innerHTML = rows.map(c => `
+        <tr>
+          <td>${c.id}</td>
+          <td>${esc(c.user_name)}</td>
+          <td>${esc(c.listing_crop)}</td>
+          <td>${esc(c.content).slice(0, 80)}</td>
+          <td>${formatTime(c.created_at)}</td>
+          <td>
+            ${!c.is_hidden ? `<button class="action-btn hide" onclick="hideComment(${c.id})">Hide</button>` : '<span class="badge badge-red">Hidden</span>'}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function loadAiLogs() {
+      const rows = await api('/api/admin/ai-logs');
+      document.getElementById('aiLogsTable').innerHTML = rows.map(a => `
+        <tr>
+          <td>${esc(a.user_name || 'Guest')}</td>
+          <td>${esc(a.query).slice(0, 60)}</td>
+          <td>${esc(a.response).slice(0, 80)}...</td>
+          <td>${formatTime(a.created_at)}</td>
+        </tr>
+      `).join('') || '<tr><td colspan="4">Hakuna logs bado</td></tr>';
+    }
+
+    async function loadSettings() {
+      const s = await api('/api/admin/settings');
+      document.getElementById('setAiEnabled').value = s.ai_enabled || '1';
+      document.getElementById('setAiWelcome').value = s.ai_welcome || '';
+      document.getElementById('setModeration').value = s.moderation_enabled || '1';
+    }
+
+    async function saveSettings() {
+      await api('/api/admin/settings', 'POST', {
+        ai_enabled: document.getElementById('setAiEnabled').value,
+        ai_welcome: document.getElementById('setAiWelcome').value,
+        moderation_enabled: document.getElementById('setModeration').value
+      });
+      toast('Settings zimehifadhiwa');
+    }
+
+    async function adminAddPrice() {
+      const body = {
+        crop: document.getElementById('priceCrop').value,
+        market: document.getElementById('priceMarket').value,
+        country: document.getElementById('priceCountry').value,
+        buy_price: document.getElementById('priceBuy').value,
+        sell_price: document.getElementById('priceSell').value,
+        transport_per_kg: document.getElementById('priceTransport').value
+      };
+      const res = await api('/api/admin/prices', 'POST', body);
+      if (res.ok) toast('Bei imeongezwa');
+      else toast(res.error || 'Error', true);
+    }
+
+    async function toggleUser(id) {
+      await api(`/api/admin/users/${id}/toggle`, 'POST');
+      loadAdminUsers();
+      toast('Status imebadilishwa');
+    }
+    async function verifyUser(id) {
+      await api(`/api/admin/users/${id}/verify`, 'POST');
+      loadAdminUsers();
+      toast('User verified');
+    }
+    async function verifyListing(id) {
+      await api(`/api/admin/listings/${id}/verify`, 'POST');
+      loadAdminListings();
+      toast('Listing verified');
+    }
+    async function hideListing(id) {
+      await api(`/api/admin/listings/${id}/hide`, 'POST');
+      loadAdminListings();
+      toast('Listing hidden');
+    }
+    async function hideComment(id) {
+      await api(`/api/admin/comments/${id}/hide`, 'POST');
+      loadAdminComments();
+      toast('Comment hidden');
+    }
+  </script>
+</body>
+</html>
