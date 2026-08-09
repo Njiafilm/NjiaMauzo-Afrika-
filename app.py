@@ -1,10 +1,15 @@
 import os, re, sqlite3, secrets, hashlib, json
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify, session
-
+from flask import Flask, render_template, request, jsonify, session, send_from_directory
 BASE = os.path.dirname(__file__)
 DB = os.path.join(BASE, "njiamauzo_v3.db")
-app = Flask(__name__)
+app = Flask(__name__)@app.route("/static/style.css")
+def static_css():
+    return send_from_directory('static','style.css',mimetype='text/css')
+
+@app.route("/static/app.js")
+def static_js():
+    return send_from_directory('static','app.js',mimetype='application/javascript')
 app.secret_key = os.environ.get("SECRET_KEY", "CHANGE_ME_IN_PRODUCTION")
 
 def db():
