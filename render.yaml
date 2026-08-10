@@ -1,0 +1,32 @@
+# Render Blueprint — NjiaMauzo Afrika
+# https://njiamauzo-afrika.onrender.com
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: njiamauzo-afrika
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PASSWORD_SALT
+        generateValue: true
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: INFO_EMAIL
+        value: info@njiamauzo.africa
+      - key: INFO_NAME
+        value: NjiaMauzo Afrika
+      - key: APP_URL
+        value: https://njiamauzo-afrika.onrender.com
+      # Optional — set in Render Dashboard for real email/payments:
+      # SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS
+      # PAYMENT_WEBHOOK_SECRET
