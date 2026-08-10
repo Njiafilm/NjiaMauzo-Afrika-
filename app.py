@@ -411,6 +411,14 @@ def parse_query(text):
 # ──────────────────────────────────────────────
 @app.route("/static/<path:filename>")
 def static_files(filename):
+    _mt = {"css":"text/css","js":"application/javascript","png":"image/png",
+           "jpg":"image/jpeg","jpeg":"image/jpeg","svg":"image/svg+xml",
+           "ico":"image/x-icon","json":"application/json","woff":"font/woff",
+           "woff2":"font/woff2"}
+    ext = filename.rsplit(".",1)[-1].lower() if "." in filename else ""
+    mimetype = _mt.get(ext)
+    if mimetype:
+        return send_from_directory(os.path.join(BASE, "static"), filename, mimetype=mimetype)
     return send_from_directory(os.path.join(BASE, "static"), filename)
 
 # ──────────────────────────────────────────────
