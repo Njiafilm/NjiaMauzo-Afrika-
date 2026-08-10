@@ -1,1 +1,4 @@
-
+emails/welcome.html
+emails/otp.html
+emails/password_reset.html
+emails/payment.html
