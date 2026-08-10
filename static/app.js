@@ -802,4 +802,106 @@ document.addEventListener('DOMContentLoaded', async () => {
       runAiMarketMonitor();
     }
   };
-});
+/* =====================================================
+   NJIAMAUZO AFRIKA — LEGACY HTML COMPATIBILITY BRIDGE
+   Connects old v3 index.html IDs/classes to new app.js
+   ===================================================== */
+
+(function bridgeLegacyHTML() {
+
+  // Old section IDs -> New section IDs
+  const sectionMap = {
+    home: 'section-home',
+    prices: 'section-prices',
+    intel: 'section-intel',
+    ai: 'section-ai',
+    service: 'section-service',
+    market: 'section-marketplace',
+    account: 'section-account'
+  };
+
+  Object.entries(sectionMap).forEach(([oldId, newId]) => {
+    const el = document.getElementById(oldId);
+    if (!el) return;
+
+    el.id = newId;
+    el.classList.remove('page');
+    el.classList.add('section');
+  });
+
+  // Old element IDs -> New app.js IDs
+  const idMap = {
+    pq: 'priceSearch',
+    ptable: 'pricesTableBody',
+
+    icrop: 'intelCrop',
+    iqty: 'intelQty',
+    ibuy: 'intelBuy',
+    iextra: 'intelExtra',
+    recommend: 'intelResults',
+
+    aiq: 'aiSearchInput',
+    chatq: 'chatInput',
+    chat: 'chatMessages',
+
+    lq: 'listingSearch',
+    listings: 'listingsGrid',
+
+    serviceq: 'serviceQuery',
+    serviceCountry: 'serviceCountry',
+    servicePhone: 'servicePhone'
+  };
+
+  Object.entries(idMap).forEach(([oldId, newId]) => {
+    const el = document.getElementById(oldId);
+    if (el) el.id = newId;
+  });
+
+  // Make prices table compatible with new JS
+  const priceTableBody = document.getElementById('pricesTableBody');
+
+  if (priceTableBody) {
+    const table = priceTableBody.closest('table');
+    if (table) table.id = 'pricesTable';
+  }
+
+  // Compatibility aliases for old HTML onclick handlers
+  window.show = function(name) {
+    if (name === 'market') name = 'marketplace';
+    showSection(name);
+  };
+
+  window.chatSend = function() {
+    return sendChat();
+  };
+
+  // Old Analyze button -> new Intelligence function
+  window.analyze = function() {
+    return runIntelligence();
+  };
+
+  // Old AI search UI is no longer part of the new frontend.
+  // Redirect users to the AI chat instead of causing a JavaScript error.
+  window.aiSearch = function() {
+    const input = document.getElementById('aiSearchInput');
+    const chatInput = document.getElementById('chatInput');
+
+    if (input && chatInput) {
+      chatInput.value = input.value;
+      sendChat();
+    }
+  };
+
+  // Old service button protection
+  window.startService = function() {
+    toast(
+      'Huduma ya kutafutiwa itaunganishwa na mfumo wa malipo wa TZS 1,000 katika hatua inayofuata.'
+    );
+  };
+
+  // Old price alert protection
+  window.createAlert = function() {
+    toast('Price Alert itaunganishwa na API katika hatua inayofuata.');
+  };
+
+})();});
