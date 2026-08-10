@@ -29,9 +29,26 @@ from flask import (
 BASE = os.path.dirname(os.path.abspath(__file__))
 DB = os.path.join(BASE, "njiamauzo_pro.db")
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "njiamauzo-pro-secret-change-in-production-2026")
+
+IS_PRODUCTION = os.environ.get("FLASK_ENV", "development") == "production"
+
+_secret_key = os.environ.get("SECRET_KEY")
+if not _secret_key:
+    if IS_PRODUCTION:
+        raise RuntimeError(
+            "SECRET_KEY env var haijawekwa. Weka SECRET_KEY kwenye mazingira ya "
+            "production (mfano: Render → Environment). Tumia: python -c "
+            "\"import secrets; print(secrets.token_hex(32))\" kutengeneza moja."
+        )
+    # Local/dev only: generate a random key each run (sessions won't persist across restarts).
+    _secret_key = secrets.token_hex(32)
+    print("⚠️  SECRET_KEY haikuwekwa — nimetengeneza moja ya muda kwa dev. "
+          "Weka SECRET_KEY halisi kabla ya deploy.")
+app.secret_key = _secret_key
+
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = IS_PRODUCTION
 
 SERVICE_FEE_TZS = 1000.0
 CURRENCY_RATES = {
@@ -69,9 +86,19 @@ def db():
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
+_PASSWORD_SALT = os.environ.get("PASSWORD_SALT")
+if not _PASSWORD_SALT:
+    if IS_PRODUCTION:
+        raise RuntimeError(
+            "PASSWORD_SALT env var haijawekwa. Weka PASSWORD_SALT kwenye mazingira ya "
+            "production kabla ya kuanza (usibadilishe baada ya watumiaji kujiandikisha, "
+            "vinginevyo password zote za zamani zitashindwa kuthibitika)."
+        )
+    _PASSWORD_SALT = "njiamauzo-pro-salt-dev-only"
+    print("⚠️  PASSWORD_SALT haikuwekwa — natumia salt ya dev pekee.")
+
 def hash_password(password: str) -> str:
-    salt = os.environ.get("PASSWORD_SALT", "njiamauzo-pro-salt-v2").encode()
-    return hashlib.pbkdf2_hmac("sha256", password.encode(), salt, 200000).hex()
+    return hashlib.pbkdf2_hmac("sha256", password.encode(), _PASSWORD_SALT.encode(), 200000).hex()
 
 def now_iso():
     return datetime.utcnow().isoformat()
@@ -1665,7 +1692,10 @@ init_db()
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    debug = os.environ.get("FLASK_DEBUG", "1") == "1"
+    # Debug ni OFF kwa default sasa. Weka FLASK_DEBUG=1 kwa dev pekee — KAMWE
+    # usiiwashe kwenye production (inaonyesha stack traces na secrets kwa mtumiaji).
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1" and not IS_PRODUCTION
     print(f"\n🌾 NjiaMauzo Afrika Pro running on http://0.0.0.0:{port}")
     print(f"   Admin login → email: admin@njiamauzo.africa  |  password: 0000 (badilisha baadaye)\n")
     app.run(host="0.0.0.0", port=port, debug=debug)
+
