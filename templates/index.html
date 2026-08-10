@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+      content="Njia Mauzo Afrika — Tafuta bidhaa, pata masoko na pata msaada wa biashara kutoka shambani hadi sokoni.">
+
+<meta name="theme-color" content="#07542a">
+
+<title>Njia Mauzo Afrika | Fikia Masoko • Panua Biashara</title>
+
+<link rel="icon" href="favicon.png" type="image/png">
+
+<style>
+:root {
+  --green: #0e7a3d;
+  --green-dark: #07542a;
+  --green-deep: #042c17;
+  --gold: #f6b21b;
+  --red: #d9534f;
+  --blue: #00a9e0;
+  --bg: #f4f7f5;
+  --white: #fff;
+  --text: #172019;
+  --muted: #66736b;
+  --border: #dce5df;
+  --shadow: 0 12px 35px rgba(0,0,0,.10);
+  --shadow-hover: 0 18px 45px rgba(0,0,0,.16);
+  --radius: 18px;
+  --font: system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  background: var(--gold);
+  color: #000;
+  padding: 10px 16px;
+  font-weight: 800;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* =========================
+   HEADER / HERO
+========================= */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(246,178,27,.18), transparent 30%),
+    linear-gradient(135deg, #0e7a3d, #042c17);
+  padding: 0 20px 100px;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  right: -160px;
+  bottom: -220px;
+  background: rgba(246,178,27,.08);
+}
+
+nav {
+  max-width: 1160px;
+  margin: auto;
+  padding: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-wrap img {
+  width: 50px;
+  height: 50px;
+  border-radius: 13px;
+  object-fit: cover;
+  box-shadow: 0 5px 18px rgba(0,0,0,.25);
+}
+
+.logo-text {
+  color: var(--gold);
+  font-size: 1.08rem;
+  font-weight: 900;
+  letter-spacing: .5px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+nav a {
+  color: #fff;
+  font-weight: 700;
+  font-size: .94rem;
+  transition: color .2s;
+}
+
+nav a:hover {
+  color: var(--gold);
+}
+
+.hero-content {
+  max-width: 850px;
+  margin: 70px auto 0;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: .85rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.hero-content h1 {
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  line-height: 1.05;
+  font-weight: 950;
+  margin-bottom: 18px;
+  text-shadow: 0 5px 20px rgba(0,0,0,.3);
+}
+
+.hero-content h1 span {
+  color: var(--gold);
+}
+
+.hero-content p {
+  max-width: 680px;
+  margin: auto;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  opacity: .95;
+}
+
+.cta-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 13px;
+  margin-top: 28px;
+}
+
+.btn {
+  border: none;
+  min-height: 48px;
+  padding: 13px 23px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 850;
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: #000;
+  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 12px 28px rgba(0,0,0,.3);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,.7);
+  color: #fff;
+}
+
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+  max-width: 1160px;
+  margin: -55px auto 70px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.section {
+  margin-top: 75px;
+}
+
+.section-title {
+  text-align: center;
+  color: var(--green-dark);
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.section-description {
+  max-width: 680px;
+  margin: 0 auto 30px;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* =========================
+   PRODUCT CARDS
+========================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 23px;
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.logo-card {
+  min-height: 350px;
+  padding: 35px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo-card img {
+  width: 200px;
+  margin: auto;
+}
+
+.logo-card p {
+  color: var(--muted);
+  font-weight: 800;
+  margin-top: 14px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card img {
+  width: 100%;
+  height: 245px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 20px;
+  flex: 1;
+}
+
+.tag {
+  display: inline-block;
+  color: var(--green);
+  font-size: .73rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+
+.card-body h3 {
+  font-size: 1.18rem;
+  margin-bottom: 8px;
+}
+
+.card-body p {
+  color: var(--muted);
+  font-size: .93rem;
+}
+
+.price {
+  display: inline-block;
+  margin-top: 12px;
+  background: #fff3d0;
+  color: #795900;
+  padding: 7px 12px;
+  border-radius: 9px;
+  font-size: .84rem;
+  font-weight: 850;
+}
+
+/* =========================
+   ASSISTED SEARCH CTA
+========================= */
+
+.assisted {
+  background:
+    linear-gradient(135deg, rgba(7,84,42,.97), rgba(14,122,61,.96));
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 38px 30px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 25px;
+}
+
+.assisted h2 {
+  color: var(--gold);
+  margin-bottom: 8px;
+  font-size: 1.65rem;
+}
+
+.assisted p {
+  opacity: .93;
+  max-width: 720px;
+}
+
+.assisted .btn {
+  white-space: nowrap;
+}
+
+/* =========================
+   HOW IT WORKS
+========================= */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.step {
+  background: var(--white);
+  padding: 27px 20px;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.step h3 {
+  font-size: 1.05rem;
+  margin-bottom: 7px;
+}
+
+.step p {
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+/* =========================
+   PAYMENT INFO
+========================= */
+
+.payment-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 30px;
+  max-width: 850px;
+  margin: auto;
+}
+
+.payment-fee {
+  text-align: center;
+  background: #f0f8f3;
+  border: 2px solid #cfe7d7;
+  border-radius: 15px;
+  padding: 22px;
+  margin-bottom: 22px;
+}
+
+.payment-fee small {
+  display: block;
+  color: var(--muted);
+}
+
+.payment-fee strong {
+  display: block;
+  color: var(--green-dark);
+  font-size: 2rem;
+  margin: 4px 0;
+}
+
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.payment-method {
+  padding: 18px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.payment-method h3 {
+  margin-bottom: 7px;
+}
+
+.payment-number {
+  font-weight: 900;
+}
+
+.payment-name {
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 4px;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact {
+  background: var(--green-dark);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 30px 22px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.contact h2 {
+  color: var(--gold);
+  margin-bottom: 15px;
+}
+
+.contact-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px 30px;
+}
+
+.contact a {
+  font-weight: 750;
+}
+
+.contact a:hover {
+  color: var(--gold);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.68);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 1000;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 600px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 25px 70px rgba(0,0,0,.3);
+  padding: 28px;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: #edf1ee;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.modal-card h2 {
+  color: var(--green-dark);
+  margin-bottom: 7px;
+  padding-right: 40px;
+}
+
+.modal-card > p {
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 13px 14px;
+  border: 2px solid var(--border);
+  border-radius: 11px;
+  outline: none;
+  background: #fff;
+}
+
+.form-control:focus {
+  border-color: var(--green);
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.fee-display {
+  background: #fff8df;
+  border: 2px solid #f4d875;
+  border-radius: 13px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.fee-display strong {
+  color: var(--green-dark);
+  font-size: 1.25rem;
+}
+
+.status {
+  display: none;
+  margin-top: 14px;
+  padding: 13px 15px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: .9rem;
+}
+
+.status.show {
+  display: block;
+}
+
+.status.info {
+  background: #e9f6ff;
+  border: 1px solid #9dd8f5;
+  color: #075b80;
+}
+
+.status.success {
+  background: #e8f7ed;
+  border: 1px solid #9ed3ad;
+  color: #07542a;
+}
+
+.status.error {
+  background: #fdeceb;
+  border: 1px solid #efaaa6;
+  color: #9d2925;
+}
+
+/* =========================
+   USER ROOM
+========================= */
+
+.room {
+  display: none;
+}
+
+.room.show {
+  display: block;
+}
+
+.room-header {
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 30px;
+  margin-bottom: 22px;
+}
+
+.room-header h2 {
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+
+.room-status {
+  display: inline-block;
+  margin-top: 12px;
+  background: #dff5e5;
+  color: #07542a;
+  padding: 7px 12px;
+  border-radius: 50px;
+  font-size: .8rem;
+  font-weight: 900;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.room-card {
+  background: #fff;
+  padding: 22px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.room-card h3 {
+  color: var(--green-dark);
+  margin-bottom: 8px;
+}
+
+.room-card p {
+  color: var(--muted);
+}
+
+.searching {
+  margin-top: 14px;
+  padding: 14px;
+  background: #f0f8f3;
+  border-radius: 11px;
+  font-weight: 700;
+  color: var(--green-dark);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  background: var(--green-deep);
+  color: #cfe1d4;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+footer strong {
+  color: #fff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .steps {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .assisted {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .room-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    gap: 8px 15px;
+  }
+
+  .hero-content {
+    margin-top: 45px;
+  }
+
+  main {
+    padding: 0 14px;
+  }
+
+  .grid,
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-card {
+    padding: 23px 17px;
+  }
+
+  .assisted {
+    padding: 28px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#bidhaa">
+  Ruka kwenda kwenye bidhaa
+</a>
+
+<!-- =========================
+     HERO
+========================= -->
+
+<header class="hero">
+
+  <nav aria-label="Menyu kuu">
+
+    <a href="/" class="logo-wrap">
+      <img src="favicon.png"
+           alt="Logo ya Njia Mauzo Afrika">
+      <span class="logo-text">
+        NJIA MAUZO AFRIKA
+      </span>
+    </a>
+
+    <ul>
+      <li><a href="#bidhaa">Bidhaa</a></li>
+      <li><a href="#jinsi">Jinsi Inavyofanya Kazi</a></li>
+      <li><a href="#msaada">Tafuta Kwa Msaada</a></li>
+      <li><a href="#malipo">Malipo</a></li>
+      <li><a href="#mawasiliano">Mawasiliano</a></li>
+    </ul>
+
+  </nav>
+
+  <div class="hero-content">
+
+    <div class="badge">
+      🌍 Soko la Afrika
+    </div>
+
+    <h1>
+      NJIA MAUZO <span>AFRIKA</span>
+    </h1>
+
+    <p>
+      Fikia masoko, tafuta bidhaa na pata msaada wa kutafuta
+      fursa za biashara kulingana na mahitaji yako.
+    </p>
+
+    <div class="cta-row">
+      <a href="#bidhaa" class="btn btn-primary">
+        🔎 Tazama Bidhaa
+      </a>
+
+      <button
+        type="button"
+        class="btn btn-outline"
+        onclick="funguaMsaada()">
+        🤝 Nitafutie Bidhaa / Soko
+      </button>
+    </div>
+
+  </div>
+
+</header>
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
+
+<!-- BIDHAA -->
+<section id="bidhaa" class="section">
+
+  <h2 class="section-title">
+    Bidhaa na Fursa
+  </h2>
+
+  <p class="section-description">
+    Unaweza kuangalia bidhaa na taarifa za msingi bila kulipa.
+    Malipo yanahitajika pale unapotaka huduma ya kutafutiwa
+    bidhaa au masoko kulingana na ombi lako.
+  </p>
+
+  <div class="grid">
+
+    <article class="card logo-card">
+
+      <div>
+        <img src="favicon.png"
+             alt="Njia Mauzo Afrika">
+
+        <p>
+          Fikia Masoko · Panua Biashara
+        </p>
+      </div>
+
+    </article>
+
+    <article class="card product-card">
+
+      <img
+        src="IMG-20260801-WA0010.jpg"
+        alt="Mtaalamu wa kilimo akiwa shambani"
+        loading="lazy">
+
+      <div class="card-body">
+
+        <span class="tag">
+          Mtaalamu
+        </span>
+
+        <h3>
+          Ushauri wa Kilimo
+        </h3>
+
+        <p>
+          Ushauri wa kitaalamu kuhusu uzalishaji,
+          usimamizi wa mashamba na masoko.
+        </p>
+
+      </div>
+
+    </article>
+
+    <article class="card product-card">
+
+      <img
+        src="Polish_20260810_220752019.jpg"
+        alt="Mazao na huduma za kilimo"
+        loading="lazy">
+
+      <div class="card-body">
+
+        <span class="tag">
+          Mazao & Huduma
+        </span>
+
+        <h3>
+          Tafuta Bidhaa
+        </h3>
+
+        <p>
+          Tuambie bidhaa unayotafuta na eneo unalotaka.
+          Mfumo utakusaidia kuanza kuitafuta.
+        </p>
+
+        <span class="price">
+          Huduma ya kutafuta: TZS 1,000
+        </span>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+<!-- ASSISTED SEARCH -->
+<section id="msaada" class="section">
+
+  <div class="assisted">
+
+    <div>
+
+      <h2>
+        🤝 Unataka Tukusaidie Kutafuta?
+      </h2>
+
+      <p>
+        Mfumo unaweza kukusaidia kutafuta bidhaa au masoko
+        kulingana na ombi lako. TZS 1,000 ndiyo ada ya msingi
+        ya huduma ya kutafuta.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      onclick="funguaMsaada()">
+      Anza Kutafuta
+    </button>
+
+  </div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="jinsi" class="section">
+
+  <h2 class="section-title">
+    Jinsi Inavyofanya Kazi
+  </h2>
+
+  <p class="section-description">
+    Hatua rahisi kutoka kwenye ombi lako hadi kupata matokeo.
+  </p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Tazama Bidhaa</h3>
+      <p>
+        Angalia bidhaa na fursa zilizopo bila kulipa.
+      </p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Omba Msaada</h3>
+      <p>
+        Tuambie bidhaa au soko unalotafuta.
+      </p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Lipa TZS 1,000</h3>
+      <p>
+        Lipa ada ya huduma kwa njia inayopatikana.
+      </p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>User Room</h3>
+      <p>
+        Baada ya malipo kuthibitishwa, User Room inafunguliwa
+        na mfumo kuanza kutafuta.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- USER ROOM -->
+<section id="user-room" class="section room">
+
+  <div class="room-header">
+
+    <h2>
+      🔓 User Room
+    </h2>
+
+    <p>
+      Huduma yako ya kutafuta imefunguliwa.
+    </p>
+
+    <span class="room-status">
+      ✓ MALIPO VERIFIED
+    </span>
+
+  </div>
+
+  <div class="room-grid">
+
+    <div class="room-card">
+
+      <h3>
+        🔎 Ombi Lako
+      </h3>
+
+      <p id="room-request">
+        —
+      </p>
+
+      <div class="searching">
+        🤖 Mfumo unaandaa utafutaji kulingana
+        na ombi lako...
+      </div>
+
+    </div>
+
+    <div class="room-card">
+
+      <h3>
+        📊 Matokeo ya Utafutaji
+      </h3>
+
+      <p>
+        Bidhaa na masoko yanayolingana na ombi lako
+        yataonekana hapa baada ya mfumo kupata data.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- MALIPO -->
+<section id="malipo" class="section">
+
+  <h2 class="section-title">
+    Malipo ya Huduma
+  </h2>
+
+  <p class="section-description">
+    Ada ya msingi ya huduma ya kutafuta ni TZS 1,000.
+    Kwa nchi nyingine mfumo unaweza kuonyesha thamani
+    inayolingana katika currency ya nchi hiyo.
+  </p>
+
+  <div class="payment-box">
+
+    <div class="payment-fee">
+
+      <small>
+        Ada ya msingi
+      </small>
+
+      <strong>
+        TZS 1,000
+      </strong>
+
+      <small>
+        Huduma ya kutafuta bidhaa / masoko
+      </small>
+
+    </div>
+
+    <div class="payment-methods">
+
+      <div class="payment-method">
+        <h3>M-Pesa</h3>
+        <p class="payment-number">
+          0691 925 100
+        </p>
+        <p class="payment-name">
+          Njia Mauzo Afrika
+        </p>
+      </div>
+
+      <div class="payment-method">
+        <h3>Tigo Pesa / Halotel</h3>
+        <p class="payment-number">
+          0625 031 460
+        </p>
+        <p class="payment-name">
+          Njia Mauzo Afrika
+        </p>
+      </div>
+
+      <div class="payment-method">
+        <h3>Airtel / WhatsApp</h3>
+        <p class="payment-number">
+          0755 248 789
+        </p>
+        <p class="payment-name">
+          Tutafute Kwa Huduma Bora
+        </p>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:25px">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        onclick="funguaMsaada()">
+        💳 Endelea na Huduma
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="mawasiliano" class="section">
+
+  <div class="contact">
+
+    <h2>
+      Wasiliana Nasi
+    </h2>
+
+    <div class="contact-grid">
+
+      <a href="tel:+255691925100">
+        📞 0691 925 100
+      </a>
+
+      <a href="tel:+255625031460">
+        📞 0625 031 460
+      </a>
+
+      <a
+        href="https://wa.me/255755248789"
+        target="_blank"
+        rel="noopener">
+        💬 WhatsApp 0755 248 789
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<!-- =========================
+     ASSISTED SEARCH MODAL
+========================= -->
+
+<div
+  class="modal"
+  id="msaada-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="msaada-title">
+
+  <div class="modal-card">
+
+    <button
+      type="button"
+      class="modal-close"
+      onclick="fungaMsaada()"
+      aria-label="Funga">
+      ×
+    </button>
+
+    <h2 id="msaada-title">
+      🤝 Tutafute Kwa Ajili Yako
+    </h2>
+
+    <p>
+      Tuambie unachotafuta. Mfumo utatumia ombi lako
+      kuandaa utafutaji wa bidhaa au masoko.
+    </p>
+
+    <form id="search-form">
+
+      <div class="form-group">
+
+        <label for="country">
+          Nchi
+        </label>
+
+        <select
+          id="country"
+          class="form-control"
+          required>
+
+          <option value="TZ" data-currency="TZS" data-rate="1">
+            Tanzania — TZS
+          </option>
+
+          <option value="KE" data-currency="KES" data-rate="0.023">
+            Kenya — KES
+          </option>
+
+          <option value="UG" data-currency="UGX" data-rate="3.70">
+            Uganda — UGX
+          </option>
+
+          <option value="RW" data-currency="RWF" data-rate="0.80">
+            Rwanda — RWF
+          </option>
+
+          <option value="BI" data-currency="BIF" data-rate="1.40">
+            Burundi — BIF
+          </option>
+
+          <option value="ZM" data-currency="ZMW" data-rate="0.020">
+            Zambia — ZMW
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="search-request">
+          Unatafuta nini?
+        </label>
+
+        <textarea
+          id="search-request"
+          class="form-control"
+          required
+          placeholder="Mfano: Natafuta tani 20 za ufuta, eneo la Songea, bei nzuri na mnunuzi wa jumla..."></textarea>
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="phone">
+          Namba yako ya simu
+        </label>
+
+        <input
+          id="phone"
+          class="form-control"
+          type="tel"
+          placeholder="Mfano: 0712345678"
+          required>
+
+      </div>
+
+      <div class="fee-display">
+
+        <div>
+          Ada ya huduma
+        </div>
+
+        <strong id="fee-display">
+          TZS 1,000
+        </strong>
+
+        <div
+          id="fee-note"
+          style="font-size:.82rem;color:#66736b;margin-top:4px">
+          Ada msingi: TZS 1,000
+        </div>
+
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        style="width:100%">
+        💳 Endelea Kulipia Huduma
+      </button>
+
+      <div
+        id="search-status"
+        class="status"
+        role="status">
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+  <p>
+    <strong>NJIA MAUZO AFRIKA</strong>
+    <br>
+    Fikia Masoko · Panua Biashara
+    <br><br>
+    © 2026 Haki zote zimehifadhiwa.
+  </p>
+
+</footer>
+
+<script>
+"use strict";
+
+/* =========================================================
+   CONFIGURATION
+   ========================================================= */
+
+const CONFIG = {
+
+  /*
+   * Hizi ni endpoint za backend.
+   *
+   * Zitatakiwa kuunganishwa na Flask/API yako.
+   *
+   * USIWEKE API SECRET HAPA.
+   */
+  CREATE_PAYMENT_ENDPOINT: "/api/payment/create",
+
+  PAYMENT_STATUS_ENDPOINT: "/api/payment/status",
+
+  ASSISTED_SEARCH_ENDPOINT: "/api/assisted-search",
+
+  /*
+   * Ada ya msingi.
+   */
+  BASE_FEE_TZS: 1000
+
+};
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+const modal = document.getElementById("msaada-modal");
+
+function funguaMsaada() {
+
+  modal.classList.add("show");
+
+  document.body.classList.add("modal-open");
+
+  setTimeout(() => {
+
+    document.getElementById("search-request").focus();
+
+  }, 100);
+
+}
+
+function fungaMsaada() {
+
+  modal.classList.remove("show");
+
+  document.body.classList.remove("modal-open");
+
+}
+
+modal.addEventListener("click", function(event) {
+
+  if (event.target === modal) {
+    fungaMsaada();
+  }
+
+});
+
+document.addEventListener("keydown", function(event) {
+
+  if (event.key === "Escape") {
+    fungaMsaada();
+  }
+
+});
+
+
+/* =========================================================
+   CURRENCY DISPLAY
+   =========================================================
+
+   MUHIMU:
+   Hizi rates ni za DISPLAY tu.
+
+   Kwa production:
+   tumia FX API/backend ili rate iwe updated.
+*/
+
+const countrySelect =
+  document.getElementById("country");
+
+const feeDisplay =
+  document.getElementById("fee-display");
+
+const feeNote =
+  document.getElementById("fee-note");
+
+
+function formatMoney(amount, currency) {
+
+  try {
+
+    return new Intl.NumberFormat(
+      "en-US",
+      {
+        style: "currency",
+        currency: currency,
+        maximumFractionDigits:
+          currency === "UGX" ||
+          currency === "RWF" ||
+          currency === "BIF"
+            ? 0
+            : 2
+      }
+    ).format(amount);
+
+  } catch (error) {
+
+    return `${currency} ${Math.round(amount)}`;
+
+  }
+
+}
+
+
+function updateFeeDisplay() {
+
+  const option =
+    countrySelect.options[
+      countrySelect.selectedIndex
+    ];
+
+  const currency =
+    option.dataset.currency || "TZS";
+
+  const rate =
+    Number(option.dataset.rate || 1);
+
+  const converted =
+    CONFIG.BASE_FEE_TZS * rate;
+
+  if (currency === "TZS") {
+
+    feeDisplay.textContent =
+      "TZS 1,000";
+
+    feeNote.textContent =
+      "Ada msingi ya huduma";
+
+  } else {
+
+    feeDisplay.textContent =
+      formatMoney(converted, currency);
+
+    feeNote.textContent =
+      `Sawa na takribani TZS 1,000. Rate ya mwisho ithibitishwe na mfumo wa malipo.`;
+
+  }
+
+}
+
+
+countrySelect.addEventListener(
+  "change",
+  updateFeeDisplay
+);
+
+updateFeeDisplay();
+
+
+/* =========================================================
+   STATUS HELPER
+   ========================================================= */
+
+function showStatus(
+  message,
+  type = "info"
+) {
+
+  const box =
+    document.getElementById("search-status");
+
+  box.textContent = message;
+
+  box.className =
+    `status show ${type}`;
+
+}
+
+
+/* =========================================================
+   PHONE VALIDATION
+   ========================================================= */
+
+function validTanzaniaPhone(phone) {
+
+  return /^0[67]\d{8}$/.test(
+    phone.replace(/\s+/g, "")
+  );
+
+}
+
+
+/* =========================================================
+   ASSISTED SEARCH FORM
+   ========================================================= */
+
+const searchForm =
+  document.getElementById("search-form");
+
+
+searchForm.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+    const country =
+      countrySelect.value;
+
+    const request =
+      document
+        .getElementById("search-request")
+        .value
+        .trim();
+
+    const phone =
+      document
+        .getElementById("phone")
+        .value
+        .trim();
+
+    if (request.length < 10) {
+
+      showStatus(
+        "Tafadhali eleza vizuri bidhaa au soko unalotafuta.",
+        "error"
+      );
+
+      return;
+    }
+
+    if (!validTanzaniaPhone(phone)) {
+
+      showStatus(
+        "Tafadhali weka namba sahihi ya simu ya Tanzania, mfano 0712345678.",
+        "error"
+      );
+
+      return;
+    }
+
+    /*
+     * Hapa tunatuma ombi kwa backend.
+     *
+     * Backend itatengeneza payment reference.
+     */
+
+    showStatus(
+      "Tunaandaa ombi lako la huduma...",
+      "info"
+    );
+
+    try {
+
+      const response =
+        await fetch(
+          CONFIG.CREATE_PAYMENT_ENDPOINT,
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+
+              country: country,
+
+              request: request,
+
+              phone: phone,
+
+              amount_tzs:
+                CONFIG.BASE_FEE_TZS
+
+            })
+
+          }
+        );
+
+      /*
+       * Kama backend haijawa connected bado,
+       * usifanye kama payment imeverified.
+       */
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Payment endpoint haipatikani."
+        );
+
+      }
+
+      const data =
+        await response.json();
+
+      /*
+       * Backend inatakiwa kurudisha:
+       *
+       * payment_id
+       * status
+       * checkout_url / instructions
+       */
+
+      if (!data.payment_id) {
+
+        throw new Error(
+          "Payment ID haijarudishwa."
+        );
+
+      }
+
+      localStorage.setItem(
+        "njiaMauzoPaymentId",
+        data.payment_id
+      );
+
+      localStorage.setItem(
+        "njiaMauzoRequest",
+        request
+      );
+
+      showStatus(
+        data.message ||
+        "Ombi limepokelewa. Endelea na malipo.",
+        "success"
+      );
+
+      /*
+       * Kama payment provider imetoa
+       * checkout URL, fungua checkout.
+       */
+
+      if (data.checkout_url) {
+
+        window.location.href =
+          data.checkout_url;
+
+        return;
+
+      }
+
+      /*
+       * Kama hakuna checkout URL,
+       * backend inaweza kuonyesha payment instructions.
+       */
+
+      if (data.instructions) {
+
+        showStatus(
+          data.instructions,
+          "info"
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Payment error:",
+        error
+      );
+
+      showStatus(
+        "Mfumo haujaunganishwa na payment gateway bado. Unganisha endpoint ya backend /api/payment/create.",
+        "error"
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   PAYMENT VERIFICATION
+   =========================================================
+
+   USER ROOM HAIFUNGULIWI KWA:
+   localStorage
+   button click
+   screenshot
+   paid=true kutoka browser
+
+   Inafunguliwa baada ya backend kusema:
+   VERIFIED
+*/
+
+async function verifyPayment(
+  paymentId
+) {
+
+  if (!paymentId) {
+    return;
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        `${CONFIG.PAYMENT_STATUS_ENDPOINT}/${encodeURIComponent(paymentId)}`
+      );
+
+    if (!response.ok) {
+      return;
+    }
+
+    const data =
+      await response.json();
+
+    if (data.status === "VERIFIED") {
+
+      openUserRoom();
+
+      return;
+
+    }
+
+    if (
+      data.status === "PENDING"
+    ) {
+
+      showStatus(
+        "Malipo bado yanathibitishwa. Tafadhali subiri.",
+        "info"
+      );
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Verification error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   USER ROOM
+========================= */
+
+function openUserRoom() {
+
+  const room =
+    document.getElementById(
+      "user-room"
+    );
+
+  const request =
+    localStorage.getItem(
+      "njiaMauzoRequest"
+    );
+
+  document.getElementById(
+    "room-request"
+  ).textContent =
+    request || "Ombi lako";
+
+  room.classList.add("show");
+
+  room.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+}
+
+
+/* =========================================================
+   CHECK PAYMENT AFTER RETURN
+========================= */
+
+const existingPaymentId =
+  localStorage.getItem(
+    "njiaMauzoPaymentId"
+  );
+
+if (existingPaymentId) {
+
+  /*
+   * Hii hai-verify payment yenyewe.
+   * Inaomba status kutoka backend.
+   */
+
+  verifyPayment(
+    existingPaymentId
+  );
+
+}
+
+
+/* =========================================================
+   OPTIONAL: REFRESH PAYMENT STATUS
+========================= */
+
+let paymentCheckTimer = null;
+
+
+function startPaymentChecking(
+  paymentId
+) {
+
+  if (!paymentId) {
+    return;
+  }
+
+  if (paymentCheckTimer) {
+    clearInterval(
+      paymentCheckTimer
+    );
+  }
+
+  paymentCheckTimer =
+    setInterval(
+      async () => {
+
+        try {
+
+          const response =
+            await fetch(
+              `${CONFIG.PAYMENT_STATUS_ENDPOINT}/${encodeURIComponent(paymentId)}`
+            );
+
+          if (!response.ok) {
+            return;
+          }
+
+          const data =
+            await response.json();
+
+          if (
+            data.status ===
+            "VERIFIED"
+          ) {
+
+            clearInterval(
+              paymentCheckTimer
+            );
+
+            openUserRoom();
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+        }
+
+      },
+      5000
+    );
+
+}
+
+
+/* =========================================================
+   START CHECKING WHEN PAYMENT EXISTS
+========================= */
+
+if (existingPaymentId) {
+
+  startPaymentChecking(
+    existingPaymentId
+  );
+
+}
+
+
+/* =========================================================
+   PAGE VISIBILITY
+========================= */
+
+document.addEventListener(
+  "visibilitychange",
+  function() {
+
+    if (
+      !document.hidden &&
+      existingPaymentId
+    ) {
+
+      verifyPayment(
+        existingPaymentId
+      );
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
