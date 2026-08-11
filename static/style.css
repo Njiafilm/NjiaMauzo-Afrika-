@@ -428,3 +428,62 @@ input:focus, select:focus, textarea:focus {
   margin-top: 0.75rem;
   text-align: right;
 }
+.bidhaa-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:14px;
+  padding:16px;
+}
+.bidhaa-card{
+  background:#fff;
+  border-radius:12px;
+  padding:10px;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+  transition:transform .15s;
+}
+.bidhaa-card:hover{ transform:translateY(-3px); }
+.bidhaa-card img{ width:100%; border-radius:8px; }
+
+.modal-overlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.75);
+  display:flex; align-items:center; justify-content:center;
+  z-index:999;
+}
+.hidden{ display:none; }
+.modal-card{
+  background:#fff;
+  border-radius:14px;
+  padding:30px 20px;
+  max-width:340px;
+  text-align:center;
+  position:relative;
+}
+.modal-kubwa{
+  font-size:2.4rem;
+  font-weight:900;
+  line-height:1.05;
+  color:#111;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.modal-swali{
+  font-size:1.1rem;
+  color:#333;
+  margin-bottom:20px;
+}
+.modal-actions{ display:flex; flex-direction:column; gap:10px; }
+.btn-ndio{
+  background:#f5a623; border:none; padding:12px;
+  border-radius:8px; font-weight:700; font-size:1rem; cursor:pointer;
+}
+.btn-hapana{
+  background:none; border:1px solid #ccc; padding:10px;
+  border-radius:8px; cursor:pointer;
+}
+.modal-close{
+  position:absolute; top:8px; right:12px;
+  background:none; border:none; font-size:1.5rem; cursor:pointer;
+}
