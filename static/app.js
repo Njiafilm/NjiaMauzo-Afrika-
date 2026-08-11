@@ -903,5 +903,36 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.createAlert = function() {
     toast('Price Alert itaunganishwa na API katika hatua inayofuata.');
   };
+let bidhaaZote = []; // itajazwa kutoka API yako, mf. fetch('/api/bidhaa')
+let bidhaaIliyochaguliwa = null;
 
+async function pakiaBidhaa(){
+  const res = await fetch('/api/bidhaa'); // badilisha endpoint yako halisi
+  bidhaaZote = await res.json();
+  const cont = document.getElementById('bidhaa-list');
+  cont.innerHTML = bidhaaZote.map(b => `
+    <div class="bidhaa-card" onclick="fungua('${b.id}')">
+      <img src="${b.picha}" alt="${b.jina}">
+      <p>${b.jina}</p>
+    </div>
+  `).join('');
+}
+
+function fungua(id){
+  bidhaaIliyochaguliwa = bidhaaZote.find(b => b.id == id);
+  document.getElementById('modal-jina-bidhaa').textContent = bidhaaIliyochaguliwa.jina;
+  document.getElementById('bei-modal').classList.remove('hidden');
+}
+
+function fungaModal(){
+  document.getElementById('bei-modal').classList.add('hidden');
+}
+
+function onaBei(){
+  // Hapa unaweza kuelekeza kwenye ukurasa wa malipo/verification
+  // au ku-display bei moja kwa moja kama huna gharama
+  window.location.href = `/bidhaa/${bidhaaIliyochaguliwa.id}/bei`;
+}
+
+document.addEventListener('DOMContentLoaded', pakiaBidhaa);
 })();});
