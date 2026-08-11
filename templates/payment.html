@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NjiaMauzo Afrika - Malipo</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#0e0e0e; color:#fff; margin:0; padding:0; }
+  .banner { background:linear-gradient(90deg,#0a7a3d,#0f9d58); padding:16px; text-align:center; }
+  .banner h2 { margin:0 0 6px 0; font-size:18px; }
+  .banner p { margin:0; font-size:14px; opacity:.9; }
+
+  .ads-strip { display:flex; overflow-x:auto; gap:10px; padding:12px; background:#161616; }
+  .ad-card { min-width:130px; background:#1f1f1f; border-radius:10px; padding:8px; text-align:center; flex-shrink:0; }
+  .ad-card img { width:100%; height:90px; object-fit:cover; border-radius:6px; }
+  .ad-card span { display:block; font-size:12px; margin-top:6px; color:#ddd; }
+  .ad-tag { font-size:10px; background:#0f9d58; color:#fff; border-radius:4px; padding:2px 6px; display:inline-block; margin-top:4px; }
+
+  .container { max-width:480px; margin:0 auto; padding:20px; }
+  .amount-box { background:#1a1a1a; border-radius:12px; padding:16px; margin-bottom:16px; }
+  label { display:block; margin-bottom:6px; font-size:14px; color:#bbb; }
+  input, select { width:100%; padding:12px; border-radius:8px; border:1px solid #333; background:#111; color:#fff; font-size:16px; box-sizing:border-box; margin-bottom:14px; }
+
+  .fee-note { font-size:13px; color:#f5b942; margin-bottom:14px; }
+
+  .methods { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:16px; }
+  .method-btn { border:2px solid #333; background:#1a1a1a; color:#fff; border-radius:10px; padding:14px 6px; text-align:center; cursor:pointer; font-size:13px; }
+  .method-btn.mpesa { border-color:#22c55e; }
+  .method-btn.halotel { border-color:#f97316; }
+  .method-btn.airtel { border-color:#ef4444; }
+  .method-btn.active { background:#2a2a2a; }
+
+  .number-reveal { display:none; background:#111; border:1px dashed #444; border-radius:10px; padding:16px; text-align:center; margin-bottom:16px; }
+  .number-reveal.show { display:block; }
+  .number-reveal .num { font-size:22px; letter-spacing:1px; font-weight:bold; color:#0f9d58; margin:8px 0; }
+
+  .confirm-btn { width:100%; padding:14px; border:none; border-radius:10px; background:#0f9d58; color:#fff; font-size:16px; font-weight:bold; cursor:pointer; }
+  .confirm-btn:disabled { background:#333; cursor:not-allowed; }
+
+  .status { margin-top:14px; font-size:13px; text-align:center; color:#aaa; }
+</style>
+</head>
+<body>
+
+  <div class="banner">
+    <h2>Karibu NjiaMauzo Afrika 🇹🇿</h2>
+    <p>Mfumo wetu utakutafutia bidhaa unayohitaji kwa ada nafuu tu — bila usumbufu!</p>
+  </div>
+
+  <div class="ads-strip" id="adsStrip">
+    <!-- Bidhaa/matangazo yanaonyeshwa bure hapa, yamejazwa na backend -->
+    {% for ad in ads %}
+    <div class="ad-card">
+      <img src="{{ ad.image_url }}" alt="{{ ad.title }}">
+      <span>{{ ad.title }}</span>
+      <span class="ad-tag">Tangazo</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="container">
+    <div class="amount-box">
+      <label for="country">Chagua Nchi</label>
+      <select id="country" onchange="convertCurrency()">
+        <option value="TZ" data-rate="1" data-symbol="TZS">Tanzania (TZS)</option>
+        <option value="KE" data-rate="0.048" data-symbol="KES">Kenya (KES)</option>
+        <option value="UG" data-rate="1.62" data-symbol="UGX">Uganda (UGX)</option>
+        <option value="RW" data-rate="0.54" data-symbol="RWF">Rwanda (RWF)</option>
+      </select>
+
+      <label>Ada ya huduma</label>
+      <div id="feeDisplay" style="font-size:22px; font-weight:bold; color:#0f9d58;">TZS 3,000</div>
+      <p class="fee-note">Ada hii ndiyo itakayowezesha mfumo kukutafutia bidhaa unayohitaji.</p>
+    </div>
+
+    <label>Chagua njia ya malipo</label>
+    <div class="methods">
+      <div class="method-btn mpesa" onclick="revealNumber('mpesa', this)">M-Pesa / Vodacom</div>
+      <div class="method-btn halotel" onclick="revealNumber('halotel', this)">Halotel</div>
+      <div class="method-btn airtel" onclick="revealNumber('airtel', this)">Airtel Money</div>
+    </div>
+
+    <div class="number-reveal" id="numberReveal">
+      <div>Tuma malipo kwenye namba ifuatayo:</div>
+      <div class="num" id="numDisplay"></div>
+      <div id="numLabel" style="font-size:13px; color:#999;"></div>
+    </div>
+
+    <label for="txnRef">Namba ya muamala / Reference</label>
+    <input type="text" id="txnRef" placeholder="Weka reference ya malipo baada ya kutuma">
+
+    <button class="confirm-btn" id="confirmBtn" disabled onclick="submitPayment()">Thibitisha Malipo</button>
+
+    <div class="status" id="statusMsg"></div>
+  </div>
+
+<script>
+  // Namba za malipo HAZIONEKANI kwenye HTML source - zinaletwa server-side kwa ombi la ndani (fetch)
+  // baada ya mtumiaji kuchagua njia, ili zisionekane kwa "view source" wala DevTools mapema.
+  let selectedMethod = null;
+
+  async function revealNumber(method, el) {
+    document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    selectedMethod = method;
+
+    try {
+      const res = await fetch('/api/payment-number?method=' + method, { credentials: 'same-origin' });
+      const data = await res.json();
+      document.getElementById('numDisplay').innerText = data.number;
+      document.getElementById('numLabel').innerText = data.label;
+      document.getElementById('numberReveal').classList.add('show');
+      document.getElementById('confirmBtn').disabled = false;
+    } catch (e) {
+      document.getElementById('statusMsg').innerText = 'Imeshindikana kupata namba, jaribu tena.';
+    }
+  }
+
+  function convertCurrency() {
+    const sel = document.getElementById('country');
+    const opt = sel.options[sel.selectedIndex];
+    const rate = parseFloat(opt.dataset.rate);
+    const symbol = opt.dataset.symbol;
+    const value = Math.round(3000 * rate);
+    document.getElementById('feeDisplay').innerText = symbol + ' ' + value.toLocaleString();
+  }
+
+  async function submitPayment() {
+    const ref = document.getElementById('txnRef').value.trim();
+    if (!ref) {
+      document.getElementById('statusMsg').innerText = 'Tafadhali weka reference ya malipo kwanza.';
+      return;
+    }
+    document.getElementById('statusMsg').innerText = 'Inathibitisha malipo...';
+    try {
+      const res = await fetch('/api/verify-payment', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        credentials: 'same-origin',
+        body: JSON.stringify({ method: selectedMethod, reference: ref, country: document.getElementById('country').value })
+      });
+      const data = await res.json();
+      if (data.status === 'VERIFIED') {
+        document.getElementById('statusMsg').innerText = '✅ Malipo yamethibitishwa! Unaelekezwa User Room...';
+        setTimeout(() => window.location.href = '/user-room', 1500);
+      } else {
+        document.getElementById('statusMsg').innerText = '⏳ Malipo yanasubiri uthibitisho wa admin/AI.';
+      }
+    } catch (e) {
+      document.getElementById('statusMsg').innerText = 'Hitilafu imetokea, jaribu tena.';
+    }
+  }
+</script>
+</body>
+</html>
