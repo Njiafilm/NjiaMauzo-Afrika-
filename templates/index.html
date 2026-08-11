@@ -971,7 +971,7 @@ footer strong {
         </p>
 
         <span class="price">
-          Huduma ya kutafuta: TZS 1,000
+          Huduma ya kutafuta: TZS 3,000
         </span>
 
       </div>
@@ -995,7 +995,7 @@ footer strong {
 
       <p>
         Mfumo unaweza kukusaidia kutafuta bidhaa au masoko
-        kulingana na ombi lako. TZS 1,000 ndiyo ada ya msingi
+        kulingana na ombi lako. TZS 3,000 ndiyo ada ya msingi
         ya huduma ya kutafuta.
       </p>
 
@@ -1043,7 +1043,7 @@ footer strong {
 
     <div class="step">
       <div class="step-number">3</div>
-      <h3>Lipa TZS 1,000</h3>
+      <h3>Lipa TZS 3,000</h3>
       <p>
         Lipa ada ya huduma kwa njia inayopatikana.
       </p>
@@ -1139,7 +1139,7 @@ footer strong {
       </small>
 
       <strong>
-        TZS 1,000
+        TZS 3,000
       </strong>
 
       <small>
@@ -1153,7 +1153,7 @@ footer strong {
       <div class="payment-method">
         <h3>M-Pesa</h3>
         <p class="payment-number">
-          0691 925 100
+          0755 248 789 
         </p>
         <p class="payment-name">
           Njia Mauzo Afrika
@@ -1171,7 +1171,7 @@ footer strong {
       </div>
 
       <div class="payment-method">
-        <h3>Airtel / WhatsApp</h3>
+        <h3>Vodacom / WhatsApp</h3>
         <p class="payment-number">
           0755 248 789
         </p>
@@ -1338,13 +1338,13 @@ footer strong {
         </div>
 
         <strong id="fee-display">
-          TZS 1,000
+          TZS 3,000
         </strong>
 
         <div
           id="fee-note"
           style="font-size:.82rem;color:#66736b;margin-top:4px">
-          Ada msingi: TZS 1,000
+          Ada msingi: TZS 3,000
         </div>
 
       </div>
@@ -1367,7 +1367,22 @@ footer strong {
   </div>
 
 </div>
+      
+<!-- Sehemu ya orodha ya bidhaa -->
+<div id="bidhaa-list" class="bidhaa-grid"></div>
 
+<!-- Modal ya tangazo -->
+<div id="bei-modal" class="modal-overlay hidden">
+  <div class="modal-card">
+    <button class="modal-close" onclick="fungaModal()">&times;</button>
+    <h1 class="modal-kubwa" id="modal-jina-bidhaa">BIDHAA</h1>
+    <p class="modal-swali">Uko tayari kupatiwa bei za bidhaa hii?</p>
+    <div class="modal-actions">
+      <button class="btn-ndio" onclick="onaBei()">Ndio, Nionyeshe Bei</button>
+      <button class="btn-hapana" onclick="fungaModal()">Sivyo Bado</button>
+    </div>
+  </div>
+</div>
 <!-- =========================
      FOOTER
 ========================= -->
@@ -1409,7 +1424,7 @@ const CONFIG = {
   /*
    * Ada ya msingi.
    */
-  BASE_FEE_TZS: 1000
+  BASE_FEE_TZS: 3000
 
 };
 
