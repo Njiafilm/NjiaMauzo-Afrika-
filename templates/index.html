@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Njia Mauzo Afrika — Tafuta bidhaa, pata masoko na pata msaada wa biashara kutoka shambani hadi sokoni.">
+<meta name="theme-color" content="#07542a">
+<title>Njia Mauzo Afrika | Fikia Masoko • Panua Biashara</title>
+<link rel="icon" href="favicon.png" type="image/png">
+
+<style>
+:root {
+  --green: #0e7a3d;
+  --green-dark: #07542a;
+  --green-deep: #042c17;
+  --gold: #f6b21b;
+  --red: #d9534f;
+  --blue: #00a9e0;
+  --bg: #f4f7f5;
+  --white: #fff;
+  --text: #172019;
+  --muted: #66736b;
+  --border: #dce5df;
+  --shadow: 0 12px 35px rgba(0,0,0,.10);
+  --shadow-hover: 0 18px 45px rgba(0,0,0,.16);
+  --radius: 18px;
+  --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.55; }
+body.modal-open { overflow: hidden; }
+img { max-width: 100%; display: block; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+.skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; background: var(--gold); color: #000; padding: 10px 16px; font-weight: 800; }
+.skip-link:focus { left: 0; }
+
+.hero {
+  position: relative; overflow: hidden; color: #fff;
+  background: radial-gradient(circle at 80% 20%, rgba(246,178,27,.18), transparent 30%), linear-gradient(135deg, #0e7a3d, #042c17);
+  padding: 0 20px 100px;
+}
+.hero::after { content: ""; position: absolute; width: 420px; height: 420px; border-radius: 50%; right: -160px; bottom: -220px; background: rgba(246,178,27,.08); }
+nav { max-width: 1160px; margin: auto; padding: 18px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; position: relative; z-index: 2; }
+.logo-wrap { display: flex; align-items: center; gap: 12px; }
+.logo-wrap img { width: 50px; height: 50px; border-radius: 13px; object-fit: cover; box-shadow: 0 5px 18px rgba(0,0,0,.25); }
+.logo-text { color: var(--gold); font-size: 1.08rem; font-weight: 900; letter-spacing: .5px; }
+nav ul { list-style: none; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; }
+nav a { color: #fff; font-weight: 700; font-size: .94rem; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.hero-content { max-width: 850px; margin: 70px auto 0; text-align: center; position: relative; z-index: 2; }
+.badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); padding: 8px 16px; border-radius: 50px; font-size: .85rem; font-weight: 800; margin-bottom: 18px; }
+.hero-content h1 { font-size: clamp(2.2rem, 6vw, 4.2rem); line-height: 1.05; font-weight: 950; margin-bottom: 18px; text-shadow: 0 5px 20px rgba(0,0,0,.3); }
+.hero-content h1 span { color: var(--gold); }
+.hero-content p { max-width: 680px; margin: auto; font-size: clamp(1rem, 2vw, 1.2rem); opacity: .95; }
+.cta-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 13px; margin-top: 28px; }
+
+.btn { border: none; min-height: 48px; padding: 13px 23px; border-radius: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 850; transition: transform .2s, box-shadow .2s, background .2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--gold); color: #000; box-shadow: 0 8px 22px rgba(0,0,0,.22); }
+.btn-primary:hover { box-shadow: 0 12px 28px rgba(0,0,0,.3); }
+.btn-outline { background: transparent; border: 2px solid rgba(255,255,255,.7); color: #fff; }
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.btn-dark { background: var(--green-dark); color: #fff; }
+.btn-dark:hover { background: var(--green); }
+.btn-sm { min-height: 38px; padding: 9px 16px; font-size: .85rem; border-radius: 40px; }
+
+main { max-width: 1160px; margin: -55px auto 70px; padding: 0 20px; position: relative; z-index: 5; }
+.section { margin-top: 75px; }
+.section-title { text-align: center; color: var(--green-dark); font-size: clamp(1.6rem, 4vw, 2rem); font-weight: 900; margin-bottom: 10px; }
+.section-description { max-width: 680px; margin: 0 auto 30px; text-align: center; color: var(--muted); }
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 23px; }
+.card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; transition: transform .25s, box-shadow .25s; }
+.card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+.logo-card { min-height: 350px; padding: 35px 25px; display: flex; align-items: center; justify-content: center; text-align: center; }
+.logo-card img { width: 200px; margin: auto; }
+.logo-card p { color: var(--muted); font-weight: 800; margin-top: 14px; }
+.product-card { display: flex; flex-direction: column; }
+.product-card img { width: 100%; height: 245px; object-fit: cover; }
+.card-body { padding: 20px; flex: 1; }
+.tag { display: inline-block; color: var(--green); font-size: .73rem; font-weight: 900; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
+.card-body h3 { font-size: 1.18rem; margin-bottom: 8px; }
+.card-body p { color: var(--muted); font-size: .93rem; }
+.price { display: inline-block; margin-top: 12px; background: #fff3d0; color: #795900; padding: 7px 12px; border-radius: 9px; font-size: .84rem; font-weight: 850; }
+
+.assisted { background: linear-gradient(135deg, rgba(7,84,42,.97), rgba(14,122,61,.96)); color: #fff; border-radius: var(--radius); padding: 38px 30px; box-shadow: var(--shadow); display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 25px; }
+.assisted h2 { color: var(--gold); margin-bottom: 8px; font-size: 1.65rem; }
+.assisted p { opacity: .93; max-width: 720px; }
+.assisted .btn { white-space: nowrap; }
+
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.step { background: var(--white); padding: 27px 20px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; }
+.step-number { width: 48px; height: 48px; margin: 0 auto 14px; border-radius: 50%; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 900; }
+.step h3 { font-size: 1.02rem; margin-bottom: 7px; }
+.step p { color: var(--muted); font-size: .9rem; }
+.step .btn { margin-top: 12px; width: 100%; }
+.step-expert-tag { display: inline-flex; align-items: center; gap: 5px; background: #eaf6ee; color: var(--green-dark); font-size: .68rem; font-weight: 900; text-transform: uppercase; padding: 4px 10px; border-radius: 40px; margin-bottom: 10px; letter-spacing: .4px; }
+
+.payment-fee { text-align: center; background: #f0f8f3; border: 2px solid #cfe7d7; border-radius: 15px; padding: 22px; margin: 15px 0 22px; }
+.payment-fee small { display: block; color: var(--muted); }
+.payment-fee strong { display: block; color: var(--green-dark); font-size: 2rem; margin: 4px 0; }
+.payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.payment-method { padding: 18px; text-align: center; border: 1px solid var(--border); border-radius: 13px; }
+.payment-method h3 { margin-bottom: 7px; }
+.payment-number { font-weight: 900; }
+.payment-name { color: var(--muted); font-size: .8rem; margin-top: 4px; }
+
+.contact { background: var(--green-dark); color: #fff; border-radius: var(--radius); padding: 30px 22px; text-align: center; box-shadow: var(--shadow); }
+.contact h2 { color: var(--gold); margin-bottom: 15px; }
+.contact-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px 30px; }
+.contact a { font-weight: 750; }
+.contact a:hover { color: var(--gold); }
+
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.68); display: none; align-items: center; justify-content: center; padding: 18px; z-index: 1000; }
+.modal.show { display: flex; }
+.modal-card { width: 100%; max-width: 600px; max-height: 92vh; overflow-y: auto; background: #fff; border-radius: 22px; box-shadow: 0 25px 70px rgba(0,0,0,.3); padding: 28px; position: relative; }
+.modal-card.wide { max-width: 780px; }
+.modal-close { position: absolute; right: 16px; top: 14px; width: 38px; height: 38px; border: none; border-radius: 50%; background: #edf1ee; font-size: 1.2rem; font-weight: 900; z-index: 2; }
+.modal-card h2 { color: var(--green-dark); margin-bottom: 7px; padding-right: 40px; }
+.modal-card > p { color: var(--muted); margin-bottom: 22px; }
+
+.expert-header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; padding-right: 40px; }
+.expert-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--green-dark); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.expert-title h2 { padding-right: 0; margin-bottom: 2px; }
+.expert-sub { font-size: .78rem; color: var(--green); font-weight: 800; display: flex; align-items: center; gap: 5px; }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; animation: pulse 1.4s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-weight: 800; margin-bottom: 6px; }
+.form-control { width: 100%; padding: 13px 14px; border: 2px solid var(--border); border-radius: 11px; outline: none; background: #fff; }
+.form-control:focus { border-color: var(--green); }
+textarea.form-control { min-height: 120px; resize: vertical; }
+
+.fee-display { background: #fff8df; border: 2px solid #f4d875; border-radius: 13px; padding: 15px; margin: 15px 0; }
+.fee-display strong { color: var(--green-dark); font-size: 1.25rem; }
+
+.status { display: none; margin-top: 14px; padding: 13px 15px; border-radius: 10px; font-weight: 700; font-size: .9rem; }
+.status.show { display: block; }
+.status.info { background: #e9f6ff; border: 1px solid #9dd8f5; color: #075b80; }
+.status.success { background: #e8f7ed; border: 1px solid #9ed3ad; color: #07542a; }
+.status.error { background: #fdeceb; border: 1px solid #efaaa6; color: #9d2925; }
+
+.room { display: none; }
+.room.show { display: block; }
+.room-header { background: linear-gradient(135deg, var(--green-dark), var(--green)); color: #fff; border-radius: var(--radius); padding: 30px; margin-bottom: 22px; }
+.room-header h2 { color: var(--gold); margin-bottom: 5px; }
+.room-status { display: inline-block; margin-top: 12px; background: #dff5e5; color: #07542a; padding: 7px 12px; border-radius: 50px; font-size: .8rem; font-weight: 900; }
+.room-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.room-card { background: #fff; padding: 22px; border-radius: var(--radius); box-shadow: var(--shadow); }
+.room-card h3 { color: var(--green-dark); margin-bottom: 8px; }
+.room-card p { color: var(--muted); }
+.searching { margin-top: 14px; padding: 14px; background: #f0f8f3; border-radius: 11px; font-weight: 700; color: var(--green-dark); }
+
+.ai-toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.ai-toolbar input { flex: 1; min-width: 160px; }
+.ai-products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-height: 55vh; overflow-y: auto; padding-right: 4px; }
+.ai-product-card { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: #fff; }
+.ai-product-card img { width: 100%; height: 110px; object-fit: cover; background: #eef2ef; }
+.ai-product-body { padding: 10px 12px; }
+.ai-product-body h4 { font-size: .88rem; margin-bottom: 4px; }
+.ai-product-body .src { font-size: .7rem; color: var(--muted); }
+.ai-product-body .p { font-size: .8rem; font-weight: 900; color: var(--green-dark); margin-top: 4px; }
+.ai-loading { grid-column: 1/-1; text-align: center; padding: 30px 10px; color: var(--muted); font-weight: 700; }
+.ai-loading .spinner { width: 30px; height: 30px; border: 4px solid #dce5df; border-top-color: var(--green); border-radius: 50%; margin: 0 auto 10px; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ai-empty { grid-column: 1/-1; text-align: center; padding: 30px 10px; color: var(--muted); }
+
+.chat-window { height: 50vh; overflow-y: auto; border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 12px; background: #fafcfa; display: flex; flex-direction: column; gap: 10px; }
+.chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 14px; font-size: .9rem; line-height: 1.4; }
+.chat-msg.bot { background: #eef6f0; color: var(--text); border-bottom-left-radius: 4px; align-self: flex-start; }
+.chat-msg.user { background: var(--green-dark); color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; }
+.chat-typing { align-self: flex-start; display: flex; gap: 4px; padding: 10px 14px; }
+.chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); display: inline-block; animation: blink 1.2s infinite; }
+.chat-typing span:nth-child(2) { animation-delay: .2s; }
+.chat-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%,80%,100%{opacity:.25} 40%{opacity:1} }
+.chat-input-row { display: flex; gap: 8px; }
+.chat-input-row input { flex: 1; }
+.chat-foot-note { font-size: .74rem; color: var(--muted); margin-top: 10px; text-align: center; }
+
+footer { background: var(--green-deep); color: #cfe1d4; text-align: center; padding: 30px 20px; }
+footer strong { color: #fff; }
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .assisted { grid-template-columns: 1fr; }
+  .payment-methods { grid-template-columns: 1fr; }
+  .room-grid { grid-template-columns: 1fr; }
+  .ai-products-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 650px) {
+  nav { flex-direction: column; align-items: flex-start; }
+  nav ul { gap: 8px 15px; }
+  .hero-content { margin-top: 45px; }
+  main { padding: 0 14px; }
+  .grid, .steps { grid-template-columns: 1fr; }
+  .modal-card { padding: 23px 17px; }
+  .assisted { padding: 28px 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#bidhaa">Ruka kwenda kwenye bidhaa</a>
+
+<header class="hero">
+  <nav aria-label="Menyu kuu">
+    <a href="/" class="logo-wrap">
+      <img src="favicon.png" alt="Logo ya Njia Mauzo Afrika">
+      <span class="logo-text">NJIA MAUZO AFRIKA</span>
+    </a>
+    <ul>
+      <li><a href="#bidhaa">Bidhaa</a></li>
+      <li><a href="#jinsi">Jinsi Inavyofanya Kazi</a></li>
+      <li><a href="#msaada">Tafuta Kwa Msaada</a></li>
+      <li><a href="#mawasiliano">Mawasiliano</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-content">
+    <div class="badge">🌍 Soko la Afrika</div>
+    <h1>NJIA MAUZO <span>AFRIKA</span></h1>
+    <p>Fikia masoko, tafuta bidhaa na pata msaada wa kutafuta fursa za biashara kulingana na mahitaji yako.</p>
+    <div class="cta-row">
+      <a href="#bidhaa" class="btn btn-primary">🔎 Tazama Bidhaa</a>
+      <button type="button" class="btn btn-outline" onclick="funguaMsaada()">🤝 Nitafutie Bidhaa / Soko</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="bidhaa" class="section">
+  <h2 class="section-title">Bidhaa na Fursa</h2>
+  <p class="section-description">
+    Unaweza kuangalia bidhaa na taarifa za msingi bila kulipa.
+    Malipo yanahitajika pale unapotaka huduma ya kutafutiwa bidhaa au masoko kulingana na ombi lako.
+  </p>
+
+  <div class="grid">
+    <article class="card logo-card">
+      <div>
+        <img src="favicon.png" alt="Njia Mauzo Afrika">
+        <p>Fikia Masoko · Panua Biashara</p>
+      </div>
+    </article>
+
+    <article class="card product-card">
+      <img src="IMG-20260801-WA0010.jpg" alt="Mtaalamu wa kilimo akiwa shambani" loading="lazy">
+      <div class="card-body">
+        <span class="tag">Mtaalamu</span>
+        <h3>Ushauri wa Kilimo</h3>
+        <p>Ushauri wa kitaalamu kuhusu uzalishaji, usimamizi wa mashamba na masoko.</p>
+      </div>
+    </article>
+
+    <article class="card product-card">
+      <img src="Polish_20260810_220752019.jpg" alt="Mazao na huduma za kilimo" loading="lazy">
+      <div class="card-body">
+        <span class="tag">Mazao & Huduma</span>
+        <h3>Tafuta Bidhaa</h3>
+        <p>Tuambie bidhaa unayotafuta na eneo unalotaka. Mfumo utakusaidia kuanza kuitafuta.</p>
+        <span class="price">Huduma ya kutafuta: TZS 3,000</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="msaada" class="section">
+  <div class="assisted">
+    <div>
+      <h2>🤝 Unataka Tukusaidie Kutafuta?</h2>
+      <p>Mfumo unaweza kukusaidia kutafuta bidhaa au masoko kulingana na ombi lako. TZS 3,000 ndiyo ada ya msingi ya huduma ya kutafuta.</p>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="funguaMsaada()">Anza Kutafuta</button>
+  </div>
+</section>
+
+<section id="jinsi" class="section">
+  <h2 class="section-title">Jinsi Inavyofanya Kazi</h2>
+  <p class="section-description">Hatua rahisi kutoka kwenye ombi lako hadi kupata matokeo.</p>
+
+  <div class="steps">
+    <div class="step">
+      <span class="step-expert-tag">⚙️ AI Powered</span>
+      <div class="step-number">1</div>
+      <h3>Bidhaa Zinazopatikana</h3>
+      <p>AI inatafuta na kuonyesha bidhaa halisi kutoka vyanzo mbalimbali moja kwa moja.</p>
+      <button type="button" class="btn btn-dark btn-sm" onclick="funguaAiBidhaa()">🔎 Tazama Bidhaa (AI)</button>
+    </div>
+
+    <div class="step">
+      <span class="step-expert-tag">🤖 Msaada 24/7</span>
+      <div class="step-number">2</div>
+      <h3>Zungumza na Bot Mtaalamu</h3>
+      <p>Bot wa NjiaMauzo yupo tayari kukujibu wakati wowote, mchana au usiku.</p>
+      <button type="button" class="btn btn-dark btn-sm" onclick="funguaBot()">💬 Anza Mazungumzo</button>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>KARIBU GUSA HAPA TUKUHUDUMIE</h3>
+      <button type="button" class="btn btn-primary btn-sm" onclick="funguaMalipo()">Endelea na Huduma</button>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>User Room</h3>
+      <p>Baada ya malipo kuthibitishwa, User Room inafunguliwa na mfumo kuanza kutafuta.</p>
+    </div>
+  </div>
+</section>
+
+<section id="user-room" class="section room">
+  <div class="room-header">
+    <h2>🔓 User Room</h2>
+    <p>Huduma yako ya kutafuta imefunguliwa.</p>
+    <span class="room-status">✓ MALIPO VERIFIED</span>
+  </div>
+
+  <div class="room-grid">
+    <div class="room-card">
+      <h3>🔎 Ombi Lako</h3>
+      <p id="room-request">—</p>
+      <div class="searching">🤖 Mfumo unaandaa utafutaji kulingana na ombi lako...</div>
+    </div>
+    <div class="room-card">
+      <h3>📊 Matokeo ya Utafutaji</h3>
+      <p>Bidhaa na masoko yanayolingana na ombi lako yataonekana hapa baada ya mfumo kupata data.</p>
+    </div>
+  </div>
+</section>
+
+<section id="mawasiliano" class="section">
+  <div class="contact">
+    <h2>Wasiliana Nasi</h2>
+    <div class="contact-grid">
+      <a href="tel:+255691925100">📞 Piga simu</a>
+      <a href="tel:+255625031460">📞 Piga simu</a>
+      <a href="https://wa.me/255755248789" target="_blank" rel="noopener">💬 WhatsApp 0755 248 789</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ASSISTED SEARCH MODAL -->
+<div class="modal" id="msaada-modal" role="dialog" aria-modal="true" aria-labelledby="msaada-title">
+  <div class="modal-card">
+    <button type="button" class="modal-close" onclick="fungaMsaada()" aria-label="Funga">×</button>
+    <h2 id="msaada-title">🤝 Tutafute Kwa Ajili Yako</h2>
+    <p>Tuambie unachotafuta. Mfumo utatumia ombi lako kuandaa utafutaji wa bidhaa au masoko.</p>
+    <form id="search-form">
+      <div class="form-group">
+        <label for="country">Nchi</label>
+        <select id="country" class="form-control" required>
+          <option value="TZ" data-currency="TZS" data-rate="1">Tanzania — TZS</option>
+          <option value="KE" data-currency="KES" data-rate="0.023">Kenya — KES</option>
+          <option value="UG" data-currency="UGX" data-rate="3.70">Uganda — UGX</option>
+          <option value="RW" data-currency="RWF" data-rate="0.80">Rwanda — RWF</option>
+          <option value="BI" data-currency="BIF" data-rate="1.40">Burundi — BIF</option>
+          <option value="ZM" data-currency="ZMW" data-rate="0.020">Zambia — ZMW</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="search-request">Unatafuta nini?</label>
+        <textarea id="search-request" class="form-control" required
+          placeholder="Mfano: Natafuta tani 20 za ufuta, eneo la Songea, bei nzuri na mnunuzi wa jumla..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="phone">Namba yako ya simu</label>
+        <input id="phone" class="form-control" type="tel" placeholder="Mfano: 0712345678" required>
+      </div>
+      <div class="fee-display">
+        <div>Ada ya huduma</div>
+        <strong id="fee-display">TZS 3,000</strong>
+        <div id="fee-note" style="font-size:.82rem;color:#66736b;margin-top:4px">Ada msingi: TZS 3,000</div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%">💳 Endelea Kulipia Huduma</button>
+      <div id="search-status" class="status" role="status"></div>
+    </form>
+  </div>
+</div>
+
+<!-- MALIPO MODAL -->
+<div class="modal" id="malipo-modal" role="dialog" aria-modal="true" aria-labelledby="malipo-title">
+  <div class="modal-card">
+    <button type="button" class="modal-close" onclick="fungaMalipo()" aria-label="Funga">×</button>
+    <h2 id="malipo-title">Malipo ya Huduma</h2>
+    <p>Ada ya msingi ya huduma ya kutafuta ni TZS 3,000. Kwa nchi nyingine mfumo unaweza kuonyesha thamani inayolingana katika currency ya nchi hiyo.</p>
+    <div class="payment-fee">
+      <small>Ada ya msingi</small>
+      <strong>TZS 3,000</strong>
+      <small>Huduma ya kutafuta bidhaa / masoko</small>
+    </div>
+    <div class="payment-methods">
+      <div class="payment-method"><h3>M-Pesa</h3><p class="payment-number">0755 248 789</p><p class="payment-name">Njia Mauzo Afrika</p></div>
+      <div class="payment-method"><h3>Tigo Pesa / Halotel</h3><p class="payment-number">0625 031 460</p><p class="payment-name">Njia Mauzo Afrika</p></div>
+      <div class="payment-method"><h3>Vodacom / WhatsApp</h3><p class="payment-number">0755 248 789</p><p class="payment-name">Tutafute Kwa Huduma Bora</p></div>
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <button type="button" class="btn btn-primary" onclick="fungaMalipo(); funguaMsaada();">💳 Endelea na Huduma</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI PRODUCT FINDER MODAL -->
+<div class="modal" id="ai-bidhaa-modal" role="dialog" aria-modal="true" aria-labelledby="ai-bidhaa-title">
+  <div class="modal-card wide">
+    <button type="button" class="modal-close" onclick="fungaAiBidhaa()" aria-label="Funga">×</button>
+    <div class="expert-header">
+      <div class="expert-icon">⚙️</div>
+      <div class="expert-title">
+        <h2 id="ai-bidhaa-title">AI Product Finder</h2>
+        <div class="expert-sub"><span class="live-dot"></span> Bot inatafuta bidhaa moja kwa moja</div>
+      </div>
+    </div>
+    <p>Bot yetu ya AI inachanganua vyanzo mbalimbali vya masoko na kuleta bidhaa zinazolingana na mahitaji ya wateja wa Afrika Mashariki.</p>
+
+    <div class="ai-toolbar">
+      <input type="text" id="ai-search-input" class="form-control" placeholder="Andika zao au bidhaa (mf. Ufuta, Korosho)...">
+      <button type="button" class="btn btn-dark btn-sm" onclick="tafutaBidhaaAI()">Tafuta</button>
+    </div>
+
+    <div id="ai-products-grid" class="ai-products-grid">
+      <div class="ai-loading">
+        <div class="spinner"></div>
+        Bot inatafuta bidhaa kwa ajili yako...
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOT CHAT MODAL -->
+<div class="modal" id="bot-modal" role="dialog" aria-modal="true" aria-labelledby="bot-title">
+  <div class="modal-card wide">
+    <button type="button" class="modal-close" onclick="fungaBot()" aria-label="Funga">×</button>
+    <div class="expert-header">
+      <div class="expert-icon">🤖</div>
+      <div class="expert-title">
+        <h2 id="bot-title">Msaidizi wa NjiaMauzo</h2>
+        <div class="expert-sub"><span class="live-dot"></span> Mtandaoni · Anajibu 24/7</div>
+      </div>
+    </div>
+
+    <div id="chat-window" class="chat-window"></div>
+
+    <div class="chat-input-row">
+      <input type="text" id="bot-input" class="form-control" placeholder="Andika swali lako..." onkeydown="if(event.key==='Enter'){event.preventDefault();tumaUjumbeBot();}">
+      <button type="button" class="btn btn-primary btn-sm" onclick="tumaUjumbeBot()">Tuma</button>
+    </div>
+    <p class="chat-foot-note">Mazungumzo yako yanaweza kutumwa kwa admin (WhatsApp 0755 248 789) kwa ajili ya ufuatiliaji bora.</p>
+  </div>
+</div>
+
+<footer>
+  <p>
+    <strong>NJIA MAUZO AFRIKA</strong><br>
+    Fikia Masoko · Panua Biashara<br><br>
+    © 2026 Haki zote zimehifadhiwa.
+  </p>
+</footer>
+
+<script>
+"use strict";
+
+const CONFIG = {
+  CREATE_PAYMENT_ENDPOINT: "/api/payment/create",
+  PAYMENT_STATUS_ENDPOINT: "/api/payment/status",
+  ASSISTED_SEARCH_ENDPOINT: "/api/assisted-search",
+  AI_PRODUCTS_ENDPOINT: "/api/ai-products",
+  BOT_CHAT_ENDPOINT: "/api/bot-chat",
+  NOTIFY_ADMIN_ENDPOINT: "/api/notify-admin",
+  ADMIN_WHATSAPP: "255755248789",
+  BASE_FEE_TZS: 3000
+};
+
+function openModalEl(el) { el.classList.add("show"); document.body.classList.add("modal-open"); }
+function closeModalEl(el) { el.classList.remove("show"); document.body.classList.remove("modal-open"); }
+
+const modal = document.getElementById("msaada-modal");
+function funguaMsaada() { openModalEl(modal); setTimeout(() => document.getElementById("search-request").focus(), 100); }
+function fungaMsaada() { closeModalEl(modal); }
+modal.addEventListener("click", (e) => { if (e.target === modal) fungaMsaada(); });
+
+const malipoModal = document.getElementById("malipo-modal");
+function funguaMalipo() { openModalEl(malipoModal); }
+function fungaMalipo() { closeModalEl(malipoModal); }
+malipoModal.addEventListener("click", (e) => { if (e.target === malipoModal) fungaMalipo(); });
+
+const aiModal = document.getElementById("ai-bidhaa-modal");
+const aiGrid = document.getElementById("ai-products-grid");
+let aiLoaded = false;
+
+function funguaAiBidhaa() {
+  openModalEl(aiModal);
+  if (!aiLoaded) { pakiaBidhaaAI(); aiLoaded = true; }
+}
+function fungaAiBidhaa() { closeModalEl(aiModal); }
+aiModal.addEventListener("click", (e) => { if (e.target === aiModal) fungaAiBidhaa(); });
+
+async function pakiaBidhaaAI(query) {
+  aiGrid.innerHTML = `<div class="ai-loading"><div class="spinner"></div>Bot inatafuta bidhaa kwa ajili yako...</div>`;
+  try {
+    const url = query
+      ? `${CONFIG.AI_PRODUCTS_ENDPOINT}?q=${encodeURIComponent(query)}`
+      : CONFIG.AI_PRODUCTS_ENDPOINT;
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("AI products endpoint haipatikani.");
+    const data = await res.json();
+
+    if (!Array.isArray(data) || data.length === 0) {
+      aiGrid.innerHTML = `<div class="ai-empty">Hakuna bidhaa zilizopatikana kwa sasa. Jaribu tena baadaye.</div>`;
+      return;
+    }
+
+    aiGrid.innerHTML = data.map(item => `
+      <div class="ai-product-card">
+        <img src="${item.picha || 'favicon.png'}" alt="${item.jina || 'Bidhaa'}">
+        <div class="ai-product-body">
+          <h4>${item.jina || 'Bidhaa'}</h4>
+          <div class="src">Chanzo: ${item.chanzo || 'Mtandao'}</div>
+          <div class="p">${item.bei || 'Bei: Wasiliana'}</div>
+        </div>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    console.error("AI products error:", err);
+    aiGrid.innerHTML = `<div class="ai-empty">
+      Bot bado haijaunganishwa na backend ya kutafuta bidhaa.<br>
+      Unganisha endpoint <code>${CONFIG.AI_PRODUCTS_ENDPOINT}</code> kwenye app.py.
+    </div>`;
+  }
+}
+
+function tafutaBidhaaAI() {
+  const q = document.getElementById("ai-search-input").value.trim();
+  pakiaBidhaaAI(q);
+}
+
+const botModal = document.getElementById("bot-modal");
+const chatWindow = document.getElementById("chat-window");
+let botChatStarted = false;
+
+function funguaBot() {
+  openModalEl(botModal);
+  if (!botChatStarted) {
+    addChatMsg("bot", "Habari! Mimi ni msaidizi wa NjiaMauzo Afrika, nipo tayari kukusaidia muda wowote. Unahitaji msaada gani leo?");
+    botChatStarted = true;
+  }
+  setTimeout(() => document.getElementById("bot-input").focus(), 100);
+}
+function fungaBot() { closeModalEl(botModal); }
+botModal.addEventListener("click", (e) => { if (e.target === botModal) fungaBot(); });
+
+function addChatMsg(role, text) {
+  const div = document.createElement("div");
+  div.className = `chat-msg ${role}`;
+  div.textContent = text;
+  chatWindow.appendChild(div);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function showTyping() {
+  const div = document.createElement("div");
+  div.className = "chat-typing";
+  div.id = "typing-indicator";
+  div.innerHTML = "<span></span><span></span><span></span>";
+  chatWindow.appendChild(div);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+function hideTyping() {
+  const el = document.getElementById("typing-indicator");
+  if (el) el.remove();
+}
+
+async function tumaUjumbeBot() {
+  const input = document.getElementById("bot-input");
+  const text = input.value.trim();
+  if (!text) return;
+
+  addChatMsg("user", text);
+  input.value = "";
+  showTyping();
+
+  try {
+    const res = await fetch(CONFIG.BOT_CHAT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
+
+    hideTyping();
+
+    if (!res.ok) throw new Error("Bot chat endpoint haipatikani.");
+    const data = await res.json();
+
+    addChatMsg("bot", data.reply || "Samahani, sijaelewa vizuri. Unaweza kueleza zaidi?");
+
+    notifyAdmin(text, data.reply);
+
+  } catch (err) {
+    hideTyping();
+    console.error("Bot chat error:", err);
+    addChatMsg("bot", "Samahani, mfumo wa bot haujaunganishwa bado na backend. Unganisha endpoint " + CONFIG.BOT_CHAT_ENDPOINT + " kwenye app.py.");
+  }
+}
+
+async function notifyAdmin(userMsg, botReply) {
+  try {
+    await fetch(CONFIG.NOTIFY_ADMIN_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_message: userMsg,
+        bot_reply: botReply,
+        admin_whatsapp: CONFIG.ADMIN_WHATSAPP
+      })
+    });
+  } catch (err) {
+    console.warn("Notify admin failed (backend endpoint might be missing):", err);
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { fungaMsaada(); fungaMalipo(); fungaAiBidhaa(); fungaBot(); }
+});
+
+const countrySelect = document.getElementById("country");
+const feeDisplay = document.getElementById("fee-display");
+const feeNote = document.getElementById("fee-note");
+
+function formatMoney(amount, currency) {
+  try {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency", currency: currency,
+      maximumFractionDigits: (currency === "UGX" || currency === "RWF" || currency === "BIF") ? 0 : 2
+    }).format(amount);
+  } catch (error) { return `${currency} ${Math.round(amount)}`; }
+}
+function updateFeeDisplay() {
+  const option = countrySelect.options[countrySelect.selectedIndex];
+  const currency = option.dataset.currency || "TZS";
+  const rate = Number(option.dataset.rate || 1);
+  const converted = CONFIG.BASE_FEE_TZS * rate;
+  if (currency === "TZS") {
+    feeDisplay.textContent = "TZS 3,000";
+    feeNote.textContent = "Ada msingi ya huduma";
+  } else {
+    feeDisplay.textContent = formatMoney(converted, currency);
+    feeNote.textContent = "Sawa na takribani TZS 3,000. Rate ya mwisho ithibitishwe na mfumo wa malipo.";
+  }
+}
+countrySelect.addEventListener("change", updateFeeDisplay);
+updateFeeDisplay();
+
+function showStatus(message, type = "info") {
+  const box = document.getElementById("search-status");
+  box.textContent = message;
+  box.className = `status show ${type}`;
+}
+
+function validTanzaniaPhone(phone) { return /^0[67]\d{8}$/.test(phone.replace(/\s+/g, "")); }
+
+const searchForm = document.getElementById("search-form");
+searchForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  const country = countrySelect.value;
+  const request = document.getElementById("search-request").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+
+  if (request.length < 10) { showStatus("Tafadhali eleza vizuri bidhaa au soko unalotafuta.", "error"); return; }
+  if (!validTanzaniaPhone(phone)) { showStatus("Tafadhali weka namba sahihi ya simu ya Tanzania, mfano 0712345678.", "error"); return; }
+
+  showStatus("Tunaandaa ombi lako la huduma...", "info");
+
+  try {
+    const response = await fetch(CONFIG.CREATE_PAYMENT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ country, request, phone, amount_tzs: CONFIG.BASE_FEE_TZS })
+    });
+    if (!response.ok) throw new Error("Payment endpoint haipatikani.");
+    const data = await response.json();
+    if (!data.payment_id) throw new Error("Payment ID haijarudishwa.");
+
+    localStorage.setItem("njiaMauzoPaymentId", data.payment_id);
+    localStorage.setItem("njiaMauzoRequest", request);
+    showStatus(data.message || "Ombi limepokelewa. Endelea na malipo.", "success");
+
+    if (data.checkout_url) { window.location.href = data.checkout_url; return; }
+    if (data.instructions) showStatus(data.instructions, "info");
+  } catch (error) {
+    console.error("Payment error:", error);
+    showStatus("Mfumo haujaunganishwa na payment gateway bado. Unganisha endpoint ya backend /api/payment/create.", "error");
+  }
+});
+
+async function verifyPayment(paymentId) {
+  if (!paymentId) return;
+  try {
+    const response = await fetch(`${CONFIG.PAYMENT_STATUS_ENDPOINT}/${encodeURIComponent(paymentId)}`);
+    if (!response.ok) return;
+    const data = await response.json();
+    if (data.status === "VERIFIED") { openUserRoom(); return; }
+    if (data.status === "PENDING") showStatus("Malipo bado yanathibitishwa. Tafadhali subiri.", "info");
+  } catch (error) { console.error("Verification error:", error); }
+}
+
+function openUserRoom() {
+  const room = document.getElementById("user-room");
+  const request = localStorage.getItem("njiaMauzoRequest");
+  document.getElementById("room-request").textContent = request || "Ombi lako";
+  room.classList.add("show");
+  room.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+const existingPaymentId = localStorage.getItem("njiaMauzoPaymentId");
+if (existingPaymentId) verifyPayment(existingPaymentId);
+
+let paymentCheckTimer = null;
+function startPaymentChecking(paymentId) {
+  if (!paymentId) return;
+  if (paymentCheckTimer) clearInterval(paymentCheckTimer);
+  paymentCheckTimer = setInterval(async () => {
+    try {
+      const response = await fetch(`${CONFIG.PAYMENT_STATUS_ENDPOINT}/${encodeURIComponent(paymentId)}`);
+      if (!response.ok) return;
+      const data = await response.json();
+      if (data.status === "VERIFIED") { clearInterval(paymentCheckTimer); openUserRoom(); }
+    } catch (error) { console.error(error); }
+  }, 5000);
+}
+if (existingPaymentId) startPaymentChecking(existingPaymentId);
+
+document.addEventListener("visibilitychange", function () {
+  if (!document.hidden && existingPaymentId) verifyPayment(existingPaymentId);
+});
+</script>
+
+</body>
+</html>
