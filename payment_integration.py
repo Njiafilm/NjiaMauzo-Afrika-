@@ -10,8 +10,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 
 
-BASE_FEE_TZS = Decimal("1000.00")
-
+BASE_FEE_TZS = Decimal("3000.00")
 
 @dataclass
 class PaymentResult:
@@ -22,7 +21,7 @@ class PaymentResult:
 
 
 def foreign_display_amount(rate_from_tzs: Decimal) -> Decimal:
-    """Convert the canonical TZS 1,000 service fee for display only."""
+    """Convert the canonical TZS 3,000 service fee for display only."""
     return (BASE_FEE_TZS * rate_from_tzs).quantize(Decimal("0.01"))
 
 
