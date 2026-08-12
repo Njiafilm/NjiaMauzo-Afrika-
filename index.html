@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NjiaMauzo Afrika - Tafuta bidhaa, mazao, bei na huduma Afrika.">
+    <meta name="theme-color" content="#0b6b3a">
+    <title>NjiaMauzo Afrika</title>
+    <link rel="icon" href="/static/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            background: #f0f5f2;
+            color: #1a2e24;
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #064d28, #0b8a4b);
+            color: white;
+            padding: 14px 18px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,.18);
+        }
+        .nav {
+            max-width: 1150px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .brand {
+            font-size: 19px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .brand img {
+            width: 42px; height: 42px;
+            border-radius: 11px;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,.25);
+        }
+        .brand small {
+            display: block;
+            font-size: 11px;
+            opacity: .8;
+            font-weight: 400;
+            margin-top: 1px;
+        }
+        .nav-buttons { display: flex; gap: 7px; flex-wrap: wrap; }
+        .nav button {
+            border: 0;
+            background: rgba(255,255,255,.14);
+            color: white;
+            padding: 9px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background .2s;
+        }
+        .nav button:hover { background: rgba(255,255,255,.25); }
+
+        main { max-width: 1150px; margin: auto; padding: 20px 16px; }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(145deg, #073d22 0%, #0b7d45 55%, #0d9a55 100%);
+            color: white;
+            padding: 36px 24px;
+            border-radius: 22px;
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            right: -40px; top: -40px;
+            width: 180px; height: 180px;
+            background: rgba(255,255,255,.06);
+            border-radius: 50%;
+        }
+        .hero h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .hero p {
+            line-height: 1.7;
+            max-width: 640px;
+            opacity: .92;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        .search {
+            display: flex;
+            gap: 8px;
+            max-width: 720px;
+            flex-wrap: wrap;
+        }
+        .search input {
+            flex: 1;
+            min-width: 200px;
+            padding: 13px 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            background: white;
+            color: #1a2e24;
+            box-shadow: 0 2px 10px rgba(0,0,0,.1);
+        }
+
+        /* FORMS */
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #d0ddd5;
+            border-radius: 11px;
+            font-size: 15px;
+            outline: none;
+            font-family: inherit;
+            transition: border-color .2s, box-shadow .2s;
+            background: #fff;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #0b7d45;
+            box-shadow: 0 0 0 3.5px rgba(11,125,69,.13);
+        }
+        button { cursor: pointer; font-family: inherit; }
+
+        /* BUTTONS */
+        .primary {
+            background: linear-gradient(135deg, #0b7d45, #0a9a52);
+            color: white;
+            border: 0;
+            border-radius: 12px;
+            padding: 12px 18px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: transform .15s, box-shadow .15s;
+            box-shadow: 0 3px 12px rgba(11,125,69,.25);
+        }
+        .primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 18px rgba(11,125,69,.35);
+        }
+        .secondary {
+            background: #e6f4ec;
+            color: #075d31;
+            border: 0;
+            border-radius: 11px;
+            padding: 10px 15px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .secondary:hover { background: #d4eddd; }
+        .link-btn {
+            background: none;
+            border: 0;
+            color: #0b7d45;
+            font-weight: 700;
+            text-decoration: underline;
+            padding: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* SECTIONS */
+        .section {
+            background: white;
+            padding: 22px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 16px rgba(0,0,0,.05);
+        }
+        .section h2 {
+            margin: 0 0 16px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #0d3d24;
+        }
+
+        /* PRODUCT CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 3px 16px rgba(0,0,0,.07);
+            border: 1px solid #e8f0eb;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(0,0,0,.11);
+        }
+        .card img {
+            width: 100%;
+            height: 175px;
+            object-fit: cover;
+            background: #e8f0eb;
+        }
+        .card-body { padding: 15px; }
+        .card h3 {
+            margin: 0 0 6px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #0d3d24;
+        }
+        .available {
+            display: inline-block;
+            background: #e4f7eb;
+            color: #087a3a;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+        .muted { color: #6b7c72; font-size: 13px; }
+        .distance { color: #0b7d45; font-weight: 700; font-size: 13px; margin-top: 4px; }
+        .actions {
+            display: flex;
+            gap: 7px;
+            margin-top: 13px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .pay-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #0b7d45, #0a9a52);
+            color: white;
+            border: 0;
+            border-radius: 12px;
+            padding: 13px 16px;
+            font-weight: 800;
+            font-size: 14px;
+            box-shadow: 0 3px 12px rgba(11,125,69,.28);
+            transition: transform .15s, box-shadow .15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+        .pay-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 18px rgba(11,125,69,.38);
+        }
+        .like-btn {
+            background: #fdecec;
+            color: #b42318;
+            border: 0;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .like-btn.liked { background: #b42318; color: white; }
+        .follow-btn {
+            background: #eaf1ff;
+            color: #1849b4;
+            border: 0;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .follow-btn.following { background: #1849b4; color: white; }
+
+        /* BANNER */
+        .banner {
+            background: linear-gradient(135deg, #fff8e1, #fff3c4);
+            border-left: 5px solid #e4a400;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        /* ADVISORY */
+        .advisory {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+        .advisory img {
+            width: 100%;
+            border-radius: 16px;
+            display: block;
+            box-shadow: 0 4px 18px rgba(0,0,0,.08);
+        }
+        .advisory-list { display: flex; flex-direction: column; gap: 12px; }
+        .advisory-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: #f0f8f3;
+            padding: 13px 14px;
+            border-radius: 13px;
+            border: 1px solid #e0eee5;
+        }
+        .advisory-item .n {
+            background: linear-gradient(135deg, #0b7d45, #0a9a52);
+            color: white;
+            min-width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366, #1ebe57);
+            color: white;
+            border: 0;
+            border-radius: 13px;
+            padding: 14px 18px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            text-decoration: none;
+            width: 100%;
+            text-align: center;
+            font-size: 15px;
+            box-shadow: 0 4px 16px rgba(37,211,102,.3);
+            transition: transform .15s, box-shadow .15s;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+        .whatsapp-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 22px rgba(37,211,102,.4);
+        }
+        @media (max-width: 750px) {
+            .advisory { grid-template-columns: 1fr; }
+        }
+
+        /* MODALS */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.6);
+            z-index: 3000;
+            padding: 20px;
+            overflow-y: auto;
+            backdrop-filter: blur(3px);
+        }
+        .modal-box {
+            background: white;
+            max-width: 480px;
+            margin: 40px auto;
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
+            animation: modalIn .25s ease;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(20px) scale(.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-box h2 {
+            margin: 0 0 16px;
+            font-size: 19px;
+            font-weight: 800;
+            color: #0d3d24;
+            line-height: 1.35;
+        }
+        .close {
+            float: right;
+            border: 0;
+            background: #f0f0f0;
+            border-radius: 50%;
+            width: 34px; height: 34px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .close:hover { background: #e0e0e0; }
+
+        .captcha-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f0f8f3;
+            padding: 11px;
+            border-radius: 11px;
+            margin: 12px 0;
+        }
+        .captcha-row strong { white-space: nowrap; }
+
+        /* FEED */
+        .feed-item {
+            padding: 12px 14px;
+            border-bottom: 1px solid #eef2ef;
+            font-size: 14px;
+            animation: fadeSlideIn .4s ease;
+        }
+        .feed-item:last-child { border-bottom: 0; }
+        .feed-item:hover { background: #f5faf7; }
+        .feed-time { color: #8a978f; font-size: 11px; margin-top: 4px; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .45; transform: scale(.85); }
+        }
+
+        /* CHAT */
+        .chat {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 2000;
+        }
+        .chat-button {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            border: 0;
+            background: linear-gradient(135deg, #0b7d45, #0a9a52);
+            color: white;
+            font-size: 26px;
+            box-shadow: 0 6px 22px rgba(11,125,69,.4);
+            transition: transform .2s;
+        }
+        .chat-button:hover { transform: scale(1.06); }
+        .chat-box {
+            display: none;
+            width: 340px;
+            max-width: calc(100vw - 30px);
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 12px 48px rgba(0,0,0,.22);
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .chat-head {
+            background: linear-gradient(135deg, #0b7d45, #0a9a52);
+            color: white;
+            padding: 15px 16px;
+            font-weight: 800;
+            font-size: 14px;
+        }
+        .chat-messages { height: 300px; overflow-y: auto; padding: 14px; }
+        .msg {
+            padding: 10px 13px;
+            border-radius: 12px;
+            margin-bottom: 9px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        .bot { background: #edf5ef; }
+        .user { background: #d4f0df; text-align: right; }
+        .chat-input {
+            display: flex;
+            gap: 7px;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+        .chat-input input { min-width: 0; }
+
+        /* PAYMENT */
+        .payment-number {
+            background: #f0f8f3;
+            border: 1.5px solid #c5e4d0;
+            padding: 13px 14px;
+            margin: 8px 0;
+            border-radius: 11px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0c1f16;
+            color: white;
+            padding: 32px 18px;
+            margin-top: 36px;
+            text-align: center;
+        }
+        footer img {
+            width: 50px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 2px solid rgba(255,255,255,.15);
+        }
+        footer strong { font-size: 16px; letter-spacing: .5px; }
+        footer p { opacity: .8; margin: 8px 0; font-size: 14px; }
+        footer small { opacity: .55; font-size: 12px; }
+
+        .hidden { display: none !important; }
+        .status {
+            padding: 11px 13px;
+            border-radius: 10px;
+            margin: 9px 0;
+            font-size: 14px;
+        }
+        .success { background: #e4f7eb; color: #087a3a; }
+        .error { background: #fdecec; color: #a11a1a; }
+
+        .comment-list { margin-top: 10px; max-height: 220px; overflow-y: auto; }
+        .comment-item {
+            background: #f4f9f6;
+            padding: 9px 12px;
+            border-radius: 10px;
+            margin-bottom: 7px;
+            font-size: 13px;
+        }
+        .comment-item b { color: #0b7d45; }
+
+        /* MARKET STATS */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 11px;
+            margin-bottom: 20px;
+        }
+        .summary-card {
+            background: linear-gradient(145deg, #0b7d45, #0a5f36);
+            color: white;
+            border-radius: 15px;
+            padding: 16px 12px;
+            text-align: center;
+            box-shadow: 0 3px 14px rgba(11,125,69,.2);
+        }
+        .summary-card .num {
+            font-size: 26px;
+            font-weight: 800;
+            display: block;
+        }
+        .summary-card .lbl {
+            font-size: 12px;
+            opacity: .88;
+            margin-top: 2px;
+        }
+        .cat-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 13px;
+            margin-bottom: 22px;
+        }
+        .cat-card {
+            background: #f5faf7;
+            border: 1px solid #e1ede4;
+            border-radius: 14px;
+            padding: 15px;
+        }
+        .cat-card .cat-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 9px;
+        }
+        .cat-card .cat-name { font-weight: 800; font-size: 14px; }
+        .cat-card .cat-count {
+            background: #0b7d45;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 20px;
+            padding: 3px 10px;
+        }
+        .bar-track {
+            background: #e1ede4;
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+        .bar-fill {
+            background: linear-gradient(90deg, #0b7d45, #24b46a);
+            height: 100%;
+            border-radius: 10px;
+        }
+        .cat-card .cat-detail {
+            font-size: 12px;
+            color: #4d5c53;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 7px;
+        }
+        .cat-card .cat-detail span {
+            background: white;
+            border: 1px solid #e1ede4;
+            border-radius: 8px;
+            padding: 3px 8px;
+        }
+        .market-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+        @media (max-width: 700px) {
+            .market-columns { grid-template-columns: 1fr; }
+        }
+        .location-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 9px;
+            font-size: 13px;
+        }
+        .location-row .name { min-width: 110px; font-weight: 600; }
+        .location-row .track {
+            flex: 1;
+            background: #eef4f0;
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+        }
+        .location-row .fill {
+            background: linear-gradient(90deg, #0b7d45, #1aa85a);
+            height: 100%;
+            border-radius: 8px;
+        }
+        .location-row .count {
+            font-weight: 700;
+            min-width: 22px;
+            text-align: right;
+            color: #0b7d45;
+        }
+        .recent-item {
+            background: #f5faf7;
+            border-radius: 11px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            border: 1px solid #e8f0eb;
+        }
+        .recent-item .rt { font-weight: 700; }
+
+        @media (max-width: 650px) {
+            .hero h1 { font-size: 24px; }
+            .hero { padding: 26px 18px; }
+            .search { flex-direction: column; }
+            .nav { align-items: flex-start; flex-direction: column; gap: 10px; }
+            .brand { font-size: 16px; }
+            .section { padding: 16px; }
+            .modal-box { margin: 20px auto; padding: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="nav">
+        <div class="brand">
+            <img src="/static/logo.png" alt="NjiaMauzo Afrika Logo">
+            <div>
+                NjiaMauzo Afrika
+                <small>Fikia Masoko, Panua Biashara</small>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button onclick="openModal('loginModal')" id="loginBtn">Ingia</button>
+            <button onclick="openModal('registerModal')" id="registerBtn">Jisajili</button>
+            <button onclick="openModal('changePasswordModal')" id="changePwBtn" class="hidden">Badilisha Nywila</button>
+            <button onclick="logout()" id="logoutBtn" class="hidden">Toka</button>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Tafuta bidhaa kwa urahisi Afrika 🌍</h1>
+        <p>
+            NjiaMauzo Afrika inakusaidia kupata mazao, bidhaa, wataalamu,
+            vifaa na huduma kutoka maeneo mbalimbali.
+        </p>
+        <div class="search">
+            <input id="searchInput" placeholder="Mfano: ufuta Ruvuma, mahindi Mbeya...">
+            <button class="primary" onclick="searchProducts()">🔎 Tafuta</button>
+            <button class="secondary" onclick="useMyLocation()" id="locBtn">📍 Tumia Eneo Langu</button>
+        </div>
+        <div id="locStatus" class="muted" style="margin-top:10px;color:#d4f0df;"></div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="section">
+        <div class="banner">
+            <strong>🤖 PRODUCT FINDER + AI SEARCHER</strong><br>
+            Angalia bidhaa zinazopatikana. <strong>Bei, eneo na muuzaji</strong> utapata baada ya kulipa ada <strong>TZS 3,000</strong> — AI itatafuta na kukutumia taarifa.
+        </div>
+        <h2>Bidhaa na Huduma</h2>
+        <div id="products" class="cards"></div>
+    </section>
+
+    <!-- USHAURI -->
+    <section class="section">
+        <h2>🌱 Ushauri wa Kitaalamu wa Kilimo</h2>
+        <div class="advisory">
+            <img src="/static/ushauri.jpg" alt="Ushauri wa Kitaalamu wa Kilimo">
+            <div class="advisory-list">
+                <div class="advisory-item">
+                    <div class="n">1</div>
+                    <div>
+                        <strong>Wataalamu wa kilimo cha mbegu</strong><br>
+                        <span class="muted">Mbegu bora kwa mavuno bora.</span>
+                    </div>
+                </div>
+                <div class="advisory-item">
+                    <div class="n">2</div>
+                    <div>
+                        <strong>Usimamizi katika maswala ya kilimo</strong><br>
+                        <span class="muted">Usimamizi bora huleta matokeo bora.</span>
+                    </div>
+                </div>
+                <div class="advisory-item">
+                    <div class="n">3</div>
+                    <div>
+                        <strong>Ushauri wa namna bora ya kilimo</strong><br>
+                        <span class="muted">Solutions za kilimo kwa maendeleo yako.</span>
+                    </div>
+                </div>
+                <!-- Inafungua Payment Modal kwanza -->
+                <button class="whatsapp-btn" onclick="openModal('paymentModal'); loadPaymentNumbers();">
+                    💬 Omba Ushauri wa Kitaalamu
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARKET STATS -->
+    <section class="section">
+        <h2>📊 Takwimu za Soko — Afrika Mashariki</h2>
+        <p class="muted" style="margin-bottom:16px;">Takwimu zinazoonyesha aina za mazao, bidhaa na huduma zilizopo sokoni sasa hivi.</p>
+        <div id="marketSummary" class="summary-grid"></div>
+        <div id="marketCategories" class="cat-stats"></div>
+        <div class="market-columns">
+            <div>
+                <h3 style="margin-bottom:12px;font-size:16px;">📍 Maeneo Yanayoongoza</h3>
+                <div id="topLocations"></div>
+            </div>
+            <div>
+                <h3 style="margin-bottom:12px;font-size:16px;">🆕 Bidhaa Mpya Zilizoongezwa</h3>
+                <div id="recentProducts"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE FEED -->
+    <section class="section">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+            <h2 style="margin:0;">📡 Live Activity Feed</h2>
+            <span style="background:#e4f7eb;color:#087a3a;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;display:flex;align-items:center;gap:6px;">
+                <span style="width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse 1.4s infinite;"></span>
+                LIVE — AI Searcher
+            </span>
+        </div>
+        <p class="muted" style="margin-bottom:12px;font-size:13px;">
+            AI Searcher inatafuta bidhaa kiotomatiki katika mikoa yote ya <strong>Tanzania</strong> na <strong>Afrika Mashariki</strong>.
+        </p>
+        <div id="activityFeed" style="max-height:380px;overflow-y:auto;">
+            <p class="muted">Inapakia matukio...</p>
+        </div>
+    </section>
+
+    <!-- KUTAFUTIWA BIDHAA -->
+    <section class="section">
+        <h2>🔎 Kutafutiwa Bidhaa</h2>
+        <p style="margin-bottom:14px;">
+            Andika unachotafuta, kwa mfano:
+            <b>Natafuta tani 20 za ufuta Ruvuma</b>
+        </p>
+        <button class="primary" onclick="openModal('paymentModal'); loadPaymentNumbers();" style="font-size:15px;padding:14px 22px;">
+            KARIBU GUSA HAPA TUKUHUDUMIE
+        </button>
+    </section>
+
+    <!-- ACCOUNT -->
+    <section class="section">
+        <h2>👤 Akaunti</h2>
+        <div id="account">Hujawa umeingia.</div>
+        <button class="link-btn" onclick="openModal('forgotModal')" style="margin-top:8px;">Umesahau nywila?</button>
+    </section>
+
+</main>
+
+<!-- ==================== MODALS ==================== -->
+
+<!-- LOGIN -->
+<div class="modal" id="loginModal">
+    <div class="modal-box">
+        <button class="close" onclick="closeModal('loginModal')">×</button>
+        <h2>Ingia</h2>
+        <div id="loginStatus"></div>
+        <input id="loginEmail" type="email" placeholder="Barua pepe" style="margin-bottom:12px;">
+        <input id="loginPassword" type="password" placeholder="Nywila" style="margin-bottom:16px;">
+        <button class="primary" onclick="login()" style="width:100%;">Ingia</button>
+        <br><br>
+        <button class="link-btn" onclick="closeModal('loginModal');openModal('forgotModal')">Umesahau nywila?</button>
+    </div>
+</div>
+
+<!-- REGISTER -->
+<div class="modal" id="registerModal">
+    <div class="modal-box">
+        <button class="close" onclick="closeModal('registerModal')">×</button>
+        <h2>Jisajili</h2>
+        <div id="registerStatus"></div>
+        <input id="registerName" placeholder="Jina kamili" style="margin-bottom:12px;">
+        <input id="registerEmail" type="email" placeholder="Barua pepe" style="margin-bottom:12px;">
+        <input id="registerPhone" placeholder="Namba ya simu" style="margin-bottom:12px;">
+        <input id="registerPassword" type="password" placeholder="Nywila" style="margin-bottom:12px;">
+        <div class="captcha-row">
+            <strong id="registerCaptchaQuestion">...</strong>
+            <input id="registerCaptchaAnswer" placeholder="Jibu" style="max-width:100px;">
+            <button type="button" class="link-btn" onclick="loadRegisterCaptcha()">🔄</button>
+        </div>
+        <button class="primary" onclick="register()" style="width:100%;margin-top:8px;">Jisajili</button>
+    </div>
+</div>
+
+<!-- FORGOT -->
+<div class="modal" id="forgotModal">
+    <div class="modal-box">
+        <button class="close" onclick="closeModal('forgotModal')">×</button>
+        <h2>Umesahau Nywila</h2>
+        <div id="forgotStatus"></div>
+        <div id="forgotStep1">
+            <input id="forgotEmail" type="email" placeholder="Barua pepe yako" style="margin-bottom:12px;">
+            <select id="forgotChannel" style="margin-bottom:16px;">
+                <option value="email">Tuma OTP kwa Email</option>
+                <option value="sms">Tuma OTP kwa SMS</option>
+                <option value="whatsapp">Tuma OTP kwa WhatsApp</option>
+            </select>
+            <button class="primary" onclick="requestOtp()" style="width:100%;">Tuma OTP</button>
+        </div>
+        <div id="forgotStep2" class="hidden">
+            <input id="otpCode" placeholder="Weka OTP" style="margin-bottom:12px;">
+            <input id="newPasswordOtp" type="password" placeholder="Nywila mpya" style="margin-bottom:16px;">
+            <button class="primary" onclick="submitOtpReset()" style="width:100%;">Badilisha Nywila</button>
+        </div>
+    </div>
+</div>
+
+<!-- CHANGE PASSWORD -->
+<div class="modal" id="changePasswordModal">
+    <div class="modal-box">
+        <button class="close" onclick="closeModal('changePasswordModal')">×</button>
+        <h2>Badilisha Nywila</h2>
+        <div id="changePwStatus"></div>
+        <input id="currentPassword" type="password" placeholder="Nywila ya sasa" style="margin-bottom:12px;">
+        <input id="newPassword" type="password" placeholder="Nywila mpya" style="margin-bottom:16px;">
+        <button class="primary" onclick="submitChangePassword()" style="width:100%;">Badilisha</button>
+    </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal" id="paymentModal">
+    <div class="modal-box">
+        <button class="close" onclick="closeModal('paymentModal')">×</button>
+        <h2>💰 LIPA ADA KUWASILIANA NA WASHAURI/WATAALAMU</h2>
+        <div class="banner">Ada ya huduma: <strong>TZS 3,000</strong></div>
+        <p style="margin-bottom:12px;font-size:14px;color:#4d5c53;">Chagua njia ya malipo.</p>
+        <select id="paymentMethod" style="margin-bottom:12px;">
+            <option value="">Chagua njia</option>
+            <option value="M-Pesa">M-Pesa</option>
+            <option value="Halotel">Halotel</option>
+            <option value="Airtel Money">Airtel Money</option>
+        </select>
+        <input id="paymentPhone" placeholder="Namba yako ya simu" style="margin-bottom:14px;">
+        <div id="paymentNumbers">Inapakia namba za malipo...</div>
+        <button class="primary" onclick="requestPayment()" style="width:100%;margin-top:12px;padding:14px;">
+            Endelea na Malipo
+        </button>
+        <div id="paymentStatus"></div>
+    </div>
+</div>
+
+<!-- COMMENTS -->
+<div class="modal" id="commentsModal">
+    <div class="modal-box">
+        <button class="close" onclick="closeModal('commentsModal')">×</button>
+        <h2>💬 Maoni</h2>
+        <div id="commentList" class="comment-list"></div>
+        <textarea id="newCommentText" placeholder="Andika maoni yako..." rows="3" style="margin-top:12px;"></textarea>
+        <button class="primary" onclick="submitComment()" style="width:100%;margin-top:12px;">Tuma Maoni</button>
+    </div>
+</div>
+
+<!-- CHATBOT -->
+<div class="chat">
+    <div class="chat-box" id="chatBox">
+        <div class="chat-head">HUDUMA YA MAWASILIANO — 24/7</div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="msg bot">Karibu NjiaMauzo Afrika! 👋 Unatafuta bidhaa gani?</div>
+        </div>
+        <div class="chat-input">
+            <input id="chatInput" placeholder="Andika ujumbe..." onkeydown="if(event.key==='Enter') sendChat()">
+            <button class="primary" onclick="sendChat()">➤</button>
+        </div>
+    </div>
+    <button class="chat-button" onclick="toggleChat()">💬</button>
+</div>
+
+<footer>
+    <img src="/static/logo.png" alt="NjiaMauzo Afrika Logo">
+    <div><strong>NJIA MAUZO AFRIKA</strong></div>
+    <p>Tafuta. Linganisha. Nunua. Unganisha Afrika.</p>
+    <small>© 2026 NjiaMauzo Afrika</small>
+</footer>
+
+<script>
+let csrfToken = "";
+let currentProductId = null;
+let lastActivityId = 0;
+let userLat = null;
+let userLon = null;
+
+async function api(url, options = {}) {
+    options.credentials = "include";
+    options.headers = { ...(options.headers || {}), "Content-Type": "application/json" };
+    if (options.method && options.method !== "GET" && csrfToken) {
+        options.headers["X-CSRF-Token"] = csrfToken;
+    }
+    const response = await fetch(url, options);
+    let data = {};
+    try { data = await response.json(); } catch (_) {}
+    return { response, data };
+}
+
+async function loadCSRF() {
+    try {
+        const result = await api("/api/csrf-token");
+        csrfToken = result.data.csrf_token || "";
+    } catch (e) { console.error(e); }
+}
+
+function openModal(id) { document.getElementById(id).style.display = "block"; }
+function closeModal(id) { document.getElementById(id).style.display = "none"; }
+
+/* PRODUCTS */
+async function loadProducts() {
+    const box = document.getElementById("products");
+    box.innerHTML = "<p class='muted'>Inapakia bidhaa...</p>";
+    try {
+        let url = "/api/products";
+        if (userLat && userLon) url += `?lat=${userLat}&lon=${userLon}`;
+        const result = await api(url);
+        const products = result.data.products || [];
+        if (!products.length) {
+            box.innerHTML = "<p class='muted'>Hakuna bidhaa kwa sasa.</p>";
+            return;
+        }
+        box.innerHTML = products.map(productCard).join("");
+    } catch (e) {
+        box.innerHTML = "<p class='muted'>Imeshindikana kupata bidhaa.</p>";
+    }
+}
+
+function productCard(product) {
+    const image = product.image || "/static/logo.png";
+    const title = escapeHTML(product.title || "Bidhaa");
+    const description = escapeHTML(product.description || "Lipa ada ili kupata bei, eneo na mawasiliano.");
+
+    return `
+        <article class="card">
+            <img src="${escapeAttr(image)}" alt="${escapeAttr(title)}" loading="lazy">
+            <div class="card-body">
+                <h3>${title}</h3>
+                <span class="available">✅ Kipo</span>
+                <p style="font-size:13.5px;margin:6px 0 8px;color:#4a5c52;">${description}</p>
+                <div class="muted" style="font-size:12px;margin-top:4px;">🔒 Bei, eneo na muuzaji — baada ya kulipa ada</div>
+                <div class="actions">
+                    <button class="pay-btn" onclick="openPaymentForProduct(${product.id})">
+                        💳 PATA MSAADA HAPA
+                    </button>
+                    <button class="like-btn" id="like-${product.id}" onclick="toggleLike(${product.id})">
+                        ❤️ ${product.likes || 0}
+                    </button>
+                    <button class="secondary" onclick="loadComments(${product.id})">Maoni</button>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+function useMyLocation() {
+    const status = document.getElementById("locStatus");
+    if (!navigator.geolocation) {
+        status.textContent = "Kifaa chako hakiwezi kutambua eneo.";
+        return;
+    }
+    status.textContent = "Inatambua eneo lako...";
+    navigator.geolocation.getCurrentPosition(
+        (pos) => {
+            userLat = pos.coords.latitude;
+            userLon = pos.coords.longitude;
+            status.textContent = "Eneo limepatikana ✅ — bidhaa zimepangwa kwa umbali.";
+            loadProducts();
+        },
+        () => { status.textContent = "Imeshindikana kupata eneo. Ruhusu location."; }
+    );
+}
+
+async function searchProducts() {
+    const q = document.getElementById("searchInput").value.trim();
+    const box = document.getElementById("products");
+    if (!q) { loadProducts(); return; }
+    box.innerHTML = "<p class='muted'>AI inatafuta...</p>";
+    try {
+        const result = await api("/api/ai-products?q=" + encodeURIComponent(q));
+        const products = result.data.products || [];
+        if (!products.length) {
+            box.innerHTML = `<div class="banner">Hakuna bidhaa zilizopatikana.</div>`;
+            return;
+        }
+        box.innerHTML = products.map(p => productCard({
+            id: p.id,
+            title: p.title || p.jina,
+            image: p.image || p.picha,
+            description: p.description || "",
+            location: p.location || p.chanzo,
+            seller_name: p.seller_name || "",
+            seller_id: p.seller_id || "",
+            likes: p.likes || 0
+        })).join("");
+    } catch (e) {
+        box.innerHTML = "<p class='muted'>Hitilafu ya utafutaji.</p>";
+    }
+}
+
+/* CAPTCHA / AUTH */
+async function loadRegisterCaptcha() {
+    const result = await api("/api/captcha");
+    window.registerCaptchaId = result.data.captcha_id || "";
+    document.getElementById("registerCaptchaQuestion").textContent = result.data.question || "?";
+    document.getElementById("registerCaptchaAnswer").value = "";
+}
+
+async function register() {
+    const status = document.getElementById("registerStatus");
+    const data = {
+        name: document.getElementById("registerName").value,
+        email: document.getElementById("registerEmail").value,
+        phone: document.getElementById("registerPhone").value,
+        password: document.getElementById("registerPassword").value,
+        captcha_id: window.registerCaptchaId,
+        captcha_answer: document.getElementById("registerCaptchaAnswer").value
+    };
+    const result = await api("/api/register", { method: "POST", body: JSON.stringify(data) });
+    if (result.data.success) {
+        csrfToken = result.data.csrf_token || csrfToken;
+        status.innerHTML = `<div class="status success">Umesajiliwa kikamilifu.</div>`;
+        updateAccount();
+        setTimeout(() => closeModal("registerModal"), 700);
+    } else {
+        status.innerHTML = `<div class="status error">${escapeHTML(result.data.message || "Usajili umeshindikana.")}</div>`;
+        if (result.data.captcha_id) {
+            window.registerCaptchaId = result.data.captcha_id;
+            document.getElementById("registerCaptchaQuestion").textContent = result.data.question || "?";
+        }
+    }
+}
+
+async function login() {
+    const status = document.getElementById("loginStatus");
+    const data = {
+        email: document.getElementById("loginEmail").value,
+        password: document.getElementById("loginPassword").value
+    };
+    const result = await api("/api/login", { method: "POST", body: JSON.stringify(data) });
+    if (result.data.success) {
+        csrfToken = result.data.csrf_token || csrfToken;
+        status.innerHTML = `<div class="status success">Umeingia kikamilifu.</div>`;
+        updateAccount();
+        setTimeout(() => {
+            closeModal("loginModal");
+            if (result.data.must_change_password) openModal("changePasswordModal");
+        }, 500);
+    } else {
+        status.innerHTML = `<div class="status error">${escapeHTML(result.data.message || "Login imeshindikana.")}</div>`;
+    }
+}
+
+async function updateAccount() {
+    const result = await api("/api/me");
+    const account = document.getElementById("account");
+    const loginBtn = document.getElementById("loginBtn");
+    const registerBtn = document.getElementById("registerBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const changePwBtn = document.getElementById("changePwBtn");
+
+    if (result.data.success) {
+        const user = result.data.user;
+        account.innerHTML = `
+            <div class="status success">
+                Umeingia kama <strong>${escapeHTML(user.name)}</strong><br>
+                ${escapeHTML(user.email)}<br>
+                ${escapeHTML(user.phone)}
+                ${user.role === 'admin' ? '<br><b>👑 Admin</b>' : ''}
+            </div>`;
+        loginBtn.classList.add("hidden");
+        registerBtn.classList.add("hidden");
+        logoutBtn.classList.remove("hidden");
+        changePwBtn.classList.remove("hidden");
+        if (user.must_change_password) openModal("changePasswordModal");
+    } else {
+        account.innerHTML = "Hujawa umeingia.";
+        loginBtn.classList.remove("hidden");
+        registerBtn.classList.remove("hidden");
+        logoutBtn.classList.add("hidden");
+        changePwBtn.classList.add("hidden");
+    }
+}
+
+async function logout() {
+    await api("/api/logout", { method: "POST", body: "{}" });
+    await loadCSRF();
+    updateAccount();
+}
+
+async function submitChangePassword() {
+    const status = document.getElementById("changePwStatus");
+    const data = {
+        current_password: document.getElementById("currentPassword").value,
+        new_password: document.getElementById("newPassword").value
+    };
+    const result = await api("/api/password/change", { method: "POST", body: JSON.stringify(data) });
+    if (result.data.success) {
+        status.innerHTML = `<div class="status success">Nywila imebadilishwa.</div>`;
+        setTimeout(() => closeModal("changePasswordModal"), 800);
+    } else {
+        status.innerHTML = `<div class="status error">${escapeHTML(result.data.message || "Imeshindikana.")}</div>`;
+    }
+}
+
+let currentResetId = null;
+
+async function requestOtp() {
+    const status = document.getElementById("forgotStatus");
+    const data = {
+        email: document.getElementById("forgotEmail").value,
+        channel: document.getElementById("forgotChannel").value
+    };
+    const result = await api("/api/password/forgot", { method: "POST", body: JSON.stringify(data) });
+    if (result.data.success) {
+        currentResetId = result.data.reset_id || null;
+        status.innerHTML = `<div class="status success">${escapeHTML(result.data.message)}</div>`;
+        document.getElementById("forgotStep1").classList.add("hidden");
+        document.getElementById("forgotStep2").classList.remove("hidden");
+    } else {
+        status.innerHTML = `<div class="status error">${escapeHTML(result.data.message || "Imeshindikana.")}</div>`;
+    }
+}
+
+async function submitOtpReset() {
+    const status = document.getElementById("forgotStatus");
+    const data = {
+        reset_id: currentResetId,
+        otp: document.getElementById("otpCode").value,
+        new_password: document.getElementById("newPasswordOtp").value
+    };
+    const result = await api("/api/password/reset", { method: "POST", body: JSON.stringify(data) });
+    if (result.data.success) {
+        status.innerHTML = `<div class="status success">${escapeHTML(result.data.message)}</div>`;
+        setTimeout(() => {
+            closeModal("forgotModal");
+            document.getElementById("forgotStep1").classList.remove("hidden");
+            document.getElementById("forgotStep2").classList.add("hidden");
+            openModal("loginModal");
+        }, 1000);
+    } else {
+        status.innerHTML = `<div class="status error">${escapeHTML(result.data.message || "OTP si sahihi.")}</div>`;
+    }
+}
+
+/* PAYMENT */
+async function loadPaymentNumbers() {
+    const box = document.getElementById("paymentNumbers");
+    try {
+        const result = await api("/api/service/payment-number");
+        const n = result.data.numbers || {};
+        box.innerHTML = `
+            <div class="payment-number">📱 M-Pesa: ${escapeHTML(n.mpesa || "")}</div>
+            <div class="payment-number">📱 Halotel: ${escapeHTML(n.halotel || "")}</div>
+            <div class="payment-number">📱 Airtel Money: ${escapeHTML(n.airtel || "")}</div>
+        `;
+    } catch (e) {
+        box.innerHTML = "<p class='muted'>Imeshindikana kupata namba.</p>";
+    }
+}
+
+function openPaymentForProduct(productId) {
+    window.selectedProductId = productId;
+    openModal("paymentModal");
+    loadPaymentNumbers();
+}
+
+async function requestPayment() {
+    const method = document.getElementById("paymentMethod").value;
+    const phone = document.getElementById("paymentPhone").value.trim();
+    const status = document.getElementById("paymentStatus");
+
+    if (!method || !phone) {
+        status.innerHTML = `<div class="status error">Jaza njia na namba ya simu.</div>`;
+        return;
+    }
+
+    const result = await api("/api/payment/request", {
+        method: "POST",
+        body: JSON.stringify({
+            simu: phone,
+            njia: method,
+            kiasi: 3000,
+            product_id: window.selectedProductId || null
+        })
+    });
+
+    if (result.data.success) {
+        status.innerHTML = `
+            <div class="status success">
+                <strong>Payment imeanzishwa.</strong><br><br>
+                Tuma <strong>TZS 3,000</strong> kwenda
+                <strong>${escapeHTML(result.data.payment_number)}</strong>
+                kupitia ${escapeHTML(method)}.<br><br>
+                Order ID: <strong>${escapeHTML(result.data.order_id)}</strong><br><br>
+                Status: <strong>PENDING</strong><br><br>
+                <span style="color:#0b7d45;">✅ Inafungua WhatsApp ili kuwasiliana na mshauri...</span>
+            </div>
+        `;
+        // Baada ya malipo — fungua WhatsApp
+        setTimeout(function () {
+            const waUrl = "https://wa.me/255755248789?text=" + encodeURIComponent(
+                "Habari, nimetuma ada ya TZS 3,000 (Order ID: " + (result.data.order_id || "") + "). " +
+                "Tafadhali nipokee. AI Searcher itatafuta na kutuma taarifa kamili (bei, eneo, muuzaji) baada ya kuthibitisha malipo."
+            );
+            window.open(waUrl, "_blank");
+        }, 1800);
+    } else {
+        status.innerHTML = `<div class="status error">${escapeHTML(result.data.message || "Payment imeshindikana.")}</div>`;
+    }
+}
+
+/* LIKES / FOLLOW / COMMENTS */
+async function toggleLike(productId) {
+    const result = await api(`/api/products/${productId}/like`, { method: "POST", body: "{}" });
+    if (result.response.status === 401) {
+        alert("Ingia kwanza ili kupenda bidhaa.");
+        openModal("loginModal");
+        return;
+    }
+    if (result.data.success) {
+        const btn = document.getElementById(`like-${productId}`);
+        if (btn) {
+            btn.textContent = `❤️ ${result.data.likes}`;
+            btn.classList.toggle("liked", result.data.liked);
+        }
+    }
+}
+
+async function toggleFollow(sellerId) {
+    const result = await api(`/api/sellers/${encodeURIComponent(sellerId)}/follow`, { method: "POST", body: "{}" });
+    if (result.response.status === 401) {
+        alert("Ingia kwanza ili kufuata muuzaji.");
+        openModal("loginModal");
+        return;
+    }
+    if (result.data.success) {
+        const btn = document.getElementById(`follow-${sellerId}`);
+        if (btn) {
+            btn.textContent = result.data.following
+                ? `✓ Unamfuata (${result.data.followers})`
+                : `+ Fuata (${result.data.followers})`;
+            btn.classList.toggle("following", result.data.following);
+        }
+    }
+}
+
+async function loadComments(productId) {
+    currentProductId = productId;
+    openModal("commentsModal");
+    const list = document.getElementById("commentList");
+    list.innerHTML = "<p class='muted'>Inapakia maoni...</p>";
+    try {
+        const result = await api(`/api/comments/${productId}`);
+        const comments = result.data.comments || [];
+        if (!comments.length) {
+            list.innerHTML = `<p class="muted">Hakuna maoni bado.</p>`;
+            return;
+        }
+        list.innerHTML = comments.map(c => `
+            <div class="comment-item">
+                <b>${escapeHTML(c.author)}</b> · <span class="muted">${escapeHTML(c.time)}</span><br>
+                ${escapeHTML(c.text)}
+            </div>
+        `).join("");
+    } catch (e) {
+        list.innerHTML = "<p class='muted'>Imeshindikana kupata maoni.</p>";
+    }
+}
+
+async function submitComment() {
+    const text = document.getElementById("newCommentText").value.trim();
+    if (!text || !currentProductId) return;
+    const result = await api(`/api/comments/${currentProductId}`, {
+        method: "POST",
+        body: JSON.stringify({ text })
+    });
+    if (result.response.status === 401) {
+        alert("Ingia kwanza ili kutoa maoni.");
+        openModal("loginModal");
+        return;
+    }
+    if (result.data.success) {
+        document.getElementById("newCommentText").value = "";
+        loadComments(currentProductId);
+    }
+}
+
+/* MARKET STATS */
+function formatTZS(n) {
+    return "TZS " + Number(n || 0).toLocaleString("sw-TZ");
+}
+
+async function loadMarketStats() {
+    try {
+        const result = await api("/api/market-stats");
+        if (!result.data.success) return;
+        const summary = result.data.summary || {};
+        const categories = result.data.categories || [];
+        const topLocations = result.data.top_locations || [];
+        const recent = result.data.recent || [];
+
+        document.getElementById("marketSummary").innerHTML = `
+            <div class="summary-card"><span class="num">${summary.total_products || 0}</span><span class="lbl">Bidhaa Sokoni</span></div>
+            <div class="summary-card"><span class="num">${summary.total_categories || 0}</span><span class="lbl">Aina za Bidhaa</span></div>
+            <div class="summary-card"><span class="num">${summary.total_locations || 0}</span><span class="lbl">Maeneo</span></div>
+            <div class="summary-card"><span class="num">${summary.total_likes || 0}</span><span class="lbl">Mapendekezo</span></div>
+        `;
+
+        const maxCount = Math.max(1, ...categories.map(c => c.count));
+        document.getElementById("marketCategories").innerHTML = categories.map(c => `
+            <div class="cat-card">
+                <div class="cat-head">
+                    <span class="cat-name">${escapeHTML(c.label)}</span>
+                    <span class="cat-count">${c.count} bidhaa</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:${Math.round((c.count / maxCount) * 100)}%"></div></div>
+                <div class="cat-detail">
+                    <span>Wastani: ${formatTZS(c.avg_price)}</span>
+                    <span>Chini: ${formatTZS(c.min_price)}</span>
+                    <span>Juu: ${formatTZS(c.max_price)}</span>
+                    <span>${c.share}% ya soko</span>
+                </div>
+            </div>
+        `).join("") || `<p class="muted">Hakuna takwimu bado.</p>`;
+
+        const maxLoc = Math.max(1, ...topLocations.map(l => l.count));
+        document.getElementById("topLocations").innerHTML = topLocations.map(l => `
+            <div class="location-row">
+                <span class="name">${escapeHTML(l.location)}</span>
+                <span class="track"><span class="fill" style="width:${Math.round((l.count / maxLoc) * 100)}%"></span></span>
+                <span class="count">${l.count}</span>
+            </div>
+        `).join("") || `<p class="muted">Hakuna maeneo bado.</p>`;
+
+        document.getElementById("recentProducts").innerHTML = recent.map(p => `
+            <div class="recent-item">
+                <span class="rt">${escapeHTML(p.title)}</span>
+                <span class="available">✅ Kipo</span>
+            </div>
+        `).join("") || `<p class="muted">Hakuna bidhaa mpya bado.</p>`;
+    } catch (e) { console.error(e); }
+}
+
+/* LIVE ACTIVITY FEED */
+function timeAgo(isoString) {
+    const diffSec = Math.max(1, Math.floor((Date.now() - new Date(isoString)) / 1000));
+    if (diffSec < 60) return `${diffSec}s`;
+    if (diffSec < 3600) return `${Math.floor(diffSec / 60)}dk`;
+    if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}saa`;
+    return `${Math.floor(diffSec / 86400)}siku`;
+}
+
+async function loadActivity() {
+    const box = document.getElementById("activityFeed");
+    try {
+        const result = await api(`/api/activity?since_id=${lastActivityId}`);
+        const items = result.data.activity || [];
+        if (!items.length && lastActivityId === 0) {
+            box.innerHTML = `<p class="muted">🔄 AI Searcher inaanzisha utafutaji wa bidhaa katika mikoa ya Tanzania na Afrika Mashariki...</p>`;
+            return;
+        }
+        if (!items.length) return;
+        lastActivityId = Math.max(lastActivityId, ...items.map(i => i.id));
+        const html = items.map(i => `
+            <div class="feed-item">
+                ${escapeHTML(i.message)}
+                <div class="feed-time">${timeAgo(i.created)} zilizopita</div>
+            </div>
+        `).join("");
+        if (box.querySelector(".muted")) {
+            box.innerHTML = html;
+        } else {
+            box.innerHTML = html + box.innerHTML;
+        }
+    } catch (e) { console.error(e); }
+}
+
+/* CHAT */
+function toggleChat() {
+    const box = document.getElementById("chatBox");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function addChatMessage(text, type) {
+    const messages = document.getElementById("chatMessages");
+    const div = document.createElement("div");
+    div.className = "msg " + type;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+async function sendChat() {
+    const input = document.getElementById("chatInput");
+    const message = input.value.trim();
+    if (!message) return;
+    addChatMessage(message, "user");
+    input.value = "";
+    addChatMessage("Inaandika...", "bot");
+    try {
+        const result = await api("/api/bot-chat", { method: "POST", body: JSON.stringify({ message }) });
+        document.getElementById("chatMessages").lastElementChild.remove();
+        addChatMessage(result.data.reply || "Samahani, jaribu tena.", "bot");
+    } catch (e) {
+        document.getElementById("chatMessages").lastElementChild.remove();
+        addChatMessage("Samahani, kuna tatizo la server.", "bot");
+    }
+}
+
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+function escapeAttr(value) { return escapeHTML(value); }
+
+window.addEventListener("click", function (event) {
+    document.querySelectorAll(".modal").forEach(modal => {
+        if (event.target === modal) modal.style.display = "none";
+    });
+});
+
+async function init() {
+    await loadCSRF();
+    await updateAccount();
+    await loadProducts();
+    await loadPaymentNumbers();
+    await loadRegisterCaptcha();
+    await loadActivity();
+    await loadMarketStats();
+    setInterval(loadActivity, 6000);
+    setInterval(loadMarketStats, 30000);
+}
+
+init();
+</script>
+</body>
+</html>
