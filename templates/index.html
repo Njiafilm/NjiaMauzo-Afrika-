@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NjiaMauzo Afrika - Soko la Kisasa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <style>
+        /* ULINZI: Kuzuia Copy, Right-Click, na Kuangazia maandishi */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        img {
+            -webkit-user-drag: none;
+            pointer-events: none; /* Kuzuia kuburuta picha */
+        }
+
+        /* WATERMARK ISIYOONEKANA VIZURI (Kuzuia Screenshot/Picha) */
+        #watermark {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        #watermark::after {
+            content: "NJIAMAUZO AFRIKA \A 0a1b2c3d4e5f6g7h8i9j0";
+            white-space: pre;
+            font-size: 18px;
+            color: rgba(0,0,0,0.04); /* Rangi nyepesi sana */
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            width: 200%;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* Animations */
+        .chat-bubble { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .pulse-dot { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+
+    <!-- Safu ya Watermark -->
+    <div id="watermark"></div>
+
+    <!-- Header -->
+    <header class="bg-green-700 text-white p-4 shadow-lg sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+                🌍 NjiaMauzo Afrika
+                <span class="text-xs bg-yellow-500 text-black px-2 py-1 rounded-full">PROTECTED</span>
+            </h1>
+            <div id="live-status" class="flex items-center gap-2 text-xs md:text-sm font-semibold bg-red-600 px-3 py-1 rounded-full">
+                <span class="w-2 h-2 bg-white rounded-full pulse-dot"></span> LIVE 24/7
+            </div>
+        </div>
+    </header>
+
+    <!-- Maudhui Makuu -->
+    <main class="max-w-5xl mx-auto p-4 md:p-8 space-y-8 relative z-10">
+        
+        <!-- Live Feed Section -->
+        <section class="bg-white rounded-xl shadow-md p-6 border-l-4 border-red-500">
+            <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                📡 Live Activity Feed (Shughuli Halisi)
+            </h2>
+            <div id="feed-container" class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                <div class="text-gray-400 text-center italic text-sm">Inasubiri shughuli...</div>
+            </div>
+        </section>
+
+        <!-- Product Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl shadow p-6 border border-gray-100">
+                <h3 class="font-bold text-green-700 mb-2">🌱 Chai (Tea)</h3>
+                <p class="text-gray-600 text-sm">Mazao bora kutoka mikoa ya kaskazini.</p>
+                <div class="mt-4 bg-yellow-50 text-yellow-800 text-xs p-2 rounded border border-yellow-200">
+                    🔒 Bei, eneo na muuzaji — baada ya kulipa ada.
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6 border border-gray-100">
+                <h3 class="font-bold text-green-700 mb-2">🍅 Nyanya (Tomatoes)</h3>
+                <p class="text-gray-600 text-sm">Msambazaji mkubwa wa soko la mboga.</p>
+                <div class="mt-4 bg-yellow-50 text-yellow-800 text-xs p-2 rounded border border-yellow-200">
+                    🔒 Bei, eneo na muuzaji — baada ya kulipa ada.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI Chatbot Widget -->
+    <div id="chat-widget" class="fixed bottom-6 right-6 z-50">
+        <button id="chat-toggle" class="bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-2xl transition-all transform hover:scale-110 flex items-center justify-center">
+            💬
+        </button>
+        
+        <div id="chat-box" class="hidden absolute bottom-16 right-0 w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col transition-all">
+            <div class="bg-green-600 text-white p-3 flex justify-between items-center">
+                <span class="font-bold text-sm flex items-center gap-2">🤖 Msaada wa AI</span>
+                <button id="chat-close" class="text-white hover:text-gray-200">✕</button>
+            </div>
+            <div id="chat-messages" class="p-4 h-64 overflow-y-auto bg-gray-50 space-y-3 text-sm">
+                <div class="chat-bubble bg-green-100 text-gray-800 p-3 rounded-lg max-w-[80%]">
+                    Karibu NjiaMauzo Afrika! Mimi ni msaidizi wako wa akili. Unaweza kuniuliza kuhusu mazao, bei, au ushauri wa kilimo.
+                </div>
+            </div>
+            <div class="p-3 bg-white border-t flex gap-2">
+                <input type="text" id="chat-input" class="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Andika ujumbe...">
+                <button id="chat-send" class="bg-green-600 text-white px-4 rounded-full hover:bg-green-700 transition text-xs">Tuma</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. ULINZI DHIDI YA COPY & SCREENSHOT
+        // ==========================================
+        document.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            alert("⚠️ Kitendo hiki kimezuiwa kwa usalama wa NjiaMauzo Afrika!");
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const blockedKeys = ['F12'];
+            const blockedCombos = ['c', 's', 'u', 'p', 'a'];
+            
+            if (blockedKeys.includes(e.key) || (e.ctrlKey && blockedCombos.includes(e.key.toLowerCase())) || (e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase()))) {
+                e.preventDefault();
+                alert("⚠️ Haki za Developer/Copy zimezuiwa (0a1b2c3d4e5f6g7h8i9j0).");
+            }
+        });
+
+        // Safisha Clipboard kama mtu akibofya PrintScreen
+        window.addEventListener('keyup', (e) => {
+            if (e.key === 'PrintScreen') {
+                navigator.clipboard.writeText('');
+                alert('Kukata skrini kumezuiwa na mfumo wa ulinzi.');
+            }
+        });
+
+        // ==========================================
+        // 2. LIVE FEED (SOCKET.IO)
+        // ==========================================
+        const socket = io();
+        const feedContainer = document.getElementById('feed-container');
+
+        socket.on('live_update', (data) => {
+            // Ondoa maandishi ya "Inasubiri..."
+            if (feedContainer.querySelector('.italic')) {
+                feedContainer.innerHTML = '';
+            }
+
+            const item = document.createElement('div');
+            item.className = 'chat-bubble bg-gray-50 p-3 rounded-lg border-l-4 border-green-500 flex justify-between items-center text-xs shadow-sm';
+            item.innerHTML = `
+                <span class="text-gray-700 flex-1">${data.msg}</span>
+                <span class="text-gray-400 ml-2 whitespace-nowrap">${data.time}</span>
+            `;
+            feedContainer.prepend(item);
+            
+            // Zuia orodha isizidi mistari 10
+            if (feedContainer.children.length > 10) {
+                feedContainer.removeChild(feedContainer.lastChild);
+            }
+        });
+
+        // ==========================================
+        // 3. BOT CHAT YENYE AKILI
+        // ==========================================
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatBox = document.getElementById('chat-box');
+        const chatClose = document.getElementById('chat-close');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
+        const chatMessages = document.getElementById('chat-messages');
+
+        chatToggle.addEventListener('click', () => chatBox.classList.toggle('hidden'));
+        chatClose.addEventListener('click', () => chatBox.classList.add('hidden'));
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            chatInput.value = '';
+            chatInput.disabled = true; // Zuia kutuma mara mbili
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                const data = await response.json();
+                addMessage(data.reply, 'bot');
+            } catch (error) {
+                addMessage("Samahani, hitilafu imetokea kwenye mtandao.", 'bot');
+            } finally {
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+        }
+
+        function addMessage(text, sender) {
+            const msg = document.createElement('div');
+            msg.className = `chat-bubble p-3 rounded-lg max-w-[85%] ${
+                sender === 'user' ? 'bg-green-600 text-white ml-auto' : 'bg-gray-200 text-gray-800'
+            }`;
+            msg.innerText = text;
+            chatMessages.appendChild(msg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        chatSend.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
