@@ -1,17 +1,13 @@
 """
 NjiaMauzo Afrika — Flask Backend
 ================================
-Serves index.html + Contact Seller API + product/payment stubs.
-
-Run:
+Serves index.html + Contact Seller API + product/payment stubs.Run:
   pip install flask flask-cors
   python app.py
 
 Open: http://127.0.0.1:5000
 Admin: admin / njiamauzo2026
-"""
-
-from flask import Flask, request, jsonify, send_from_directory, session
+"""flask import Flask, request, jsonify, send_from_directory, session
 from flask_cors import CORS
 from datetime import datetime
 from pathlib import Path
@@ -20,7 +16,6 @@ import threading
 import time
 import os
 import secrets
-
 BASE_DIR = Path(__file__).resolve().parent
 # static_folder=None: hatuoneshi folder nzima ya app (ambayo ina app.py,
 # requirements.txt n.k.) kwa HTTP moja kwa moja. Faili za umma pekee
@@ -572,101 +567,4 @@ def contact_seller():
             "created": datetime.utcnow(),
             "seller_id": data.get("seller_id") or "",
             "seller_name": seller_name,
-            "product_id": data.get("product_id"),
-            "product_title": data.get("product_title") or "",
-            "channels_sent": channels,
-            "replied": False,
-            "replied_at": None,
-            "reply_text": None,
-        }
-
-    def _auto_reply(sid):
-        time.sleep(12 + (abs(hash(sid)) % 9))
-        with SESSION_LOCK:
-            s = CONTACT_SESSIONS.get(sid)
-            if s and not s["replied"]:
-                s["replied"] = True
-                s["replied_at"] = datetime.utcnow()
-                s["reply_text"] = "Karibu niko hewani nikuhudumie"
-
-    if os.environ.get("DEMO_AUTO_REPLY", "1") == "1":
-        threading.Thread(target=_auto_reply, args=(session_id,), daemon=True).start()
-
-    return jsonify({
-        "success": True,
-        "session_id": session_id,
-        "message": "Ujumbe umetumwa kwa muuzaji kupitia mawasiliano yote yaliyopo.",
-        "channels": channels,
-        "seller_name": seller_name,
-    })
-
-
-@app.route("/api/contact-seller/status", methods=["GET"])
-def contact_seller_status():
-    _cleanup_sessions()
-    session_id = request.args.get("session_id") or ""
-    seller_id = request.args.get("seller_id") or ""
-
-    with SESSION_LOCK:
-        sess = CONTACT_SESSIONS.get(session_id)
-        if not sess and seller_id:
-            for sid, s in sorted(CONTACT_SESSIONS.items(),
-                                 key=lambda x: x[1]["created"], reverse=True):
-                if s.get("seller_id") == seller_id:
-                    sess = s
-                    session_id = sid
-                    break
-        if not sess:
-            return jsonify({"success": True, "replied": False, "found": False})
-        return jsonify({
-            "success": True,
-            "found": True,
-            "session_id": session_id,
-            "replied": bool(sess.get("replied")),
-            "seller_name": sess.get("seller_name"),
-            "replied_at": (sess["replied_at"].isoformat() + "Z") if sess.get("replied_at") else None,
-        })
-
-
-@app.route("/api/contact-seller/reply", methods=["POST"])
-def contact_seller_reply():
-    data = request.get_json(silent=True) or {}
-    session_id = data.get("session_id") or ""
-    seller_id = data.get("seller_id") or ""
-
-    with SESSION_LOCK:
-        sess = CONTACT_SESSIONS.get(session_id)
-        if not sess and seller_id:
-            for sid, s in CONTACT_SESSIONS.items():
-                if s.get("seller_id") == seller_id and not s.get("replied"):
-                    sess = s
-                    session_id = sid
-                    break
-        if not sess:
-            return jsonify({"success": False, "message": "Session haipatikani."}), 404
-        sess["replied"] = True
-        sess["replied_at"] = datetime.utcnow()
-        sess["reply_text"] = data.get("message") or "Karibu niko hewani nikuhudumie"
-
-    return jsonify({"success": True, "session_id": session_id, "message": "Jibu limeandikishwa."})
-
-
-@app.route("/api/ads/engage", methods=["POST"])
-def api_ads_engage():
-    return jsonify({"success": True})
-
-
-@app.route("/api/password/forgot", methods=["POST"])
-@app.route("/api/password/reset", methods=["POST"])
-@app.route("/api/password/change", methods=["POST"])
-def api_password():
-    return jsonify({"success": True, "message": "OK (stub)."})
-
-
-if __name__ == "__main__":
-    print("=" * 50)
-    print("  NjiaMauzo Afrika")
-    print("  http://127.0.0.1:5000")
-    print("  Admin: admin / njiamauzo2026")
-    print("=" * 50)
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+            "product_id": t(os.environ.get("PORT", 5000)), debug=True)
