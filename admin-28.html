@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — NjiaMauzo Afrika</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<style>
+
+:root{
+  --bg:#081321;--card:#10233d;--border:#204365;--text:#e9f1fb;--muted:#91a7c2;
+  --teal:#14b8a6;--blue:#3b82f6;--ok:#22c55e;--warn:#f59e0b;--danger:#ef4444;
+  --grad:linear-gradient(90deg,var(--teal),var(--blue));
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(160deg,#07111f 0%,#0d2038 55%,#0a1a2e 100%);
+  color:var(--text);font:14px/1.5 system-ui,-apple-system,Arial,sans-serif;
+  min-height:100vh;
+}
+header{
+  position:sticky;top:0;z-index:5;padding:14px 18px;
+  background:rgba(9,24,42,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+}
+h1{font-size:17px;margin:0;font-weight:800}
+h2{font-size:15px;color:var(--teal);margin:0 0 12px;font-weight:800}
+.wrap{max-width:1050px;margin:auto;padding:16px}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:16px 18px;margin-bottom:14px;
+  box-shadow:0 4px 18px rgba(0,0,0,.2);
+}
+.hidden{display:none!important}
+.tabs{display:flex;gap:7px;overflow:auto;margin-bottom:14px;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.tab{
+  padding:9px 14px;border:1px solid var(--border);background:#0a1a2e;
+  color:var(--muted);border-radius:22px;cursor:pointer;white-space:nowrap;
+  font-weight:600;font-size:13px;transition:all .18s;
+}
+.tab:hover{border-color:rgba(20,184,166,.45);color:var(--text)}
+.tab.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(20,184,166,.28)}
+.btn{
+  border:0;border-radius:10px;padding:10px 14px;background:var(--grad);
+  color:#fff;font-weight:700;cursor:pointer;font-size:13px;
+  box-shadow:0 3px 12px rgba(20,184,166,.22);transition:transform .12s,box-shadow .12s;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(20,184,166,.3)}
+.btn:active{transform:scale(.98)}
+.secondary{background:#1b385c;box-shadow:none}
+.secondary:hover{background:#244a75}
+.danger{background:linear-gradient(90deg,#b91c1c,#ef4444)}
+.small{padding:7px 11px;font-size:12px}
+input,select,textarea{
+  width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--border);
+  background:#091a2e;color:var(--text);margin:5px 0 10px;font-family:inherit;font-size:14px;
+  transition:border-color .15s,box-shadow .15s;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(20,184,166,.15);
+}
+.muted{color:var(--muted);font-size:12.5px;line-height:1.45}
+.row{
+  display:flex;justify-content:space-between;gap:12px;padding:12px 0;
+  border-bottom:1px solid rgba(32,67,101,.7);align-items:flex-start;
+}
+.row:last-child{border-bottom:0}
+.badge{
+  padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;
+  display:inline-block;letter-spacing:.2px;
+}
+.ok{background:#123c2b;color:#6ee7b7}
+.warn{background:#473617;color:#fbbf24}
+.danger-b{background:#3f1219;color:#fca5a5}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{
+  background:#091a2e;border:1px solid var(--border);border-radius:14px;
+  padding:14px 12px;text-align:center;
+  transition:border-color .15s,transform .15s;
+}
+.stat:hover{border-color:rgba(20,184,166,.35);transform:translateY(-1px)}
+.stat b{display:block;font-size:24px;color:var(--teal);font-weight:800}
+.stat span{font-size:11px;color:var(--muted);margin-top:2px;display:block}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+#login{
+  max-width:380px;margin:70px auto;
+  box-shadow:0 16px 48px rgba(0,0,0,.35);
+}
+#login h2{text-align:center;color:var(--text);font-size:18px}
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  background:#091a2e;border:1px solid var(--border);padding:12px 18px;
+  border-radius:12px;display:none;z-index:20;
+  box-shadow:0 8px 28px rgba(0,0,0,.4);font-weight:600;font-size:13px;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr}}
+.live-dot{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:#22c55e;margin-right:7px;
+  box-shadow:0 0 0 0 rgba(34,197,94,.5);
+  animation:livePulse 1.4s infinite;
+}
+@keyframes livePulse{
+  0%{box-shadow:0 0 0 0 rgba(34,197,94,.45);opacity:1}
+  70%{box-shadow:0 0 0 8px rgba(34,197,94,0);opacity:.85}
+  100%{box-shadow:0 0 0 0 rgba(34,197,94,0);opacity:1}
+}
+.chat-admin{
+  max-height:420px;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+}
+.prod-card{
+  background:#091a2e;border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;margin-bottom:8px;
+  transition:border-color .15s;
+}
+.prod-card:hover{border-color:rgba(20,184,166,.35)}
+.prod-card .title{font-weight:700;margin-bottom:4px;font-size:14px}
+.check-row{
+  display:flex;align-items:center;gap:9px;margin:9px 0;font-size:13px;
+  cursor:pointer;user-select:none;
+}
+.check-row input{width:auto;margin:0;accent-color:var(--teal)}
+.file-hint{font-size:11px;color:var(--muted);margin-top:-6px;margin-bottom:10px}
+label.muted{display:block;margin-bottom:2px;margin-top:4px}
+#liveBar{
+  height:100%;width:0%;
+  background:var(--grad);
+  transition:width .7s ease;
+  border-radius:10px;
+}
+</style>
+
+<style>
+/* ===== ADMIN PRO v2 ===== */
+:root{--admin-glass:rgba(8,19,33,.82);--admin-line:rgba(255,255,255,.09)}
+body{background:radial-gradient(circle at 10% 0%,rgba(59,130,246,.12),transparent 28%),radial-gradient(circle at 90% 20%,rgba(20,184,166,.10),transparent 25%),linear-gradient(160deg,#050d18,#0a1a2e 55%,#071321);}
+header{background:rgba(6,17,30,.88)!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom-color:var(--admin-line)!important}
+.wrap{max-width:1250px;padding:18px}
+.card{background:linear-gradient(145deg,rgba(16,35,61,.92),rgba(10,26,46,.92));border-color:var(--admin-line);box-shadow:0 12px 34px rgba(0,0,0,.20)}
+.tabs{position:sticky;top:65px;z-index:4;padding:9px 4px;background:rgba(6,17,30,.76);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:0 0 18px 18px}
+.tab{box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.stat{background:linear-gradient(145deg,#091a2e,#0d2138);min-height:88px;display:flex;flex-direction:column;justify-content:center}
+.stat b{font-size:26px;text-shadow:0 0 22px rgba(20,184,166,.18)}
+#dash:before{content:'ADMIN CONTROL CENTER';display:block;font-size:10px;letter-spacing:2px;font-weight:900;color:#6ee7b7;margin:4px 2px 10px;opacity:.75}
+.nm-admin-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.nm-admin-grid .card{margin-bottom:0}
+.nm-health{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.nm-health span{padding:7px 10px;border-radius:999px;font-size:11px;font-weight:800;background:rgba(255,255,255,.045);border:1px solid var(--admin-line)}
+.nm-health .good{color:#86efac;border-color:rgba(34,197,94,.18)}.nm-health .info{color:#93c5fd;border-color:rgba(59,130,246,.18)}
+.nm-quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}.nm-quick-actions button{min-height:58px;border:1px solid var(--admin-line);border-radius:14px;background:#091a2e;color:#e9f1fb;font-weight:800;cursor:pointer}.nm-quick-actions button:hover{border-color:rgba(20,184,166,.35);transform:translateY(-1px)}
+@media(max-width:850px){.nm-admin-grid{grid-template-columns:1fr}.nm-quick-actions{grid-template-columns:repeat(2,1fr)}.tabs{top:57px}}
+@media(max-width:520px){.wrap{padding:10px}.card{padding:13px;border-radius:14px}.nm-quick-actions{grid-template-columns:1fr 1fr}.tab{padding:8px 11px;font-size:12px}}
+</style>
+
+</head><body>
+<div id="login" class="card">
+<h2 style="text-align:center;color:var(--text);font-size:18px">🔐 Admin — NjiaMauzo Afrika</h2>
+<div id="tempAccessMsg" class="muted" style="padding:10px;border:1px solid var(--border);border-radius:10px;margin-bottom:12px;background:#0a1a2e">
+⏳ Inakagua muda wa Admin wa muda...
+</div>
+<div id="normalCreds" class="hidden">
+<label>Jina la mtumiaji</label><input id="loginUser" autocomplete="username">
+<label>Password</label>
+<div style="display:flex;gap:8px;align-items:center">
+  <input id="loginPass" type="password" autocomplete="current-password" style="margin-bottom:10px">
+  <button type="button" class="btn secondary small" onclick="togglePass()" style="width:auto;white-space:nowrap">👁️ Onyesha</button>
+</div>
+<label style="display:flex;align-items:center;gap:7px;font-size:12px;margin-bottom:10px">
+  <input id="rememberAdminUser" type="checkbox" style="width:auto;margin:0"> Kumbuka jina
+</label>
+</div>
+<button class="btn" style="width:100%" onclick="login()">Ingia Admin Room</button><p id="loginMsg" class="muted"></p>
+</div>
+<div id="dash" class="hidden"><header><h1>NjiaMauzo Afrika — Admin Room</h1><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a class="btn small" href="/" title="Rudi kwenye ukurasa wa mwanzo">🏠 Back Home</a><button class="btn small secondary" onclick="logout()">Toka</button></div></header><main class="wrap">
+<div class="tabs">
+<div class="tab" data-tab="room" onclick="tab('room')">🛡️ Chumba cha Admin</div>
+<div class="tab active" data-tab="analytics" onclick="tab('analytics')">📊 Wageni</div>
+<div class="tab" data-tab="orders" onclick="tab('orders')">💳 Malipo</div>
+<div class="tab" data-tab="advisory" onclick="tab('advisory')">🌱 Ushauri</div>
+<div class="tab" data-tab="doclib" onclick="tab('doclib')">📚 Maktaba</div>
+<div class="tab" data-tab="products" onclick="tab('products')">🛍️ Bidhaa Zote</div>
+<div class="tab" data-tab="ads" onclick="tab('ads')">📣 Matangazo</div>
+<div class="tab" data-tab="chat" onclick="tab('chat')">💬 Chat 24/7</div>
+<div class="tab" data-tab="ai" onclick="tab('ai')">🤖 AI</div>
+<div class="tab" data-tab="settings" onclick="tab('settings')">⚙️ Mipangilio</div>
+</div>
+
+<section id="tab-room" class="hidden">
+<div class="card">
+<h2>🛡️ Chumba cha Admin — Mirror ya Dashboard ya Umma</h2>
+<p class="muted">Hapa unaona kila kitu kinachoonekana kwa mtumiaji wa kawaida kwa wakati halisi (kama picha ya simu). Inajisasisha kila sekunde 5.</p>
+<div class="stats" id="roomLiveStats"></div>
+</div>
+<div class="card">
+<h2>☀️ Hali ya Sabato</h2>
+<div id="roomSabbath" class="muted">Inapakia...</div>
+</div>
+<div class="card">
+<h2>📣 Matangazo yaliyo ON AIR sasa (kama umma anavyoyaona)</h2>
+<div id="roomAds">Inapakia...</div>
+</div>
+<div class="card">
+<h2>🌾 Bidhaa (mfano wa dashboard ya umma)</h2>
+<div id="roomProducts">Inapakia...</div>
+</div>
+<div class="card">
+<h2>💬 Majadiliano ya karibuni</h2>
+<div id="roomDiscussions">Inapakia...</div>
+</div>
+<div class="card">
+<h2><span class="live-dot"></span>Ujumbe wa Chat ya Umma (Live)</h2>
+<p class="muted">Ujumbe wote (uliopokelewa na uliokataliwa). Inasasishwa kila sekunde 4.</p>
+<div id="roomChatMsgs" class="chat-admin">Inapakia...</div>
+</div>
+<div class="card">
+<h2>🚫 Zuia / Ondoa Mtumiaji</h2>
+<p class="muted">Weka namba ya simu, session ID, au IP ya mtumiaji unayetaka kumzuia.</p>
+<input id="banIdentifier" placeholder="Mfano: 0755xxxxxx au IP">
+<input id="banReason" placeholder="Sababu (hiari)">
+<button class="btn" onclick="banUser()">🚫 Zuia Mtumiaji</button>
+<h2 style="margin-top:18px">Waliozuiwa</h2>
+<div id="bannedList">Inapakia...</div>
+</div>
+</section>
+
+<section id="tab-analytics"><div class="card"><h2>📊 Wageni wa mfumo</h2><div class="stats" id="stats"></div><button class="btn secondary" style="margin-top:12px" onclick="loadAnalytics()">🔄 Sasisha</button></div><div class="card"><h2>📈 Ziara kwa siku</h2><div id="daily"></div></div><div class="card"><h2>🔥 Kurasa zinazotembelewa zaidi</h2><div id="pages"></div></div><div class="card"><h2>🟢 Ziara za karibuni</h2><div style="overflow:auto"><table><thead><tr><th>Muda</th><th>Ukurasa</th><th>Kifaa/Browser</th></tr></thead><tbody id="recent"></tbody></table></div></div></section>
+<section id="tab-orders" class="hidden"><div class="card"><h2>Malipo yanayosubiri</h2><div id="orders">Inapakia...</div><button class="btn secondary" onclick="loadOrders()">🔄 Sasisha</button></div></section>
+<section id="tab-advisory" class="hidden"><div class="card"><h2>Malipo ya Ushauri</h2><div id="advisory">Inapakia...</div><button class="btn secondary" onclick="loadAdvisory()">🔄 Sasisha</button></div></section>
+
+<section id="tab-doclib" class="hidden">
+<div class="card">
+<h2>📚 Maktaba ya Nyaraka — Pakia PDF kwa kila mada</h2>
+<p class="muted">Bei (kwa kila mada): Saa 1 = TSH 3,000 · Saa 2 = TSH 4,000 · Saa 3 = TSH 7,000 · Saa 5 = TSH 10,000. Kila mada ina bei na ufunguzi wake tofauti.</p>
+<div id="doclibTopicsList" style="margin-top:12px;">Inapakia mada...</div>
+</div>
+<div class="card">
+<h2>💳 Malipo ya Maktaba yanayosubiri uthibitisho</h2>
+<div id="doclibOrders">Inapakia...</div>
+<button class="btn secondary" onclick="loadDoclibOrders()">🔄 Sasisha</button>
+</div>
+</section>
+
+
+<section id="tab-products" class="hidden">
+  <div class="card">
+    <h2>🛍️ Bidhaa Zote — Ongeza Kitu Chochote</h2>
+    <p class="muted">Sehemu moja ya kuongeza bidhaa za kawaida, jezi au bidhaa za import. Picha hupakiwa moja kwa moja na bidhaa huonekana kwenye sehemu yake.</p>
+    <div class="form-grid">
+      <div><label class="muted">Aina ya bidhaa</label><select id="allProductType" onchange="toggleAllProductFields()"><option value="ordinary">🛍️ Bidhaa za Kawaida</option><option value="jersey">⚽ Jezi</option><option value="import">🌍 Import</option></select></div>
+      <div><label class="muted">Jina la bidhaa</label><input id="allProductTitle" placeholder="Mfano: Sandals kahawia za wanawake"></div>
+    </div>
+    <textarea id="allProductDesc" placeholder="Maelezo ya bidhaa"></textarea>
+    <div class="form-grid">
+      <div id="allOrdinaryCategoryWrap"><label class="muted">Kategoria</label><select id="allOrdinaryCategory"><option value="">🤖 Tambua kiotomatiki</option><option value="viatu">👟 Viatu</option><option value="mifuko">👜 Mifuko</option><option value="magauni">👗 Magauni</option><option value="vitambaa">🧵 Vitambaa</option><option value="nyingine">📦 Nyingine</option></select></div>
+      <div id="allImportCategoryWrap" class="hidden"><label class="muted">Kategoria ya import</label><select id="allImportCategory"><option value="import">Bidhaa ya Import</option><option value="jersey">Jezi</option></select></div>
+      <div><label class="muted">Bei (TZS)</label><input id="allProductPrice" type="number" min="0" placeholder="0"></div>
+      <div><label class="muted">Stock</label><input id="allProductStock" type="number" min="0" placeholder="0"></div>
+    </div>
+    <div id="allImportFields" class="hidden">
+      <div class="form-grid"><input id="allSourceCountry" placeholder="Nchi chanzo: USA, China, Uturuki..."><input id="allSellerContact" placeholder="Mawasiliano ya muuzaji (hiari)"></div>
+      <div class="form-grid"><input id="allSupplierUrl" type="url" placeholder="Link ya supplier / marketplace (hiari)"><input id="allSourceUrl" type="url" placeholder="Chanzo cha bidhaa (hiari)"></div>
+      <div class="form-grid"><input id="allShippingCost" type="number" min="0" placeholder="Usafiri TZS (quote ya admin)"><input id="allCustoms" placeholder="Maelezo ya ushuru (hiari)"></div>
+      <div class="form-grid"><input id="allCustomsEstimate" type="number" min="0" placeholder="Makadirio ya ushuru TZS"><input id="allWeightKg" type="number" min="0.1" step="0.1" placeholder="Uzito kg"></div>
+      <div class="form-grid"><input id="allShipperName" placeholder="Msafirishaji (DHL/FedEx/UPS/...)" ><input id="allShipperContact" placeholder="Mawasiliano ya msafirishaji"></div>
+      <div class="form-grid"><input id="allShipperUrl" type="url" placeholder="Link ya msafirishaji"><input id="allSellerName" placeholder="Jina la muuzaji / kampuni"></div>
+    </div>
+    <label class="muted">Picha ya bidhaa</label><input id="allProductImage" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+    <button class="btn" onclick="createAnyProduct()">➕ Ongeza Bidhaa Sasa</button>
+    <p id="allProductResult" class="muted"></p>
+  </div>
+  <div class="card"><h2>📦 Bidhaa za Kawaida zilizopo</h2><div class="form-grid"><input id="allProductSearch" placeholder="Tafuta bidhaa..." oninput="loadAllProducts()"><select id="allProductFilter" onchange="loadAllProducts()"><option value="">Kategoria zote</option><option value="viatu">Viatu</option><option value="mifuko">Mifuko</option><option value="magauni">Magauni</option><option value="vitambaa">Vitambaa</option><option value="nyingine">Nyingine</option></select></div><div id="allProductList">Inapakia...</div></div>
+  <div class="card"><h2>⚡ Vitendo vya Haraka</h2><div class="nm-admin-product-actions"><button class="btn secondary" onclick="tab('ads')">📣 Fungua Matangazo</button><button class="btn secondary" onclick="tab('room')">🛡️ Live Mirror</button><button class="btn secondary" onclick="tab('analytics')">📊 Analytics</button></div></div>
+</section>
+
+<section id="tab-ads" class="hidden">
+<div class="card hidden" id="adEditCard">
+<h2>✏️ Badili Tangazo</h2>
+<input id="editAdId" type="hidden">
+<input id="editAdTitle" placeholder="Kichwa cha tangazo">
+<div class="form-grid"><select id="editAdType"><option value="text">Maandishi / Marquee</option><option value="image">Picha</option><option value="video">Video</option><option value="audio">Sauti</option><option value="link">Link</option></select><input id="editAdLink" placeholder="Link URL (hiari)"></div>
+<input id="editAdMarquee" placeholder="Ujumbe wa tangazo (hiari)">
+<label class="muted">Badilisha faili (hiari)</label><input id="editAdFile" type="file" accept="image/*,video/*,audio/*">
+<div class="check-row"><input type="checkbox" id="editAdFullscreen"> Full-screen</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="saveAdEdit()">💾 Hifadhi Mabadiliko</button><button class="btn secondary" onclick="cancelAdEdit()">✖ Funga</button></div>
+<p id="editAdResult" class="muted"></p>
+</div>
+<div class="card">
+<h2>➕ Ongeza Tangazo (hadi 5 kwa wakati mmoja)</h2>
+<p class="muted">Tangazo <b>halitoki hewani</b> mpaka uchapishe (Publish). Unaweza kuweka muda maalumu wa kuanza/kuisha, au muda wa dakika.</p>
+<input id="adTitle" placeholder="Kichwa cha tangazo">
+<div class="form-grid">
+  <div>
+    <label class="muted">Aina</label>
+    <select id="adType">
+      <option value="text">Maandishi / Marquee</option>
+      <option value="image">Picha</option>
+      <option value="video">Video</option>
+      <option value="audio">Sauti</option>
+      <option value="link">Link</option>
+    </select>
+  </div>
+  <div>
+    <label class="muted">Muda hewani (dakika) — hiari</label>
+    <input id="adDuration" type="number" min="1" placeholder="Mfano: 60 (= saa 1)">
+  </div>
+</div>
+<input id="adMarquee" placeholder="Ujumbe wa marquee (hiari)">
+<input id="adMedia" placeholder="Media URL (hiari)">
+<input id="adLink" placeholder="Link URL baada ya kugusa (hiari)">
+<div class="form-grid">
+  <div>
+    <label class="muted">Anza (starts_at) — hiari</label>
+    <input id="adStarts" type="datetime-local">
+  </div>
+  <div>
+    <label class="muted">Iishe (ends_at) — hiari</label>
+    <input id="adEnds" type="datetime-local">
+  </div>
+</div>
+<label class="muted">Pakia faili (hadi 5: picha/video/sauti)</label>
+<input id="adFiles" type="file" accept="image/*,video/*,audio/*" multiple>
+<p class="file-hint">Chagua hadi faili 5. Kila faili litakuwa tangazo tofauti lenye kichwa sawa.</p>
+<div class="check-row"><input type="checkbox" id="adFullscreen" checked> Full-screen (onyesha kama overlay kamili kwa umma)</div>
+<div class="check-row"><input type="checkbox" id="adPublishNow" checked> Chapisha sasa (tokea hewani mara moja / kulingana na muda)</div>
+<button class="btn" onclick="createAd()">➕ Hifadhi Tangazo</button>
+</div>
+<div class="card">
+<h2>📊 Views — Live</h2>
+<p class="muted">Namba hizi zinatokana na wageni halisi. Inajisasisha kila sekunde 10.</p>
+<div class="stats" id="adViewStats"></div>
+<div style="margin-top:12px;height:8px;background:#091a2e;border-radius:10px;overflow:hidden"><div id="liveBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width .7s ease"></div></div>
+<p class="muted" id="liveViewStatus" style="margin-top:8px">Inasubiri data...</p>
+</div>
+<div class="card"><h2>💬 Majadiliano ya Views</h2><p class="muted">Andika maoni au hatua kuhusu views.</p><textarea id="viewDiscussion" rows="3" placeholder="Mfano: Views zimeongezeka leo..."></textarea><button class="btn" onclick="postViewDiscussion()">💬 Hifadhi</button><div id="viewDiscussions" style="margin-top:12px"></div></div>
+<div class="card"><h2>Takwimu za matangazo</h2><div class="stats" id="adStats"></div></div>
+<div class="card"><h2>Matangazo yaliyopo (rasimu + hewani)</h2><div id="ads"></div></div>
+</section>
+
+<section id="tab-chat" class="hidden">
+<div class="card">
+<h2><span class="live-dot"></span>Chat ya Umma — Live 24/7</h2>
+<p class="muted">Ujumbe wote wa watumiaji. Inasasishwa kila sekunde 4. Unaweza kufuta ujumbe wowote.</p>
+<button class="btn secondary small" onclick="loadRoomChat()">🔄 Sasisha sasa</button>
+<div id="chatLiveMsgs" class="chat-admin" style="margin-top:12px">Inapakia...</div>
+</div>
+</section>
+
+<section id="tab-ai" class="hidden"><div class="card"><h2>AI Product Searcher</h2><input id="aiQuery" placeholder="mfano: kahawa Arusha"><button class="btn" onclick="runAI()">🔍 Anzisha</button><p class="muted" id="aiLog"></p></div></section>
+<section id="tab-settings" class="hidden"><div class="card"><h2>🔐 Usalama wa Admin</h2><p class="muted">Admin inaingia bila jina/password kwa muda wa saa 48. Baada ya muda huo, username + password vinahitajika.</p><p id="adminModeInfo"></p></div><div class="card"><h2>☀️ Sabbath</h2><p class="muted">Lock huanza Ijumaa baada ya sunset na kuisha Jumamosi baada ya sunset.</p><div id="sabbathInfo"></div></div><div class="card"><h2>📢 Google AdSense</h2><p class="muted">Weka ADSENSE_CLIENT_ID na ADSENSE_SLOT_MARKET kwenye Render Environment Variables.</p><div id="adsenseInfo"></div></div></section>
+</main></div><div class="toast" id="toast"></div>
+<script>
+let CSRF="";
+const $=id=>document.getElementById(id);
+async function api(path,opts={}){
+  const h=Object.assign({},opts.headers||{});
+  if(!(opts.body instanceof FormData)) h["Content-Type"]=h["Content-Type"]||"application/json";
+  if(CSRF)h["X-CSRF-Token"]=CSRF;
+  const r=await fetch(path,Object.assign({credentials:"include"},opts,{headers:h}));
+  let d={};try{d=await r.json()}catch(e){}
+  return {ok:r.ok,status:r.status,data:d}
+}
+function toast(x){$("toast").textContent=x;$("toast").style.display="block";setTimeout(()=>$("toast").style.display="none",2800)}
+function tab(n){
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===n));
+  document.querySelectorAll("section[id^='tab-']").forEach(x=>x.classList.add("hidden"));
+  $("tab-"+n).classList.remove("hidden");
+  if(n==="room")loadRoom();
+  if(n==="analytics")loadAnalytics();
+  if(n==="orders")loadOrders();
+  if(n==="advisory")loadAdvisory();
+  if(n==="ads")loadAds();
+  if(n==="doclib"){loadDoclibTopics();loadDoclibOrders();}
+  if(n==="chat")loadRoomChat();
+  if(n==="settings")loadSettings();
+}
+function escapeHtml(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+
+async function loadRoom(){
+  const r=await api("/api/admin/room/snapshot");
+  if(!r.ok)return;
+  const d=r.data;
+  $("roomLiveStats").innerHTML=[
+    [d.live?.visitors_live_5m,"Hai sasa (dk 5)"],
+    [d.live?.visitors_today,"Wageni leo"],
+    [d.public_dashboard?.products_total,"Bidhaa zilizopo"],
+    [d.public_dashboard?.ads_active_count,"Matangazo ON AIR"],
+    [d.orders?.service_pending,"Malipo yanasubiri"],
+    [d.moderation?.banned_count,"Waliozuiwa"],
+  ].map(([v,l])=>`<div class="stat"><b>${Number(v||0).toLocaleString()}</b><span>${l}</span></div>`).join("");
+  const s=d.sabbath||{};
+  $("roomSabbath").innerHTML=s.active?`<b>🔒 Sabato — Live sasa</b><br><small>Mwisho: ${s.end||"—"}</small>`:`<b>🟢 Wazi (siyo Sabato)</b>`;
+  $("roomAds").innerHTML=(d.public_dashboard?.ads_active||[]).map(a=>`<div class="row"><span><b>${escapeHtml(a.title||"—")}</b><br><small>${escapeHtml(a.marquee||a.type||"")}</small>${a.ends_at?`<br><small class="muted">Mwisho: ${escapeHtml(a.ends_at)}</small>`:""}</span><span class="badge ok">ON AIR</span></div>`).join("")||'<p class="muted">Hakuna tangazo hewani kwa sasa.</p>';
+  $("roomProducts").innerHTML=(d.public_dashboard?.products||[]).map(p=>`<div class="prod-card"><div class="title">${p.emoji||""} ${escapeHtml(p.title||"")}</div><div class="muted">${escapeHtml(p.location||"")} · ${p.featured?"⭐ Featured":"Kawaida"}</div></div>`).join("")||'<p class="muted">Hakuna bidhaa.</p>';
+  $("roomDiscussions").innerHTML=(d.public_dashboard?.recent_discussions||[]).map(x=>`<div class="row"><span>${escapeHtml(x.message)}</span><small class="muted">${escapeHtml(x.created_at)}</small></div>`).join("")||'<p class="muted">Hakuna majadiliano bado.</p>';
+  loadBanned();
+  loadRoomChat();
+}
+
+async function loadRoomChat(){
+  const r=await api("/api/admin/chat/messages");
+  const html=(r.data.messages||[]).slice(0,50).map(m=>`<div class="row"><span><b>${escapeHtml(m.name||"—")}</b> (${escapeHtml(m.phone||"")})<br>${escapeHtml(m.message)}<br><small class="muted">${escapeHtml(m.created_at)} ${m.status!=="ok"?"· ❌ "+escapeHtml(m.reject_reason||"imekataliwa"):""}</small></span><span><span class="badge ${m.status==="ok"?"ok":"warn"}">${m.status==="ok"?"Imeonekana":"Imekataliwa"}</span><br><button class="btn small secondary" style="margin-top:6px" onclick="delChatMsg(${m.id})">Futa</button></span></div>`).join("")||'<p class="muted">Hakuna ujumbe bado.</p>';
+  if($("roomChatMsgs")) $("roomChatMsgs").innerHTML=html;
+  if($("chatLiveMsgs")) $("chatLiveMsgs").innerHTML=html;
+}
+async function delChatMsg(id){
+  const r=await api("/api/admin/chat/messages/"+id,{method:"DELETE"});
+  toast(r.data.message||"Imefanyika.");
+  if(r.ok)loadRoomChat();
+}
+async function banUser(){
+  const identifier=$("banIdentifier").value.trim();
+  const reason=$("banReason").value.trim();
+  if(!identifier){toast("Weka namba/IP/ID kwanza");return}
+  const r=await api("/api/admin/users/ban",{method:"POST",body:JSON.stringify({identifier,reason})});
+  toast(r.data.message||(r.ok?"Amezuiwa.":"Imeshindikana."));
+  if(r.ok){$("banIdentifier").value="";$("banReason").value="";loadBanned()}
+}
+async function unbanUser(identifier){
+  const r=await api("/api/admin/users/unban",{method:"POST",body:JSON.stringify({identifier})});
+  toast(r.data.message||(r.ok?"Amerejeshewa.":"Imeshindikana."));
+  if(r.ok)loadBanned();
+}
+async function loadBanned(){
+  const r=await api("/api/admin/users/banned");
+  $("bannedList").innerHTML=(r.data.banned||[]).map(b=>`<div class="row"><span><b>${escapeHtml(b.identifier)}</b><br><small>${escapeHtml(b.reason||"")} · ${escapeHtml(b.banned_at||"")}</small></span><button class="btn small secondary" data-ident="${escapeHtml(b.identifier)}" onclick="unbanUser(this.dataset.ident)">✅ Rejesha</button></div>`).join("")||'<p class="muted">Hakuna aliyezuiwa.</p>';
+}
+setInterval(()=>{
+  if($("dash").classList.contains("hidden"))return;
+  if(!$("tab-room").classList.contains("hidden"))loadRoom();
+  if(!$("tab-chat").classList.contains("hidden"))loadRoomChat();
+},4000);
+
+let adminTempOpen=false;
+function togglePass(){const p=$("loginPass");const b=event.currentTarget;if(p.type==="password"){p.type="text";b.textContent="🙈 Ficha"}else{p.type="password";b.textContent="👁️ Onyesha"}}
+async function loadAccessMode(){
+  try{
+    const r=await api("/api/admin/access-mode");
+    if(!r.ok){throw new Error('bad status '+r.status)}
+    adminTempOpen=!!r.data.temporary_open;
+    if(adminTempOpen){
+      $("normalCreds").classList.add("hidden");
+      const h=Math.floor((r.data.seconds_left||0)/3600), m=Math.floor(((r.data.seconds_left||0)%3600)/60);
+      $("tempAccessMsg").innerHTML=`🔓 <b>Admin iko wazi kwa muda.</b><br>Hakuna jina wala password linalohitajika.<br><small>Muda uliobaki: ${h}h ${m}m</small>`;
+    }else{
+      $("normalCreds").classList.remove("hidden");
+      $("loginUser").value=localStorage.getItem("nm_admin_user")||r.data.restore_username||"SUKUMANJIA";
+      $("tempAccessMsg").innerHTML="🔐 <b>Muda wa saa 48 umeisha.</b> Weka username na password yako ya kawaida.";
+    }
+  }catch(e){
+    $("normalCreds").classList.remove("hidden");
+    $("tempAccessMsg").innerHTML='⚠️ Imeshindikana kuwasiliana na server. <button class="btn small secondary" onclick="loadAccessMode()">🔄 Jaribu tena</button>';
+  }
+}
+async function status(){
+  try{
+    const r=await api("/api/admin/status");
+    if(r.data.is_admin){$("login").classList.add("hidden");$("dash").classList.remove("hidden");loadAnalytics();loadAccessMode()}
+    else{loadAccessMode()}
+  }catch(e){
+    loadAccessMode();
+  }
+}
+async function login(){
+  const user=adminTempOpen?"":$("loginUser").value.trim();
+  const password=adminTempOpen?"":$("loginPass").value;
+  if(!adminTempOpen && $("rememberAdminUser")?.checked) localStorage.setItem("nm_admin_user",user);
+  $("loginMsg").textContent="Inaingia...";
+  const r=await api("/api/admin/login",{method:"POST",body:JSON.stringify({username:user,password})});
+  if(r.data.success){CSRF=r.data.csrf_token||"";$("login").classList.add("hidden");$("dash").classList.remove("hidden");toast("✅ Umeingia Admin Room");loadAnalytics();loadAccessMode()}
+  else $("loginMsg").textContent=r.data.message||"Login imeshindikana."
+}
+async function logout(){await api("/api/admin/logout",{method:"POST"});location.reload()}
+async function loadAnalytics(){const r=await api("/api/admin/analytics");if(!r.ok)return;$("stats").innerHTML=[["total_visits","Jumla ya ziara"],["unique_visitors","Wageni tofauti"],["today_visits","Ziara leo"],["today_unique","Wageni leo"],["live_5m","Hai ndani ya dk 5"]].map(([k,l])=>`<div class="stat"><b>${Number(r.data[k]||0).toLocaleString()}</b><span>${l}</span></div>`).join("");$("daily").innerHTML=(r.data.daily||[]).map(x=>`<div class="row"><span>${x.date}</span><b>${x.views} views · ${x.unique} unique</b></div>`).join("")||'<p class="muted">Hakuna data.</p>';$("pages").innerHTML=(r.data.top_pages||[]).map(x=>`<div class="row"><span>${x.path}</span><b>${x.views}</b></div>`).join("")||'<p class="muted">Hakuna data.</p>';$("recent").innerHTML=(r.data.recent||[]).map(x=>`<tr><td>${x.created_at}</td><td>${x.path}</td><td>${String(x.user_agent||"").slice(0,90)}</td></tr>`).join("")}
+async function loadOrders(){const r=await api("/api/admin/orders");$("orders").innerHTML=(r.data.orders||[]).map(o=>`<div class="row"><span><b>${o.order_id}</b><br><small>${o.currency||""} ${Number(o.amount||0).toLocaleString()} · ${o.method||""} · ${o.phone||""}</small></span><span class="badge ${o.status==="verified"?"ok":"warn"}">${o.status}</span></div>`).join("")||"Hakuna order."}
+async function loadAdvisory(){const r=await api("/api/advisory/admin-orders");$("advisory").innerHTML=(r.data.orders||[]).map(o=>`<div class="row"><span><b>${o.order_id}</b><br><small>${o.currency||""} ${o.amount||0} · ${o.plan||""}</small></span><span>${o.status}</span></div>`).join("")||"Hakuna order."}
+
+async function loadDoclibTopics(){
+  const r = await api("/api/doclib/topics");
+  const topics = r.data?.topics || [];
+  $("doclibTopicsList").innerHTML = topics.map(t => `
+    <div class="row" style="flex-wrap:wrap;gap:8px;">
+      <span><b>${escapeHtml(t.label)}</b><br><small>${t.has_document ? "✅ PDF ipo" : "⚠️ Bado hakuna PDF"}</small></span>
+      <span style="display:flex;gap:6px;align-items:center;">
+        <input type="file" accept="application/pdf" id="doclibFile_${t.id}" style="max-width:160px;">
+        <button class="btn small" onclick="uploadDoclibPdf('${t.id}')">⬆️ Pakia</button>
+      </span>
+    </div>`).join("") || "Hakuna mada.";
+}
+
+async function uploadDoclibPdf(topicId){
+  const input = $("doclibFile_"+topicId);
+  const file = input?.files?.[0];
+  if(!file){ toast("Chagua faili la PDF kwanza."); return; }
+  const fd = new FormData();
+  fd.append("topic_id", topicId);
+  fd.append("file", file);
+  const res = await fetch("/api/admin/doclib/upload", {method:"POST", credentials:"include", body: fd});
+  const data = await res.json();
+  toast(data.message || (data.success ? "Imepakiwa." : "Imeshindikana."));
+  if(data.success) loadDoclibTopics();
+}
+
+async function loadDoclibOrders(){
+  const r = await api("/api/doclib/admin-orders");
+  const orders = r.data?.orders || [];
+  $("doclibOrders").innerHTML = orders.map(o => `
+    <div class="row">
+      <span><b>${o.order_id}</b><br><small>${o.currency||"TZS"} ${o.amount||0} · ${o.plan||""} · ${escapeHtml(o.phone||"")}</small></span>
+      <span>${o.status}${o.status!=="verified" ? ` <button class="btn small" onclick="verifyDoclibOrder('${o.order_id}')">✅ Thibitisha</button>` : ""}</span>
+    </div>`).join("") || "Hakuna order.";
+}
+
+async function verifyDoclibOrder(orderId){
+  const r = await api("/api/doclib/admin-verify", {method:"POST", body: JSON.stringify({order_id: orderId})});
+  toast(r.data?.message || "");
+  loadDoclibOrders();
+}
+function animateNumber(el,target){
+  const start=Number(el.dataset.value||0), end=Number(target||0);
+  if(start===end){el.textContent=end.toLocaleString();return}
+  const t0=performance.now(), dur=650;
+  function step(t){const p=Math.min(1,(t-t0)/dur), eased=1-Math.pow(1-p,3);el.textContent=Math.round(start+(end-start)*eased).toLocaleString();if(p<1)requestAnimationFrame(step);else el.dataset.value=end}
+  requestAnimationFrame(step)
+}
+async function loadLiveViewStats(){
+  const r=await api("/api/admin/analytics"); if(!r.ok)return;
+  const items=[["total_visits","Jumla ya views"],["unique_visitors","Visitors tofauti"],["today_visits","Views leo"],["today_unique","Unique leo"],["live_5m","Live (dk 5)"]];
+  $("adViewStats").innerHTML=items.map(([k,l])=>`<div class="stat"><b id="v-${k}" data-value="0">0</b><span>${l}</span></div>`).join("");
+  items.forEach(([k])=>animateNumber($("v-"+k),Number(r.data[k]||0)));
+  const live=Number(r.data.live_5m||0), total=Number(r.data.total_visits||0);
+  $("liveBar").style.width=Math.min(100,Math.max(4,live*10))+"%";
+  $("liveViewStatus").textContent=`🟢 Live sasa: ${live.toLocaleString()} · Jumla: ${total.toLocaleString()} · ${new Date().toLocaleTimeString()}`;
+}
+async function loadViewDiscussions(){
+  const r=await api("/api/admin/view-discussions"); if(!r.ok)return;
+  $("viewDiscussions").innerHTML=(r.data.discussions||[]).map(x=>`<div class="row"><div><b>💬</b> ${escapeHtml(x.message)}<br><small class="muted">${escapeHtml(x.created_at)}</small></div></div>`).join("")||'<p class="muted">Hakuna majadiliano bado.</p>';
+}
+async function postViewDiscussion(){
+  const message=$("viewDiscussion").value.trim(); if(!message){toast("Andika ujumbe kwanza");return}
+  const r=await api("/api/admin/view-discussions",{method:"POST",body:JSON.stringify({message})});
+  toast(r.data.message||""); if(r.data.success){$("viewDiscussion").value="";loadViewDiscussions()}
+}
+function localToIso(val){
+  if(!val) return "";
+  const d=new Date(val);
+  if(isNaN(d.getTime())) return val;
+  return d.toISOString();
+}
+async function createAd(){
+  const files=Array.from($("adFiles").files||[]).slice(0,5);
+  const title=$("adTitle").value.trim();
+  const type=$("adType").value;
+  const marquee=$("adMarquee").value.trim();
+  const media_url=$("adMedia").value.trim();
+  const link_url=$("adLink").value.trim();
+  const duration_minutes=$("adDuration").value?Number($("adDuration").value):null;
+  const starts_at=localToIso($("adStarts").value);
+  const ends_at=localToIso($("adEnds").value);
+  const fullscreen=$("adFullscreen").checked;
+  const published=$("adPublishNow").checked;
+  if(files.length){
+    const fd=new FormData();
+    fd.append("title",title||"Tangazo");
+    fd.append("type",type);
+    fd.append("marquee",marquee);
+    fd.append("link_url",link_url);
+    fd.append("media_url",media_url);
+    if(duration_minutes) fd.append("duration_minutes",String(duration_minutes));
+    if(starts_at) fd.append("starts_at",starts_at);
+    if(ends_at) fd.append("ends_at",ends_at);
+    fd.append("fullscreen",fullscreen?"1":"0");
+    fd.append("published",published?"1":"0");
+    fd.append("active","1");
+    files.forEach(f=>fd.append("files",f));
+    if(files[0]) fd.append("file",files[0]);
+    const r=await api("/api/admin/ads",{method:"POST",body:fd,headers:{}});
+    toast(r.data.message||(r.ok?"Imehifadhiwa":"Imeshindikana"));
+    if(r.data.success){clearAdForm();loadAds()}
+  }else{
+    const r=await api("/api/admin/ads",{method:"POST",body:JSON.stringify({
+      title:title||"Tangazo",type,marquee,media_url,link_url,
+      duration_minutes,starts_at:starts_at||null,ends_at:ends_at||null,
+      fullscreen,published,active:true
+    })});
+    toast(r.data.message||(r.ok?"Imehifadhiwa":"Imeshindikana"));
+    if(r.data.success){clearAdForm();loadAds()}
+  }
+}
+function clearAdForm(){
+  ["adTitle","adMarquee","adMedia","adLink","adDuration","adStarts","adEnds"].forEach(id=>{if($(id))$(id).value=""});
+  if($("adFiles"))$("adFiles").value="";
+  if($("adPublishNow"))$("adPublishNow").checked=false;
+}
+async function publishAd(id){
+  const duration=prompt("Muda hewani kwa dakika? (acha tupu = milele / ends_at iliyopo)","60");
+  const body={};
+  if(duration && Number(duration)>0) body.duration_minutes=Number(duration);
+  const r=await api("/api/admin/ads/"+id+"/publish",{method:"POST",body:JSON.stringify(body)});
+  toast(r.data.message||"");
+  if(r.ok)loadAds();
+}
+async function unpublishAd(id){
+  const r=await api("/api/admin/ads/"+id+"/unpublish",{method:"POST",body:JSON.stringify({})});
+  toast(r.data.message||"");
+  if(r.ok)loadAds();
+}
+async function delAd(id){
+  const r=await api("/api/admin/ads/"+id,{method:"DELETE"});
+  toast(r.data.message||"");
+  if(r.data.success)loadAds();
+}
+function adStatusBadge(a){
+  const published=a.published!==false && a.published!==0;
+  if(!published) return '<span class="badge warn">RASIMU</span>';
+  const now=Date.now();
+  const st=a.starts_at?Date.parse(a.starts_at):null;
+  const en=a.ends_at?Date.parse(a.ends_at):null;
+  if(st && now<st) return '<span class="badge warn">IMESUBIRI</span>';
+  if(en && now>=en) return '<span class="badge danger-b">IMEISHA</span>';
+  if(a.active===false) return '<span class="badge danger-b">IMEZIMWA</span>';
+  return '<span class="badge ok">ON AIR</span>';
+}
+async function loadAds(){
+  const r=await api("/api/admin/ads");
+  $("adStats").innerHTML=Object.entries(r.data.counts||{}).map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join("");
+  $("ads").innerHTML=(r.data.ads||[]).map(a=>`
+    <div class="row">
+      <span>
+        <b>${escapeHtml(a.title||"—")}</b> ${adStatusBadge(a)}
+        <br><small>${escapeHtml(a.marquee||a.type||"")}</small>
+        <br><small class="muted">
+          ${a.fullscreen?"🖥 Full-screen · ":""}
+          ${a.duration_minutes?("Muda: "+a.duration_minutes+" dk · "):""}
+          ${a.starts_at?("Anza: "+escapeHtml(a.starts_at)+" · "):""}
+          ${a.ends_at?("Mwisho: "+escapeHtml(a.ends_at)):""}
+        </small>
+      </span>
+      <span style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+        ${a.published===false||a.published===0
+          ?`<button class="btn small" onclick="publishAd(${a.id})">📢 Onyesha Umma</button>`
+          :`<button class="btn small secondary" onclick="unpublishAd(${a.id})">⏹ Ficha Umma</button>`}
+        <button class="btn small secondary" onclick="editAd(${a.id})">✏️ Badili</button>
+        <button class="btn small danger" onclick="delAd(${a.id})">🗑️ Futa</button>
+      </span>
+    </div>`).join("")||"Hakuna matangazo.";
+  loadLiveViewStats();
+  loadViewDiscussions();
+}
+
+function editAd(id){
+  api("/api/admin/ads").then(r=>{const a=(r.data?.ads||[]).find(x=>Number(x.id)===Number(id));if(!a)return;
+    $("adEditCard").classList.remove("hidden"); $("editAdId").value=a.id; $("editAdTitle").value=a.title||""; $("editAdType").value=a.type||"text"; $("editAdLink").value=a.link_url||""; $("editAdMarquee").value=a.marquee||""; $("editAdFullscreen").checked=!!a.fullscreen; $("editAdResult").textContent="Unabadilisha tangazo #"+a.id; $("adEditCard").scrollIntoView({behavior:"smooth",block:"start"});});
+}
+function cancelAdEdit(){ $("adEditCard").classList.add("hidden"); }
+async function saveAdEdit(){
+  const id=$("editAdId").value; if(!id)return; const f=$("editAdFile").files[0]; let body; let opts={method:"PUT"};
+  if(f){body=new FormData(); body.append("title",$("editAdTitle").value.trim());body.append("type",$("editAdType").value);body.append("link_url",$("editAdLink").value.trim());body.append("marquee",$("editAdMarquee").value.trim());body.append("fullscreen",$("editAdFullscreen").checked?"1":"0");body.append("file",f);opts.body=body;}
+  else {opts.headers={"Content-Type":"application/json"};opts.body=JSON.stringify({title:$("editAdTitle").value.trim(),type:$("editAdType").value,link_url:$("editAdLink").value.trim(),marquee:$("editAdMarquee").value.trim(),fullscreen:$("editAdFullscreen").checked});}
+  const r=await api("/api/admin/ads/"+id,opts); $("editAdResult").textContent=r.data?.message||"Imekamilika."; if(r.data?.success){toast("✅ Tangazo limebadilishwa");cancelAdEdit();loadAds();}
+}
+async function runAI(){const r=await api("/api/admin/ai-search/run",{method:"POST",body:JSON.stringify({query:$("aiQuery").value.trim()})});$("aiLog").textContent=r.data.message||r.data.current_thought||"Imekamilika."}
+async function loadSettings(){const s=await api("/api/site-status");$("sabbathInfo").innerHTML=`<b>${s.data.sabbath?"🔒 LOCKED — Sabato":"🟢 OPEN"}</b><br><small>Start: ${s.data.sabbath_start||"—"}<br>End: ${s.data.sabbath_end||"—"}<br>Reference: ${s.data.reference_lat}, ${s.data.reference_lon}</small>`;const c=await api("/api/public-config");$("adsenseInfo").textContent=c.data.adsense?.enabled?"🟢 AdSense imewezeshwa":"🟡 Haijawezeshwa — weka Environment Variables.";const a=await api("/api/admin/access-mode");$("adminModeInfo").innerHTML=a.data.temporary_open?`🔓 <b>Passwordless mode</b> — imebaki takriban ${Math.floor((a.data.seconds_left||0)/3600)}h.`:`🔐 <b>Normal mode</b> — username + password vinahitajika.`}
+loadAccessMode(); status();
+setInterval(()=>{if(!$("dash").classList.contains("hidden")){loadAnalytics(); if(!$("tab-ads").classList.contains("hidden"))loadLiveViewStats()}},10000);
+
+</script><script>
+/* ===== ADMIN PRO v2 JS ===== */
+(function(){
+ function inject(){
+   const dash=document.getElementById('dash'); if(!dash || document.querySelector('.nm-admin-enhanced')) return;
+   const box=document.createElement('div');box.className='nm-admin-enhanced';
+   box.innerHTML=`<div class="nm-quick-actions"><button onclick="tab('room')">🛡️<br>Live Mirror</button><button onclick="tab('analytics')">📊<br>Analytics</button><button onclick="tab('products')">🛍️<br>Bidhaa Zote</button><button onclick="tab('ads')">📣<br>Matangazo</button><button onclick="tab('chat')">💬<br>Chat Live</button><button onclick="tab('settings')">⚙️<br>Mipangilio</button></div><div class="nm-health"><span class="good">● Mfumo tayari</span><span class="info">⚡ Dashboard ya haraka</span><span>🔐 Admin protected</span><span>📱 Mobile ready</span></div>`;
+   const main=dash.querySelector('.wrap'); if(main) main.insertBefore(box,main.firstChild);
+ }
+ const timer=setInterval(()=>{if(!document.getElementById('dash')?.classList.contains('hidden')){inject();clearInterval(timer)}},300);
+})();
+</script>
+
+<style id="nm-admin-product-style">.nm-admin-product-actions{display:flex;gap:8px;flex-wrap:wrap}.nm-admin-enhanced{margin-bottom:14px}.nm-admin-enhanced .nm-quick-actions{grid-template-columns:repeat(6,minmax(0,1fr))!important}@media(max-width:700px){.nm-admin-enhanced .nm-quick-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+</style>
+<script>
+function toggleAllProductFields(){const type=document.getElementById('allProductType')?.value;const ordinary=document.getElementById('allOrdinaryCategoryWrap');const imp=document.getElementById('allImportFields');const impCat=document.getElementById('allImportCategoryWrap');if(!ordinary||!imp)return;const isOrd=type==='ordinary';ordinary.classList.toggle('hidden',!isOrd);imp.classList.toggle('hidden',isOrd);impCat.classList.toggle('hidden',isOrd);}
+async function createAnyProduct(){const type=document.getElementById('allProductType').value;const title=document.getElementById('allProductTitle').value.trim();const desc=document.getElementById('allProductDesc').value.trim();const img=document.getElementById('allProductImage').files[0];const out=document.getElementById('allProductResult');if(!title){out.textContent='⚠️ Weka jina la bidhaa.';return;}let fd=new FormData();fd.append('title',title);fd.append('description',desc);if(img)fd.append('image',img);let url='/api/admin/ordinary-products';if(type==='ordinary'){fd.append('category',document.getElementById('allOrdinaryCategory').value);fd.append('price_tzs',document.getElementById('allProductPrice').value||'0');fd.append('stock',document.getElementById('allProductStock').value||'0');}else{url='/api/admin/import/products';fd.append('category',document.getElementById('allImportCategory').value);fd.append('source_country',document.getElementById('allSourceCountry').value.trim());fd.append('estimated_price_tzs',document.getElementById('allProductPrice').value||'0');fd.append('shipping_cost_tzs',document.getElementById('allShippingCost').value||'0');fd.append('customs_duty_note',document.getElementById('allCustoms').value.trim());fd.append('seller_contact',document.getElementById('allSellerContact').value.trim());fd.append('seller_name',document.getElementById('allSellerName').value.trim());fd.append('supplier_url',document.getElementById('allSupplierUrl').value.trim());fd.append('source_url',document.getElementById('allSourceUrl').value.trim());fd.append('customs_estimate_tzs',document.getElementById('allCustomsEstimate').value||'0');fd.append('weight_kg',document.getElementById('allWeightKg').value||'0');fd.append('shipper_name',document.getElementById('allShipperName').value.trim());fd.append('shipper_contact',document.getElementById('allShipperContact').value.trim());fd.append('shipper_url',document.getElementById('allShipperUrl').value.trim());}try{const r=await fetch(url,{method:'POST',credentials:'include',body:fd});const d=await r.json();out.textContent=d.message||'Imekamilika.';if(d.success){['allProductTitle','allProductDesc','allProductPrice','allProductStock','allSourceCountry','allSellerContact','allShippingCost','allCustoms','allSupplierUrl','allSourceUrl','allCustomsEstimate','allWeightKg','allShipperName','allShipperContact','allShipperUrl','allSellerName'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});document.getElementById('allProductImage').value='';loadAllProducts();if(typeof toast==='function')toast(d.message||'Bidhaa imeongezwa.');}}catch(e){out.textContent='⚠️ Imeshindikana: '+e.message;}}
+async function loadAllProducts(){const box=document.getElementById('allProductList');if(!box)return;try{const r=await api('/api/admin/ordinary-products');let x=r.data?.products||[];const q=(document.getElementById('allProductSearch')?.value||'').toLowerCase();const c=document.getElementById('allProductFilter')?.value||'';if(q)x=x.filter(p=>(p.title+' '+(p.description||'')).toLowerCase().includes(q));if(c)x=x.filter(p=>p.category===c);box.innerHTML=x.map(p=>`<div class="row"><span>${p.image_url?`<img src="${escapeHtml(p.image_url)}" style="width:56px;height:56px;object-fit:cover;border-radius:9px;vertical-align:middle;margin-right:8px">`:''}<b>${escapeHtml(p.title)}</b><br><small>${escapeHtml(p.category||'nyingine')} · TZS ${Number(p.price_tzs||0).toLocaleString()} · stock ${p.stock||0}</small></span><button class="btn small secondary" onclick="deleteAllProduct(${p.id})">🗑️ Futa</button></div>`).join('')||'<p class="muted">Hakuna bidhaa.</p>';}catch(e){box.innerHTML='<p class="muted">Imeshindikana kupakia bidhaa.</p>';}}
+async function deleteAllProduct(id){if(!confirm('Uhakika unataka kufuta bidhaa hii?'))return;const r=await api('/api/admin/ordinary-products/'+id,{method:'DELETE'});if(typeof toast==='function')toast(r.data?.message||'');loadAllProducts();}
+(function(){const oldTab=window.tab;if(typeof oldTab==='function'&&!window.__nmProductsPatched){window.__nmProductsPatched=true;const orig=window.tab;window.tab=function(n){orig(n);if(n==='products'){toggleAllProductFields();loadAllProducts();}}}})();
+</script>
+
+</body></html>
