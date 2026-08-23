@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NjiaMauzo Afrika - Tafuta bidhaa, mazao, bei na huduma Afrika.">
+    <meta name="theme-color" content="#0b6b3a">
+    <meta name="robots" content="noindex, nofollow">
+    <title>NjiaMauzo Afrika</title>
+    <link rel="icon" href="/static/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google AdSense — weka data-ad-client yako halisi kabla ya kuwasha matangazo -->
+    <!-- Google AdSense huwashwa kupitia /api/public-config baada ya ADSENSE_CLIENT_ID kuwekwa Render. -->
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #090c18;
+            --bg-soft: #0d1224;
+            --card: #121933;
+            --card-border: #232b4d;
+            --text: #e8ecf7;
+            --muted: #96a2c2;
+            --accent1: #17d1a0;
+            --accent2: #3b82f6;
+            --accent-grad: linear-gradient(135deg, var(--accent1), var(--accent2));
+        }
+        body {
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        input, textarea, select { -webkit-user-select: text; user-select: text; }
+
+        header {
+            background: linear-gradient(135deg, #0a0e2e, #10173a);
+            color: white;
+            border-bottom: 1px solid var(--card-border);
+            padding: 14px 18px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,.18);
+            max-height: 260px; overflow: hidden;
+            transition: max-height .32s ease, padding .32s ease, box-shadow .32s ease, border-color .32s ease;
+        }
+        header.header-collapsed {
+            max-height: 0; padding-top: 0; padding-bottom: 0;
+            box-shadow: none; border-bottom-color: transparent;
+        }
+        .nav {
+            max-width: 1150px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .brand {
+            font-size: 19px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .brand img {
+            width: 42px; height: 42px;
+            border-radius: 11px;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,.25);
+        }
+        .brand small {
+            display: block;
+            font-size: 11px;
+            opacity: .8;
+            font-weight: 400;
+            margin-top: 1px;
+        }
+        .nav-buttons { display: flex; gap: 7px; flex-wrap: wrap; }
+        .modes-bar {
+            max-width: 1150px; margin: 10px auto 0; padding: 0 16px 12px;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .modes-inner { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+        .mode-btn {
+            background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+            color: white; padding: 8px 16px; border-radius: 999px;
+            font-size: 13px; font-weight: 700; cursor: pointer;
+        }
+        .mode-btn:hover { background: var(--accent-grad); border-color: transparent; }
+        .modes-tagline {
+            font-size: 17px; text-align: center; font-weight: 900; letter-spacing: .3px;
+            margin: 10px 0 4px; padding: 0 8px;
+            background: linear-gradient(90deg,#f5576c,#f093fb,#4facfe,#22c55e,#fbbf24);
+            background-size: 300% auto;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: taglineShine 5s linear infinite;
+            max-height: 60px; opacity: 1; overflow: hidden;
+            transition: max-height .35s ease, opacity .3s ease, margin .35s ease;
+        }
+        .modes-tagline.tagline-collapsed {
+            max-height: 0; opacity: 0; margin: 0; pointer-events: none;
+        }
+        @keyframes taglineShine { 0%{background-position:0% center;} 100%{background-position:300% center;} }
+        .advisory-mega-title{
+            font-size: 24px; text-align: center; font-weight: 900; letter-spacing: .2px;
+            line-height: 1.25; margin-bottom: 6px;
+            background: linear-gradient(90deg,#fbbf24,#f5576c,#8b5cf6,#4facfe,#22c55e);
+            background-size: 300% auto;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: taglineShine 6s linear infinite;
+        }
+        .lang-opt{
+            display:block;width:100%;text-align:left;background:none;border:none;color:#e9f1fb;
+            padding:8px 10px;border-radius:8px;font-size:13px;cursor:pointer;
+        }
+        .lang-opt:hover, .lang-opt:active{ background:rgba(255,255,255,.08); }
+        .goog-te-banner-frame, .goog-te-gadget-icon, #google_translate_element { display:none !important; }
+        body{ top:0 !important; }
+        .nav button {
+            border: 0;
+            background: rgba(255,255,255,.14);
+            color: white;
+            padding: 9px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .nav button:hover { background: rgba(255,255,255,.25); }
+
+        main {
+            max-width: 1150px;
+            margin: auto;
+            padding: 20px 16px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(180deg, #14110c 0%, #1c1710 100%);
+            color: white;
+            padding: 44px 24px 30px;
+            border-radius: 22px;
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            border: 1px solid rgba(212,175,55,.25);
+        }
+        .hero::before{
+            content:"";position:absolute;inset:0;
+            background: radial-gradient(ellipse at top,rgba(212,175,55,.18),transparent 60%);
+            pointer-events:none;
+        }
+        .hero h1 { margin: 0 auto 12px; font-size: 34px; font-weight: 800; max-width: 560px; line-height:1.2; position:relative; }
+        .hero h1 .grad { background: linear-gradient(90deg,#f5c542,#d4af37); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero p { line-height: 1.7; max-width: 480px; opacity: .82; font-size: 15px; margin: 0 auto 24px; position:relative; }
+        .search { display: flex; gap: 8px; max-width: 560px; flex-wrap: wrap; margin: 0 auto; position:relative; }
+        .soko-letu-cta{
+            display:block; max-width:560px; margin:14px auto 0; width:100%;
+            background: linear-gradient(135deg,#22c55e,#15803d); color:#fff;
+            border:none; border-radius:14px; padding:16px 20px;
+            font-size:19px; font-weight:900; letter-spacing:.3px; cursor:pointer;
+            box-shadow:0 8px 24px rgba(34,197,94,.4);
+            animation: sokoLetuPulse 2.2s ease-in-out infinite;
+        }
+        @keyframes sokoLetuPulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.02); } }
+        .search input {
+            flex: 1; min-width: 200px;
+            padding: 13px 16px;
+            border: none; border-radius: 12px;
+            font-size: 15px; background: white; color: #1a2e24;
+        }
+        .search .primary{
+            background: linear-gradient(135deg,#f5c542,#d4af37) !important;
+            color:#1a1400 !important; font-weight:800 !important; border:none !important;
+        }
+        .hero-trust-row{
+            display:flex; gap:22px; justify-content:center; flex-wrap:wrap;
+            margin-top:26px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08);
+            position:relative;
+        }
+        .hero-trust-item{ text-align:center; font-size:11px; opacity:.75; max-width:110px; }
+        .hero-trust-item .icon{ font-size:22px; display:block; margin-bottom:4px; }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--card-border);
+            border-radius: 11px;
+            font-size: 15px;
+            outline: none;
+            font-family: inherit;
+            background: var(--card);
+            color: var(--text);
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent1);
+            box-shadow: 0 0 0 3.5px rgba(23,209,160,.15);
+        }
+        button {
+            cursor: pointer;
+            font-family: inherit;
+            pointer-events: auto !important;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(23, 209, 160, 0.25);
+            position: relative;
+            z-index: 1;
+        }
+        button:disabled { opacity: 0.55; cursor: not-allowed; }
+        a, label, select, .mode-btn, .payment-number, .pay-logo,
+        .link-btn, .engage-btn, .seller-info-btn, .chat-button, .close {
+            pointer-events: auto !important;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(23, 209, 160, 0.25);
+            cursor: pointer;
+        }
+        select, input, textarea { pointer-events: auto !important; touch-action: manipulation; }
+
+        .primary {
+            background: var(--accent-grad);
+            color: white; border: 0; border-radius: 12px;
+            padding: 12px 18px; font-weight: 700; font-size: 14px;
+            box-shadow: 0 3px 14px rgba(23,209,160,.25);
+            pointer-events: auto !important;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        .primary:hover { transform: translateY(-1px); }
+        .secondary {
+            background: #182148; color: #7fe3cf; border: 1px solid var(--card-border);
+            border-radius: 11px; padding: 10px 15px; font-weight: 700; font-size: 13px;
+            pointer-events: auto !important;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        .link-btn {
+            background: none; border: 0; color: var(--accent1);
+            font-weight: 700; text-decoration: underline; padding: 4px; font-size: 13px; cursor: pointer;
+        }
+
+        .section {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            padding: 22px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 16px rgba(0,0,0,.25);
+        }
+        .section h2 { margin: 0 0 16px; font-size: 20px; font-weight: 800; color: var(--text); }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        @media (min-width: 560px) {
+            .cards { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+        }
+        .soko-letu-title{
+            margin: 4px 0 10px; font-size: 17px; font-weight: 900; color: #22c55e; letter-spacing: .3px;
+        }
+        .product-name-pills{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+        .product-name-pill{
+            background: var(--bg-soft); border: 1px solid var(--card-border); color: var(--text);
+            border-radius: 999px; padding: 7px 14px; font-size: 12.5px; font-weight: 700; cursor: pointer;
+        }
+        .product-name-pill:active{ transform: scale(.96); }
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 3px 16px rgba(0,0,0,.25);
+            border: 1px solid var(--card-border);
+            transition: transform .2s;
+        }
+        .card:hover { transform: translateY(-3px); }
+        .card img { width: 100%; height: 175px; object-fit: cover; background: var(--bg-soft); }
+        .card-body { padding: 15px; }
+        .card h3 { margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--text); }
+        .available {
+            display: inline-block;
+            background: rgba(23,209,160,.14); color: #4fe3bd;
+            font-size: 11px; font-weight: 700;
+            padding: 3px 9px; border-radius: 20px; margin-bottom: 8px;
+        }
+        .muted { color: var(--muted); font-size: 13px; }
+        .actions { display: flex; gap: 7px; margin-top: 13px; flex-wrap: wrap; align-items: center; position: relative; z-index: 2; pointer-events: auto; }
+        .pay-btn {
+            width: 100%;
+            background: var(--accent-grad);
+            color: white; border: 0; border-radius: 12px;
+            padding: 13px 16px; font-weight: 800; font-size: 14px;
+            box-shadow: 0 3px 12px rgba(11,125,69,.28);
+            display: flex; align-items: center; justify-content: center; gap: 7px;
+            pointer-events: auto !important;
+            cursor: pointer;
+            touch-action: manipulation;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .seller-info-btn {
+            display: block; width: 100%; text-align: left; cursor: pointer;
+            background: linear-gradient(135deg, #0f3d2e, #134e3a);
+            border: 1px solid #22c55e; border-radius: 14px;
+            padding: 14px 14px 12px; margin: 10px 0;
+            font-size: 14px; color: #ecfdf5; line-height: 1.55;
+            font-family: inherit;
+            transition: transform .15s, box-shadow .15s, border-color .15s;
+            pointer-events: auto !important;
+            touch-action: manipulation;
+        }
+        .seller-info-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+            border-color: #4ade80;
+        }
+        .seller-info-btn .si-price {
+            color: #fef08a; font-weight: 800; font-size: 16px; margin-bottom: 6px;
+        }
+        .seller-info-btn .si-row {
+            color: #f0fdf4; font-weight: 600; margin-top: 3px; font-size: 13.5px;
+        }
+        .seller-info-btn .si-row b { color: #a7f3d0; font-weight: 700; }
+        .seller-info-btn .si-note {
+            color: #bbf7d0; font-size: 11px; margin-top: 2px; font-weight: 500;
+        }
+        .seller-info-btn .si-cta {
+            margin-top: 12px; padding: 10px 12px; border-radius: 10px; text-align: center;
+            font-weight: 800; font-size: 13px; color: #052e16;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            box-shadow: 0 3px 12px rgba(34, 197, 94, 0.35);
+        }
+        .seller-info-btn .si-hint {
+            color: #86efac; font-weight: 600; margin-top: 8px; font-size: 11px; text-align: center;
+        }
+
+        
+        .like-btn {
+            background: #fdecec; color: #b42318; border: 0;
+            border-radius: 10px; padding: 8px 12px; font-weight: 700; font-size: 13px;
+        }
+        .like-btn.liked { background: #b42318; color: white; }
+
+        .banner {
+            background: linear-gradient(135deg, #1e2242, #182148);
+            border-left: 5px solid var(--accent2);
+            color: var(--text);
+            padding: 14px 16px; border-radius: 12px; margin-bottom: 16px; font-size: 14px;
+        }
+        .ad-banner {
+            background: var(--bg-soft);
+            border: 1.5px dashed var(--card-border);
+            border-radius: 14px; padding: 16px; margin-bottom: 16px; text-align: center;
+        }
+
+        .advisory {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 20px; align-items: center;
+        }
+        .advisory img { width: 100%; border-radius: 16px; display: block; }
+        .advisory-media { position: relative; border-radius: 16px; overflow: hidden; }
+        .advisory-media video, .advisory-media img {
+            width: 100%; height: 100%; object-fit: cover; border-radius: 16px; display: block;
+        }
+        .advisory-media .advisory-media-badge {
+            position: absolute; top: 10px; left: 10px; z-index: 2;
+            background: linear-gradient(90deg,#f5576c,#f093fb); color: #fff;
+            font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 999px;
+            box-shadow: 0 3px 10px rgba(0,0,0,.35); display: flex; align-items: center; gap: 5px;
+        }
+        .advisory-list { display: flex; flex-direction: column; gap: 12px; }
+        .advisory-item {
+            display: flex; gap: 10px; align-items: flex-start;
+            background: linear-gradient(145deg, var(--bg-soft), rgba(255,255,255,.02));
+            padding: 12px 14px; border-radius: 14px; border: 1px solid var(--card-border);
+            box-shadow: 0 3px 12px rgba(0,0,0,.18);
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        }
+        .advisory-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(0,0,0,.28);
+            border-color: rgba(255,255,255,.22);
+        }
+        .advisory-item .n {
+            background: var(--accent-grad);
+            color: white; min-width: 26px; height: 26px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 12px; flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,.3);
+        }
+        button.advisory-item.doclib-btn{
+            width: 100%; text-align: left; cursor: pointer; font-family: inherit;
+            min-height: 78px; box-sizing: border-box;
+        }
+        button.advisory-item.doclib-btn:active{ transform: scale(.98); }
+        .advisory-item strong { font-size: 13.5px; }
+        .advisory-item .muted { font-size: 12px; }
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366, #1ebe57);
+            color: white; border: 0; border-radius: 13px;
+            padding: 14px 18px; font-weight: 800;
+            display: flex; align-items: center; justify-content: center; gap: 9px;
+            width: 100%; font-size: 15px;
+            box-shadow: 0 4px 16px rgba(37,211,102,.3);
+            cursor: pointer;
+            pointer-events: auto !important;
+            touch-action: manipulation;
+            position: relative;
+            z-index: 2;
+        }
+        @media (max-width: 750px) { .advisory { grid-template-columns: 1fr; } }
+
+        .modal {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,.6);
+            z-index: 3000; padding: 20px; overflow-y: auto;
+            backdrop-filter: blur(3px);
+            pointer-events: none;
+        }
+        .modal.is-open {
+            display: block;
+            pointer-events: auto;
+        }
+        .modal-box {
+            background: var(--card); max-width: 480px; margin: 40px auto;
+            padding: 24px; border-radius: 20px; border: 1px solid var(--card-border);
+            box-shadow: 0 20px 60px rgba(0,0,0,.45);
+            animation: modalIn .25s ease;
+            color: var(--text);
+            position: relative;
+            z-index: 2;
+            pointer-events: auto;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(20px) scale(.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-box h2 { margin: 0 0 16px; font-size: 19px; font-weight: 800; color: var(--text); line-height: 1.35; }
+        .close {
+            float: right; border: 0; background: var(--bg-soft); color: var(--text); border-radius: 50%;
+            width: 34px; height: 34px; cursor: pointer; font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .advisory-welcome-overlay {
+            position: fixed; inset: 0; z-index: 3500; display: none;
+            background: rgba(4,10,20,.72);
+            pointer-events: none;
+        }
+        .advisory-welcome-overlay.open {
+            display: block;
+            pointer-events: auto;
+        }
+        .advisory-welcome-sheet {
+            position: absolute; left: 0; right: 0; bottom: 0; max-width: 480px; margin: 0 auto;
+            background: var(--card); border: 1px solid var(--card-border);
+            border-radius: 22px 22px 0 0; padding: 28px 22px 32px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,.5);
+            transform: translateY(100%); transition: transform .38s cubic-bezier(.25,.8,.3,1);
+        }
+        .advisory-welcome-overlay.open .advisory-welcome-sheet { transform: translateY(0); }
+
+        .captcha-row {
+            display: flex; align-items: center; gap: 10px;
+            background: var(--bg-soft); padding: 11px; border-radius: 11px; margin: 12px 0;
+        }
+        .captcha-row strong { white-space: nowrap; }
+
+        .feed-item {
+            padding: 12px 14px; border-bottom: 1px solid var(--card-border);
+            font-size: 14px; animation: fadeSlideIn .4s ease;
+        }
+        .feed-item:last-child { border-bottom: 0; }
+        .feed-item:hover { background: var(--bg-soft); }
+        .feed-time { color: var(--muted); font-size: 11px; margin-top: 4px; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .45; transform: scale(.85); }
+        }
+
+        .chat { position: fixed; right: 18px; bottom: 18px; z-index: 2000; pointer-events: none; }
+        .chat-button {
+            width: 60px; height: 60px; border-radius: 50%; border: 0;
+            background: var(--accent-grad);
+            color: white; font-size: 26px;
+            box-shadow: 0 6px 22px rgba(23,209,160,.4);
+            pointer-events: auto !important;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        .chat-box {
+            display: none; width: 340px; max-width: calc(100vw - 30px);
+            background: var(--card); border: 1px solid var(--card-border); border-radius: 18px;
+            box-shadow: 0 12px 48px rgba(0,0,0,.45);
+            overflow: hidden; margin-bottom: 12px;
+            pointer-events: auto !important;
+        }
+        .chat-head {
+            background: var(--accent-grad);
+            color: white; padding: 15px 16px; font-weight: 800; font-size: 14px;
+        }
+        .chat-messages { height: 300px; overflow-y: auto; padding: 14px; color: var(--text); }
+        .msg { padding: 10px 13px; border-radius: 12px; margin-bottom: 9px; line-height: 1.5; font-size: 14px; }
+        .bot { background: var(--bg-soft); }
+        .user { background: rgba(23,209,160,.18); text-align: right; }
+        .chat-input { display: flex; gap: 7px; padding: 10px; border-top: 1px solid var(--card-border); }
+        .chat-input input { min-width: 0; }
+
+        .payment-number {
+            background: var(--bg-soft); border: 1.5px solid var(--card-border);
+            padding: 10px 12px; margin: 8px 0; border-radius: 14px;
+            font-weight: 700; font-size: 14px;
+            display: flex; align-items: center; gap: 12px;
+            cursor: pointer;
+            transition: transform .15s, box-shadow .15s, border-color .15s, background .15s;
+            user-select: none;
+            pointer-events: auto !important;
+            touch-action: manipulation;
+            position: relative;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(23, 209, 160, 0.2);
+        }
+        .payment-number:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,.3);
+            border-color: var(--accent1);
+        }
+        .payment-number.open {
+            background: rgba(23,209,160,.12);
+            border-color: var(--accent1);
+            box-shadow: 0 0 0 2px rgba(23,209,160,.25);
+        }
+        .pay-logo {
+            min-width: 88px; height: 52px; border-radius: 12px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 900; color: white;
+            flex-shrink: 0; letter-spacing: 0.4px;
+            box-shadow: 0 3px 10px rgba(0,0,0,.22);
+            padding: 0 12px;
+            text-transform: uppercase;
+            border: 0;
+            cursor: pointer;
+        }
+        .pay-logo.mpesa { background: linear-gradient(135deg, #00a651, #007a3d); }
+        .pay-logo.tigopesa { background: linear-gradient(135deg, #002d72, #0057a8); font-size: 10px; }
+        .pay-logo.stripe { background: linear-gradient(135deg, #635bff, #4b44d6); font-size: 11px; }
+        .pay-logo.gpay { background: linear-gradient(135deg, #1a1a1a, #4285F4); font-size: 11px; }
+        .pay-logo.paypal { background: linear-gradient(135deg, #003087, #009cde); font-size: 12px; }
+        .pay-logo.halotel { background: linear-gradient(135deg, #e30613, #b00510); }
+        .pay-logo.airtel { background: linear-gradient(135deg, #ed1c24, #c41018); }
+        .pay-logo:active { transform: scale(0.97); }
+        .pay-meta { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
+        .pay-meta .pay-name { font-size: 13px; color: var(--text); font-weight: 700; }
+        .pay-meta .pay-hint { font-size: 12px; color: var(--muted); font-weight: 500; }
+        .pay-meta .pay-num {
+            font-size: 18px; color: var(--accent1); font-weight: 800;
+            letter-spacing: 0.5px; display: none;
+        }
+        .payment-number.open .pay-num { display: block; }
+        .payment-number.open .pay-hint { display: none; }
+        .pay-copy {
+            font-size: 11px; color: #0a0e2e; font-weight: 700;
+            background: var(--accent1); padding: 6px 10px; border-radius: 8px;
+            display: none; white-space: nowrap;
+        }
+        .payment-number.open .pay-copy { display: inline-block; }
+
+        footer {
+            background: #0c1f16; color: white;
+            padding: 32px 18px; margin-top: 36px; text-align: center;
+        }
+        footer img { width: 50px; border-radius: 12px; margin-bottom: 10px; }
+        footer strong { font-size: 16px; }
+        footer p { opacity: .8; margin: 8px 0; font-size: 14px; }
+        footer small { opacity: .55; font-size: 12px; }
+
+        .hidden { display: none !important; }
+        .status { padding: 11px 13px; border-radius: 10px; margin: 9px 0; font-size: 14px; }
+        .success { background: rgba(23,209,160,.15); color: #4fe3bd; }
+        .error { background: rgba(239,68,68,.15); color: #fca5a5; }
+
+        .comment-list { margin-top: 10px; max-height: 220px; overflow-y: auto; }
+        .comment-item { background: var(--bg-soft); padding: 9px 12px; border-radius: 10px; margin-bottom: 7px; font-size: 13px; }
+        .comment-item b { color: var(--accent1); }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px; margin-bottom: 15px;
+        }
+        .summary-card {
+            background: var(--accent-grad);
+            color: white; border-radius: 12px; padding: 11px 8px; text-align: center;
+        }
+        .summary-card .num { font-size: 19px; font-weight: 800; display: block; }
+        .summary-card .lbl { font-size: 10.5px; opacity: .88; margin-top: 2px; }
+        .cat-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px; margin-bottom: 16px;
+        }
+        .cat-card { background: var(--bg-soft); border: 1px solid var(--card-border); border-radius: 12px; padding: 11px; }
+        .cat-card .cat-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+        .cat-card .cat-name { font-weight: 800; font-size: 13px; color: var(--text); }
+        .cat-card .cat-count {
+            background: var(--accent-grad); color: white; font-size: 10px; font-weight: 700;
+            border-radius: 20px; padding: 2px 9px;
+        }
+        .bar-track { background: var(--card-border); border-radius: 10px; height: 8px; overflow: hidden; margin: 8px 0; }
+        .bar-fill { background: var(--accent-grad); height: 100%; border-radius: 10px; }
+        .cat-card .cat-detail {
+            font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 7px; margin-top: 7px;
+        }
+        .cat-card .cat-detail span {
+            background: var(--card); border: 1px solid var(--card-border); border-radius: 8px; padding: 3px 8px;
+        }
+        .market-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+        @media (max-width: 700px) { .market-columns { grid-template-columns: 1fr; } }
+        .location-row { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; font-size: 13px; }
+        .location-row .name { min-width: 110px; font-weight: 600; color: var(--text); }
+        .location-row .track { flex: 1; background: var(--card-border); border-radius: 8px; height: 8px; overflow: hidden; }
+        .location-row .fill { background: var(--accent-grad); height: 100%; border-radius: 8px; }
+        .location-row .count { font-weight: 700; min-width: 22px; text-align: right; color: var(--accent1); }
+        .recent-item {
+            background: var(--bg-soft); border-radius: 11px; padding: 10px 12px;
+            margin-bottom: 8px; font-size: 13px; border: 1px solid var(--card-border);
+        }
+        .recent-item .rt { font-weight: 700; color: var(--text); }
+        .ad-slot {
+            background: var(--bg-soft); border: 1.5px dashed var(--card-border); border-radius: 14px;
+            padding: 14px; text-align: center; color: var(--muted); font-size: 12px;
+            min-height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+            width: 100%; max-width: 100%; box-sizing: border-box; overflow: hidden;
+        }
+        /* Blur imeondolewa — sehemu zote zinaonekana bila kufifia */
+        .locked-section {
+            filter: none !important;
+            pointer-events: auto !important;
+            user-select: auto !important;
+            opacity: 1 !important;
+        }
+        /* Eneo la matangazo — upana kamili ndani ya main, lisizidi mfumo */
+        .ad-fullwidth {
+            width: 100%;
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .ad-fullwidth .ad-slot,
+        .ad-fullwidth .marquee-wrap,
+        .ad-fullwidth ins.adsbygoogle {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box;
+        }
+        .marquee-wrap {
+            background: var(--bg-soft); border: 1px solid var(--card-border); border-radius: 14px;
+            overflow: hidden; padding: 18px 0; margin-bottom: 14px;
+        }
+        .marquee-track {
+            display: inline-block; white-space: nowrap; padding-left: 100%;
+            font-weight: 800; font-size: 19px;
+            letter-spacing: 0.3px;
+            background: var(--accent-grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: marqueeScroll 22s linear infinite;
+            will-change: transform;
+            transition: opacity .3s ease;
+        }
+        @media (max-width: 650px) {
+            .marquee-track { font-size: 20px; }
+        }
+        @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+        html { scroll-behavior: smooth; }
+        .card, .section, .modal-box, .primary, .secondary, .mode-btn, .engage-btn, .payment-number {
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease, opacity .22s ease;
+        }
+        .section { animation: fadeUp .45s ease both; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .ad-media-box {
+            width: 100%; margin: 12px 0; border-radius: 14px; overflow: hidden;
+            background: var(--bg-soft); border: 1px solid var(--card-border);
+        }
+        .ad-media-box video, .ad-media-box img { width: 100%; max-height: 320px; object-fit: cover; display: block; }
+        .ad-media-box audio { width: 100%; max-width: calc(100% - 24px); margin: 12px; }
+        .engage-counts { font-size: 12px; color: var(--muted); margin-top: 8px; text-align: center; }
+        .product-lock-banner:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(245,158,11,.25); }
+        .product-lock-banner { transition: transform .15s, box-shadow .15s; pointer-events: auto !important; }
+        /* Matangazo — daima LIVE, bila lock */
+        .ads-live-zone, #adMarqueeText, #adMediaBox, .marquee-wrap {
+            filter: none !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+
+        .pay-btn-done {
+            background: linear-gradient(135deg, #16a34a, #22c55e) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 18px rgba(34, 197, 94, 0.45) !important;
+            pointer-events: none;
+        }
+
+        .sabbath-product-banner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:12px;background:rgba(10,18,35,.58);backdrop-filter:blur(1px);z-index:4;}
+        .sabbath-product-banner span{display:block;width:92%;padding:10px 12px;border:2px solid #f5c518;border-radius:12px;text-align:center;font-weight:900;font-size:12px;letter-spacing:.5px;color:#fff;background:linear-gradient(135deg,rgba(20,28,55,.96),rgba(68,42,7,.94));box-shadow:0 4px 16px rgba(0,0,0,.45);text-shadow:0 1px 2px #000;}
+        .sabbath-service-banner{margin:14px 0;padding:16px;border:2px solid #f5c518;border-radius:16px;text-align:center;background:linear-gradient(135deg,#101a35,#4a3008);color:#fff;font-weight:900;box-shadow:0 5px 22px rgba(245,197,24,.18);}
+        .sabbath-service-banner small{display:block;margin-top:6px;color:#f8df83;font-weight:600;}
+        body.sabbath-mode .service-control{pointer-events:none;opacity:.45;filter:grayscale(.2);}
+        .gold-help-3d{display:block;margin-top:7px;text-align:center;font-size:13px;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;background:linear-gradient(180deg,#fff7cc,#ffd65a 45%,#b87500);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 2px 0 #6b4300,0 5px 8px rgba(0,0,0,.55);filter:drop-shadow(0 3px 3px rgba(245,158,11,.35))}
+        .advisory-time-alert{margin:10px 0 12px;padding:10px 12px;border-radius:11px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.42);color:#fbbf24;font-size:12.5px;font-weight:800;text-align:center}
+        .pay-btn-welcome {
+            background: linear-gradient(135deg, #b45309, #f59e0b, #fbbf24) !important;
+            color: #1a1205 !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 22px rgba(245, 158, 11, 0.5) !important;
+            letter-spacing: 0.3px;
+            animation: goldPulse 1.6s ease-in-out infinite;
+            pointer-events: auto !important;
+        }
+        @keyframes goldPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 22px rgba(245, 158, 11, 0.45); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 28px rgba(251, 191, 36, 0.65); }
+        }
+
+        .social-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+        .social-row a {
+            width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: var(--card); border: 1px solid var(--card-border); color: var(--text); font-size: 18px; text-decoration: none;
+        }
+        .social-row a:hover { background: var(--accent-grad); border-color: transparent; }
+        .engage-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+        
+        /* ===== Full-screen tangazo overlay ===== */
+        #adFullscreenOverlay {
+            display: none; position: fixed; inset: 0; z-index: 4000;
+            background: rgba(4, 8, 18, 0.94);
+            align-items: center; justify-content: center;
+            flex-direction: column; padding: 16px;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            animation: fsFadeIn .28s ease;
+        }
+        #adFullscreenOverlay.open { display: flex; }
+        @keyframes fsFadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
+        #adFullscreenOverlay .fs-inner {
+            max-width: 920px; width: 100%; max-height: 90vh; overflow: auto;
+            background: linear-gradient(160deg, #121933, #0d1528);
+            border: 1px solid rgba(35, 43, 77, 0.9);
+            border-radius: 20px; padding: 20px 18px 18px;
+            position: relative;
+            box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(23,209,160,.08);
+        }
+        #adFullscreenOverlay .fs-inner img,
+        #adFullscreenOverlay .fs-inner video {
+            width: 100%; max-height: 68vh; object-fit: contain;
+            border-radius: 14px; display: block; background: #0a0e1a;
+        }
+        #adFullscreenOverlay .fs-close {
+            position: absolute; top: 12px; right: 12px; width: 42px; height: 42px;
+            border: 0; border-radius: 50%;
+            background: rgba(0,0,0,.55); color: #fff;
+            font-size: 22px; cursor: pointer; z-index: 2;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .15s, transform .15s;
+        }
+        #adFullscreenOverlay .fs-close:hover { background: #ef4444; transform: scale(1.05); }
+        #adFullscreenOverlay .fs-title {
+            font-weight: 800; margin: 0 40px 12px 0; font-size: 17px;
+            background: linear-gradient(135deg, #17d1a0, #3b82f6);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        #adFullscreenOverlay .fs-marquee {
+            color: var(--muted); margin-top: 12px; font-size: 13.5px; line-height: 1.5;
+            padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.04);
+            border: 1px solid var(--card-border);
+        }
+
+        /* ===== Video call overlay ===== */
+        #videoCallOverlay {
+            display: none; position: fixed; inset: 0; z-index: 4500;
+            background: #050a14; flex-direction: column; align-items: stretch;
+        }
+        #videoCallOverlay.open { display: flex; }
+        #videoCallOverlay .vc-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, #0a0e2e, #10173a);
+            border-bottom: 1px solid rgba(35, 43, 77, 0.85);
+            flex-shrink: 0;
+        }
+        #videoCallOverlay .vc-bar b { font-size: 15px; font-weight: 800; }
+        #videoCallOverlay .vc-bar small { color: #96a2c2; font-size: 12px; }
+        #videoCallOverlay .vc-videos {
+            flex: 1; position: relative; background: #000; min-height: 0;
+        }
+        #videoCallOverlay #remoteVideo {
+            width: 100%; height: 100%; object-fit: cover; background: #0a0e18;
+        }
+        #videoCallOverlay #localVideo {
+            position: absolute; right: 14px; bottom: 14px;
+            width: 30%; max-width: 150px; min-width: 90px;
+            aspect-ratio: 3/4; object-fit: cover; border-radius: 14px;
+            border: 2px solid #17d1a0; background: #1a2035;
+            box-shadow: 0 8px 24px rgba(0,0,0,.45);
+        }
+        #videoCallOverlay .vc-actions {
+            display: flex; gap: 18px; justify-content: center; align-items: center;
+            padding: 18px 16px 22px;
+            background: linear-gradient(0deg, #0a0e2e, #0c1528);
+            border-top: 1px solid rgba(35, 43, 77, 0.7);
+            flex-shrink: 0;
+        }
+        #videoCallOverlay .vc-btn {
+            width: 58px; height: 58px; border-radius: 50%; border: 0; font-size: 22px;
+            cursor: pointer; color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,.35);
+            transition: transform .15s, box-shadow .15s;
+        }
+        #videoCallOverlay .vc-btn:active { transform: scale(0.94); }
+        #videoCallOverlay .vc-end {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            width: 64px; height: 64px; font-size: 24px;
+        }
+        #videoCallOverlay .vc-mute {
+            background: linear-gradient(135deg, #334155, #475569);
+        }
+
+        /* ===== Chat widget — tabs, jamaa, video ===== */
+        .chat-box {
+            display: none; width: 360px; max-width: calc(100vw - 28px);
+            background: var(--card); border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: 0 16px 48px rgba(0,0,0,.5);
+            overflow: hidden; margin-bottom: 12px;
+            pointer-events: auto !important;
+        }
+        .chat-tabs {
+            display: flex; gap: 6px; padding: 10px 10px 8px;
+            background: linear-gradient(180deg, #0d1528, var(--card));
+            border-bottom: 1px solid var(--card-border);
+        }
+        .chat-tab-btn {
+            flex: 1; border: 1px solid var(--card-border);
+            background: rgba(255,255,255,.04);
+            color: var(--muted); border-radius: 12px;
+            padding: 8px 6px; font-size: 12px; font-weight: 700;
+            cursor: pointer; transition: all .18s;
+            font-family: inherit;
+        }
+        .chat-tab-btn:hover { border-color: rgba(23,209,160,.4); color: var(--text); }
+        .chat-tab-btn.active {
+            background: linear-gradient(135deg, #17d1a0, #3b82f6);
+            color: #fff; border-color: transparent;
+            box-shadow: 0 3px 12px rgba(23,209,160,.25);
+        }
+        .chat-register-box {
+            padding: 14px 14px 12px;
+        }
+        .chat-register-box .muted {
+            margin-bottom: 10px; font-size: 12.5px; line-height: 1.45;
+        }
+        .chat-register-box input {
+            margin-bottom: 8px; font-size: 14px;
+        }
+        .chat-register-box .primary,
+        .chat-register-box .secondary {
+            width: 100%; margin-top: 4px;
+        }
+        .community-msg {
+            padding: 10px 12px; border-radius: 12px; margin-bottom: 8px;
+            background: var(--bg-soft); font-size: 13.5px;
+            border: 1px solid transparent;
+            transition: border-color .15s;
+        }
+        .community-msg:hover { border-color: var(--card-border); }
+        .community-msg b {
+            color: #4fe3bd; font-size: 13px;
+        }
+        .community-msg .cm-meta {
+            font-size: 11px; color: var(--muted); margin-top: 5px;
+        }
+        .vc-user-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 4px; border-bottom: 1px solid var(--card-border); gap: 10px;
+        }
+        .vc-user-row:last-child { border-bottom: 0; }
+        .vc-user-row b { font-size: 13.5px; }
+        .vc-user-row .secondary {
+            padding: 7px 12px; font-size: 12px; white-space: nowrap;
+            border-radius: 10px;
+        }
+        .incoming-call-toast {
+            position: fixed; top: 72px; left: 50%; transform: translateX(-50%);
+            z-index: 4600;
+            background: linear-gradient(135deg, #0f3d2e, #134e3a);
+            color: #ecfdf5; padding: 14px 18px;
+            border-radius: 16px;
+            box-shadow: 0 12px 36px rgba(0,0,0,.45), 0 0 0 1px rgba(34,197,94,.35);
+            display: none; max-width: min(340px, 92vw);
+            text-align: center; font-size: 14px; font-weight: 600;
+            animation: callPulse 1.4s ease-in-out infinite;
+        }
+        .incoming-call-toast.show { display: block; }
+        @keyframes callPulse {
+            0%, 100% { box-shadow: 0 12px 36px rgba(0,0,0,.45), 0 0 0 1px rgba(34,197,94,.35); }
+            50% { box-shadow: 0 12px 36px rgba(0,0,0,.45), 0 0 0 4px rgba(34,197,94,.2); }
+        }
+        .incoming-call-toast button {
+            margin: 10px 4px 0; padding: 9px 16px; font-size: 13px;
+            border-radius: 10px; font-weight: 800;
+        }
+        /* Chat messages area polish */
+        .chat-messages {
+            height: 280px; overflow-y: auto; padding: 14px;
+            color: var(--text);
+            background: linear-gradient(180deg, rgba(9,12,24,.3), transparent);
+        }
+        .chat-head {
+            background: linear-gradient(135deg, #17d1a0, #3b82f6);
+            color: white; padding: 14px 16px; font-weight: 800; font-size: 13.5px;
+            letter-spacing: 0.2px;
+        }
+        .chat-button {
+            width: 60px; height: 60px; border-radius: 50%; border: 0;
+            background: linear-gradient(135deg, #17d1a0, #3b82f6);
+            color: white; font-size: 26px;
+            box-shadow: 0 6px 22px rgba(23,209,160,.4), 0 0 0 3px rgba(23,209,160,.12);
+            pointer-events: auto !important;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: transform .15s, box-shadow .15s;
+        }
+        .chat-button:hover {
+            transform: scale(1.06);
+            box-shadow: 0 8px 28px rgba(23,209,160,.5);
+        }
+        @media (max-width: 480px) {
+            .chat-box { width: calc(100vw - 20px); border-radius: 18px; }
+            #videoCallOverlay #localVideo { width: 32%; max-width: 110px; right: 10px; bottom: 10px; }
+            #adFullscreenOverlay .fs-inner { padding: 16px 12px; border-radius: 16px; }
+        }
+
+
+
+        .engage-btn {
+            background: var(--card); border: 1px solid var(--card-border); color: var(--text);
+            border-radius: 20px; padding: 7px 14px; font-size: 12.5px; font-weight: 700; cursor: pointer;
+        }
+        .engage-btn:hover { border-color: var(--accent1); color: var(--accent1); }
+
+        @media (max-width: 650px) {
+            .hero h1 { font-size: 24px; }
+            .hero { padding: 26px 18px; }
+            .search { flex-direction: column; }
+            .nav { align-items: flex-start; flex-direction: column; gap: 10px; }
+            .brand { font-size: 16px; }
+            .section { padding: 16px; }
+            .modal-box { margin: 20px auto; padding: 18px; }
+        }
+    /* ===== 💬 Chat/Majadiliano — full-bleed, wide like FB/TikTok/IG/WhatsApp ===== */
+    #chatSection{
+        background:linear-gradient(165deg,#0d1b2e 0%,#0a1420 100%);
+        border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;
+        box-shadow:0 3px 12px rgba(0,0,0,.18);
+        width:calc(100% + 44px); max-width:calc(100% + 44px);
+        margin-left:-22px; margin-right:-22px;
+        border-radius:0;
+    }
+    @media (max-width:650px){
+        #chatSection{
+            width:calc(100% + 32px); max-width:calc(100% + 32px);
+            margin-left:-16px; margin-right:-16px;
+        }
+    }
+    /* ===== 📢 Matangazo — mtindo wa Facebook ===== */
+    .fb-ad-card{
+        background: var(--bg-soft); border: 1px solid var(--card-border); border-radius: 14px;
+        margin-bottom: 14px; overflow: hidden;
+    }
+    .fb-ad-head{ display:flex; align-items:center; gap:10px; padding:12px 14px 8px; }
+    .fb-ad-head img.fb-ad-avatar{ width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0; }
+    .fb-ad-head .fb-ad-avatar-fallback{
+        width:38px;height:38px;border-radius:50%;flex-shrink:0;background:var(--accent-grad);
+        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;
+    }
+    .fb-ad-head b{ font-size:13.5px; color:var(--text); display:block; }
+    .fb-ad-head .fb-ad-meta{ font-size:11.5px; color:var(--muted); display:flex; align-items:center; gap:4px; }
+    .fb-ad-caption{ padding: 4px 14px 10px; font-size:14px; color:var(--text); line-height:1.4; }
+    .fb-ad-media img, .fb-ad-media video{ width:100%; max-height:340px; object-fit:cover; display:block; background:#000; }
+    .fb-ad-media audio{ width:calc(100% - 28px); margin:0 14px 10px; display:block; }
+    .fb-ad-learnmore{
+        display:flex; align-items:center; justify-content:space-between; gap:8px;
+        background: rgba(255,255,255,.04); padding:10px 14px; font-size:12px; color: var(--muted);
+    }
+    .fb-ad-learnmore button{
+        background: rgba(255,255,255,.1); border:1px solid var(--card-border); color: var(--text);
+        font-weight:700; font-size:12.5px; padding:7px 14px; border-radius:8px; flex-shrink:0;
+    }
+    .fb-ad-actions{ display:flex; border-top:1px solid var(--card-border); }
+    .fb-ad-actions button{
+        flex:1; background:none; border:none; padding:10px 4px; font-size:12.5px; font-weight:700;
+        color: var(--muted); display:flex; align-items:center; justify-content:center; gap:6px;
+    }
+    .fb-ad-actions button.engaged{ color: var(--accent1); }
+    .fb-ad-actions button:active{ opacity:.6; }
+
+    /* ===== 🎬 Video Reels — mtindo wa Instagram Reels ===== */
+    #reelsContainer{
+        display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+        gap:0; background:#000;
+    }
+    .reel-item{
+        position:relative; flex:0 0 100%; scroll-snap-align:start;
+        height:70vh; max-height:640px; background:#000; overflow:hidden;
+        display:flex; align-items:center; justify-content:center;
+    }
+    .reel-item video, .reel-item img{ width:100%; height:100%; object-fit:cover; }
+    .reel-account{
+        position:absolute; top:14px; left:14px; right:60px; display:flex; align-items:center; gap:8px; z-index:2;
+    }
+    .reel-account img.reel-avatar{ width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid #fff; }
+    .reel-account .reel-avatar-fallback{
+        width:34px;height:34px;border-radius:50%;border:2px solid #fff;background:var(--accent-grad);
+        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;
+    }
+    .reel-account b{ color:#fff; font-size:13px; text-shadow:0 1px 4px rgba(0,0,0,.6); }
+    .reel-account button{
+        margin-left:auto; background:transparent; border:1.5px solid #fff; color:#fff;
+        font-size:11.5px; font-weight:800; padding:4px 12px; border-radius:8px;
+    }
+    .reel-account button.engaged{ background:#fff; color:#000; }
+    .reel-caption{
+        position:absolute; left:14px; right:60px; bottom:16px; color:#fff; font-size:13px;
+        text-shadow:0 1px 6px rgba(0,0,0,.7); z-index:2; line-height:1.35;
+    }
+    .reel-side-icons{
+        position:absolute; right:10px; bottom:20px; display:flex; flex-direction:column; align-items:center;
+        gap:16px; z-index:2;
+    }
+    .reel-side-icons button{
+        background:rgba(0,0,0,.35); border:none; color:#fff; border-radius:50%; width:42px;height:42px;
+        display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:19px; gap:0;
+    }
+    .reel-side-icons button span{ font-size:10px; font-weight:700; margin-top:1px; }
+    .reel-side-icons button.engaged{ color:#f5576c; }
+    .reels-empty{ color:#fff; padding:40px 20px; text-align:center; }
+
+    .doclib-fullscreen-box{
+        position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important;
+        height: 100dvh !important; max-width: 100vw !important; max-height: 100vh !important;
+        border-radius: 0 !important; margin: 0 !important; overflow-y: auto;
+        display: flex; flex-direction: column;
+        background: #0a0a0a !important;
+    }
+    .doclib-fullscreen-box .doclib-viewer-box{
+        flex: 1; max-height: none; min-height: 0;
+    }
+    .doclib-viewer-box{
+        position: relative; min-height: 320px; max-height: 65vh; overflow-y: auto;
+        background: #1a1a1a; border-radius: 12px;
+        -webkit-user-select: none; user-select: none;
+        -webkit-touch-callout: none;
+    }
+    .doclib-viewer-box img{
+        width: 100%; display: block; pointer-events: none;
+        -webkit-user-drag: none; user-drag: none;
+    }
+    .doclib-watermark{
+        position: absolute; inset: 0; pointer-events: none; z-index: 5;
+        display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+        opacity: .16; overflow: hidden;
+    }
+    .doclib-watermark span{
+        display: inline-block; transform: rotate(-28deg); color: #fff;
+        font-size: 15px; font-weight: 800; margin: 26px; white-space: nowrap;
+    }
+        position: fixed; inset: 0; z-index: 4000;
+        width: 100vw; max-width: 100vw; height: 100vh; height: 100dvh;
+        margin: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+        /* ===== Mandhari nyeupe (white theme) kwa ukurasa wa chat ===== */
+        --bg: #ffffff; --bg-soft: #f4f5f8; --card: #ffffff; --card-border: #e5e7eb;
+        --text: #14171a; --muted: #66707c;
+        background: #ffffff !important; color: #14171a;
+    }
+    #chatSection.chat-fullscreen #chatGroupBar{ background: rgba(0,0,0,.08); }
+    #chatSection.chat-fullscreen #chatMessages::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.15); }
+    #chatSection.chat-fullscreen .chat-bubble{
+        background: #f4f5f8; border: 1px solid #e5e7eb;
+    }
+    #chatSection.chat-fullscreen .chat-bubble.own{
+        background: linear-gradient(135deg, rgba(37,211,102,.14), rgba(37,211,102,.05));
+        border: 1px solid rgba(37,211,102,.35);
+    }
+    #chatSection.chat-fullscreen #chatSendRow{
+        background: #f4f5f8; border: 1px solid #e5e7eb;
+    }
+    #chatSection.chat-fullscreen #chatSendRow input{ color: #14171a !important; }
+    #chatSection.chat-fullscreen #chatSendRow input::placeholder{ color: #8a92a0; }
+    #chatSection.chat-fullscreen .sticker-btn{
+        background: #f4f5f8; border: 1px solid #e5e7eb;
+    }
+    #chatSection.chat-fullscreen #chatFullscreenCloseBtn{
+        background: rgba(255,255,255,.96); color: #14171a;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    body.chat-fullscreen-active{ overflow: hidden; }
+    #chatFullscreenCloseBtn{
+        display: none; position: sticky; top: 0; z-index: 5; width: 100%;
+        background: rgba(13,27,46,.95); backdrop-filter: blur(6px);
+        margin: -16px -16px 12px; padding: 12px 16px;
+        font-weight: 800; color: #fff; border: none; text-align: left;
+        border-bottom: 1px solid rgba(255,255,255,.08); cursor: pointer;
+    }
+    #chatSection.chat-fullscreen #chatFullscreenCloseBtn{ display: flex; align-items: center; gap: 8px; }
+
+    #chatSection h3{
+        background:linear-gradient(90deg,#f5576c,#f093fb,#4facfe);
+        -webkit-background-clip:text;background-clip:text;color:transparent;
+        font-weight:800;letter-spacing:.2px;
+    }
+    #chatGroupBadge{
+        display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+        background:rgba(79,172,254,.15);color:#4facfe;border:1px solid rgba(79,172,254,.4);
+        border-radius:999px;padding:4px 12px;margin-bottom:10px;
+    }
+    #chatGroupBar{height:6px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:6px 0 12px;}
+    #chatGroupBarFill{height:100%;border-radius:999px;background:linear-gradient(90deg,#f5576c,#4facfe);transition:width .5s ease;}
+    #chatInviteBanner{
+        background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+        border:none !important;position:relative;overflow:hidden;
+    }
+    #chatInviteBanner::after{
+        content:"";position:absolute;inset:0;
+        background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.25),transparent 60%);
+    }
+    #chatInviteBanner input, #chatInviteBanner select{
+        background:rgba(0,0,0,.28) !important;color:#fff !important;border:1px solid rgba(255,255,255,.35) !important;
+        position:relative;z-index:1;
+    }
+    #chatInviteBanner input::placeholder{color:rgba(255,255,255,.75);}
+    #chatInviteBanner .primary{
+        background:#fff !important;color:#e1306c !important;font-weight:800;
+        border:none;position:relative;z-index:1;transition:transform .15s ease;
+    }
+    #chatInviteBanner .primary:active{transform:scale(.97);}
+    #chatMessages{
+        scroll-behavior:smooth;
+    }
+    #chatMessages::-webkit-scrollbar{width:6px;}
+    #chatMessages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:6px;}
+    .chat-bubble{
+        display:flex;gap:10px;align-items:flex-start;
+        max-width:88%;
+        padding:10px 13px;border-radius:18px;
+        background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+        animation:chatFadeIn .35s ease;
+    }
+    .chat-bubble.own{
+        flex-direction:row-reverse;
+        margin-left:auto;
+        background:linear-gradient(135deg,rgba(37,211,102,.18),rgba(37,211,102,.08));
+        border:1px solid rgba(37,211,102,.35);
+        border-bottom-right-radius:4px;
+    }
+    .chat-bubble.other{ border-bottom-left-radius:4px; }
+    .chat-bubble.own .chat-msg-block{ text-align:right; }
+    @keyframes chatFadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+    .chat-avatar{
+        flex-shrink:0;width:36px;height:36px;border-radius:50%;
+        display:flex;align-items:center;justify-content:center;
+        font-weight:800;font-size:14px;color:#fff;
+    }
+    .chat-name{font-weight:700;font-size:13px;}
+    .chat-tag{font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:middle;}
+    .chat-msg-text{font-size:14px;line-height:1.4;margin-top:2px;word-break:break-word;}
+    .chat-time{font-size:11px;opacity:.55;margin-top:3px;}
+    #chatSendRow{
+        background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+        border-radius:999px;padding:6px 6px 6px 16px;
+    }
+    #chatSendRow input{
+        background:transparent !important;border:none !important;color:#fff;
+    }
+    #chatSendRow button{
+        border-radius:999px !important;padding:10px 22px !important;
+        background:linear-gradient(90deg,#f5576c,#4facfe) !important;border:none !important;
+        font-weight:700;transition:transform .15s ease;
+    }
+    #chatSendRow button:active{transform:scale(.95);}
+    #chatNotifBanner{
+        background:linear-gradient(90deg,rgba(34,197,94,.18),rgba(79,172,254,.18)) !important;
+        border:1px solid rgba(34,197,94,.5) !important;
+    }
+    /* ===== 🛍️ Duka la Ndani — Bidhaa za Kawaida ===== */
+    .ordinary-shop-title{
+        font-size: 21px; font-weight: 900; margin-bottom: 6px; letter-spacing: .3px;
+        background: linear-gradient(90deg,#f5576c,#f093fb,#4facfe,#22c55e);
+        background-size: 250% auto;
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        animation: taglineShine 6s linear infinite;
+        text-shadow: 0 2px 18px rgba(240,147,251,.25);
+    }
+    .jersey-shop-title{
+        font-size: 20px; font-weight: 900; margin-bottom: 6px; letter-spacing: .3px;
+        background: linear-gradient(90deg,#fbbf24,#facc15,#ef4444,#dc2626);
+        background-size: 250% auto;
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        animation: taglineShine 6s linear infinite;
+    }
+    .ordinary-toolbar{ display:flex; gap:8px; flex-wrap:wrap; }
+    .ordinary-toolbar input{ flex:1; min-width:180px; }
+    .ordinary-cat-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .ordinary-cat-tab{
+        background:var(--bg-soft); border:1px solid var(--card-border); color:var(--text);
+        border-radius:999px; padding:7px 14px; font-size:12.5px; font-weight:700; cursor:pointer;
+    }
+    .ordinary-cat-tab.active{ background:var(--accent-grad); color:#fff; border-color:transparent; }
+    /* ===== 🌍 Global Import Marketplace ===== */
+    .import-grid{
+        display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px;
+    }
+    .import-card{
+        background:var(--bg-soft); border:1px solid var(--card-border); border-radius:14px;
+        overflow:hidden; display:flex; flex-direction:column;
+    }
+    .import-card img{ width:100%; height:130px; object-fit:cover; background:#111; }
+    .import-card .body{ padding:10px; flex:1; display:flex; flex-direction:column; gap:5px; }
+    .import-card .country{ font-size:10.5px; font-weight:800; color: var(--accent1); text-transform:uppercase; }
+    .import-card .title{ font-size:13px; font-weight:700; color:var(--text); line-height:1.3; }
+    .import-card .price{ font-size:12.5px; color:var(--muted); }
+    .import-card .locked-note{ font-size:11px; color:var(--muted); display:flex; align-items:center; gap:4px; }
+    .import-card .buy-btn{
+        margin-top:auto; background:var(--accent-grad); color:#fff; border:none; border-radius:999px;
+        padding:9px 8px; font-size:11.5px; font-weight:800; cursor:pointer; text-align:center;
+    }
+
+    .sticker-btn{
+        font-size:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+        border-radius:12px;padding:6px 10px;cursor:pointer;transition:transform .12s ease;
+    }
+    .sticker-btn:active{transform:scale(1.25);}
+    /* ===== Kadi ya ujumbe wenye picha/video — mtindo wa Instagram ===== */
+    .ig-post-card{
+        background: var(--bg-soft); border: 1px solid var(--card-border); border-radius: 14px;
+        overflow: hidden; margin-bottom: 14px;
+    }
+    .ig-post-head{ display:flex; align-items:center; gap:8px; padding:10px 12px; }
+    .ig-post-head b{ font-size:13px; color: var(--text); }
+    .ig-post-actions{ display:flex; align-items:center; gap:14px; padding:10px 12px 2px; }
+    .ig-icon-btn{ background:none; border:none; font-size:21px; color: var(--text); padding:0; }
+    .ig-icon-btn:active{ transform: scale(1.2); }
+    .ig-post-likes{ padding: 4px 12px 0; font-weight:700; font-size:12.5px; color: var(--text); }
+    .ig-post-caption{ padding: 4px 12px 6px; font-size:13px; color: var(--text); line-height:1.4; }
+    .chat-like-btn, .chat-del-btn{
+        background:none;border:none;color:inherit;font-size:12px;opacity:.75;
+        cursor:pointer;display:flex;align-items:center;gap:3px;padding:2px 4px;
+        transition:transform .12s ease,opacity .12s ease;
+    }
+    .chat-like-btn:active{transform:scale(1.3);}
+    .chat-del-btn{opacity:.5;}
+    .chat-del-btn:hover{opacity:1;color:#f5576c;}
+    .people-card{
+        flex-shrink:0;width:120px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+        border-radius:14px;padding:10px 8px;text-align:center;
+    }
+    .people-avatar{
+        width:56px;height:56px;border-radius:50%;margin:0 auto 6px;
+        display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:#fff;
+    }
+    .people-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .people-tag{font-size:10px;opacity:.7;margin:2px 0 8px;}
+    .people-btn{
+        width:100%;font-size:11px;font-weight:700;padding:6px 0;border-radius:8px;border:none;
+        background:linear-gradient(90deg,#4facfe,#00f2fe);color:#062;margin-bottom:4px;cursor:pointer;
+    }
+    .people-btn.remove{background:rgba(255,255,255,.08);color:inherit;}
+    </style>
+</head>
+<body oncontextmenu="return false;" ondragstart="return false;">
+
+<header id="siteHeader">
+    <div class="nav">
+        <div class="brand" id="brandLogoArea" title="NjiaMauzo Afrika">
+            <img src="/static/logo.png" alt="NjiaMauzo Afrika Logo">
+            <div>
+                <span data-i18n="brandName">NjiaMauzo Afrika</span>
+                <small data-i18n="brandTag">Fikia Masoko, Panua Biashara</small>
+            </div>
+        </div>
+        <div class="nav-buttons" style="position:relative;">
+            <button type="button" id="langToggleBtn" onclick="openLangMenu()" title="Badilisha lugha / Change language"
+                style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 12px;border-radius:10px;font-weight:700;font-size:12px;">
+                🌐 SW
+            </button>
+            <div id="langMenu" class="hidden" style="position:absolute;top:44px;left:0;z-index:2000;background:#0d1b2e;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.5);min-width:220px;max-height:320px;overflow-y:auto;">
+                <div style="font-size:11px;opacity:.6;padding:4px 8px;">Lugha kuu / Main</div>
+                <button type="button" class="lang-opt" onclick="setLangSw()">🇹🇿 Kiswahili</button>
+                <button type="button" class="lang-opt" onclick="setLangEn()">🇬🇧 English</button>
+                <div style="font-size:11px;opacity:.6;padding:8px 8px 4px;">Lugha nyingine zote duniani / All other languages</div>
+                <div id="langOtherList"></div>
+            </div>
+            <div id="google_translate_element" style="display:none;"></div>
+        </div>
+        <div class="nav-buttons">
+            <button type="button" onclick="openModal('loginModal')" id="loginBtn">Ingia</button>
+            <button type="button" onclick="openModal('registerModal')" id="registerBtn">Jisajili</button>
+            <button type="button" onclick="openModal('changePasswordModal')" id="changePwBtn" class="hidden">Badilisha Nywila</button>
+            <button type="button" onclick="logout()" id="logoutBtn" class="hidden">Toka</button>
+            <!-- Admin Room: HAIONEKANI kabisa kwa mnunuzi/muuzaji/mgeni — admin pekee baada ya login -->
+            <button type="button" id="adminRoomBtn" class="hidden" aria-hidden="true" tabindex="-1"
+                onclick="window.location.href='/admin'"
+                style="background:transparent;padding:2px;border:0;align-items:center;cursor:pointer;">
+                <span style="width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+                    background:linear-gradient(145deg,#0a7a3a,#064d28);border:2px solid #f5c518;
+                    box-shadow:0 2px 10px rgba(0,0,0,.25);font-weight:900;font-size:18px;color:#f5c518;
+                    font-family:Georgia,serif;">N</span>
+            </button>
+        </div>
+    </div>
+    <div class="modes-bar">
+        <div class="modes-inner">
+            <button class="mode-btn hidden" onclick="focusAISearch()" data-i18n="modeSearch">🔎 Tafuta</button>
+            <button class="mode-btn hidden" onclick="openModal('researchModal')" data-i18n="modeResearch">🔬 Research</button>
+            <button class="mode-btn hidden" onclick="openModal('automateModal'); loadAlerts();" data-i18n="modeAutomate">⚙️ Automate</button>
+            <button class="mode-btn hidden" onclick="scrollToFeed()" data-i18n="modeFeed">📡 Live Feed</button>
+            <button class="mode-btn" onclick="chatEnterFullscreen(); document.getElementById('chatSection').scrollIntoView({behavior:'smooth'});" style="background:linear-gradient(90deg,#f5576c,#4facfe);border:none;color:#fff;font-weight:800;">💬 NjiaMauzo Chat</button>
+        </div>
+        <div id="headerPeopleStrip" class="hidden" style="display:flex;gap:8px;overflow-x:auto;padding:10px 4px 2px;"></div>
+        <p class="modes-tagline" id="modesTaglineEl" data-i18n="modesTagline">Tafuta bidhaa, bei na wauzaji Afrika Mashariki</p>
+    </div>
+</header>
+
+<main>
+    <div id="sabbathServiceBanner" class="sabbath-service-banner hidden">🕊️ HUDUMA ZIMEFUNGWA KWA SABATO
+        <small>Huduma za NjiaMauzo Afrika zitarudi baada ya Sabato. Eneo la matangazo linaendelea kuwa wazi.</small>
+    </div>
+    <section class="hero service-control" data-service-section>
+        <h1 data-i18n-html="heroTitle">Tafuta bidhaa kwa <span class="grad">urahisi Afrika</span> 🌍</h1>
+        <p data-i18n="heroDesc">NjiaMauzo Afrika inakusaidia kupata mazao, bidhaa, wataalamu, vifaa na huduma kutoka maeneo mbalimbali.</p>
+        <div class="search">
+            <input id="searchInput" placeholder="Mfano: ufuta Ruvuma, mahindi Mbeya..." data-i18n-placeholder="searchPh">
+            <button class="primary" onclick="searchProducts()" data-i18n="searchBtn">🔎 Tafuta</button>
+            <button class="secondary" onclick="useMyLocation()" id="locBtn" data-i18n="locBtn">📍 Tumia Eneo Langu</button>
+        </div>
+        <button type="button" class="soko-letu-cta" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'});">🛒 SOKO LETU — NUNUA HAPA</button>
+        <div id="locStatus" class="muted" style="margin-top:10px;color:#d4f0df;"></div>
+        <div class="hero-trust-row">
+            <div class="hero-trust-item"><span class="icon">🏆</span>Jukwaa Bora la Biashara Afrika</div>
+            <div class="hero-trust-item"><span class="icon">🔒</span>Malipo Salama &amp; Yaliyothibitishwa</div>
+            <div class="hero-trust-item"><span class="icon">📱</span>Inafanya Kazi Simu Zote</div>
+            <div class="hero-trust-item"><span class="icon">🌍</span>Wauzaji 1000+ Mashariki mwa Afrika</div>
+        </div>
+    </section>
+
+    <!-- ===== 🛍️ Bidhaa za Kawaida — Duka la Ndani ===== -->
+    <section class="section service-control" data-service-section id="ordinarySection">
+        <h2 class="ordinary-shop-title">🛍️ Duka Letu — Viatu, Mifuko, Magauni na Vitambaa</h2>
+        <p class="muted" style="margin-bottom:14px;font-size:13px;">Bidhaa halisi zilizowekwa na NjiaMauzo Afrika — tafuta, chagua kundi, na wasiliana nasi kununua.</p>
+        <div class="ordinary-toolbar">
+            <input id="ordinarySearchInput" placeholder="Tafuta: sandals kahawia, gauni la kijani..." onkeydown="if(event.key==='Enter')searchOrdinaryProducts()">
+            <button type="button" class="primary" onclick="searchOrdinaryProducts()">🔎 Tafuta</button>
+        </div>
+        <div id="ordinaryCategoryTabs" class="ordinary-cat-tabs"></div>
+        <div id="ordinaryProductsGrid" class="import-grid" style="margin-top:14px;"><p class="muted">Inapakia bidhaa...</p></div>
+    </section>
+
+    <!-- ===== 🌍 NUNUA USA, CHINA, UTURUKI NA DUNIANI KOTE ===== -->
+    <section class="section service-control" data-service-section id="importSection">
+        <h2 style="margin-bottom:4px;">🌍 NUNUA USA, CHINA, UTURUKI, N.K — KWA BEI ZA NYUMBANI SASA</h2>
+        <p class="muted" style="margin-bottom:16px;font-size:13px;">Bidhaa bora za kiwandani kutoka masoko makuu duniani — gharama, usafiri, na ushuru vinaonekana ukishalipa ada ndogo.</p>
+        <div id="importProductsGrid" class="import-grid"><p class="muted">Inapakia bidhaa...</p></div>
+    </section>
+
+    <!-- ===== 🇹🇿 Wauzaji Wakubwa wa Ndani wanaoaminika ===== -->
+    <section class="section service-control" data-service-section>
+        <h2 style="margin-bottom:4px;">🇹🇿 Wauzaji Wakubwa wa Ndani Wanaoaminika</h2>
+        <p class="muted" style="margin-bottom:16px;font-size:13px;">Maduka makubwa ya kuaminika Tanzania — bofya kuwasiliana nao moja kwa moja.</p>
+        <div id="importLocalSellersGrid" class="import-grid"><p class="muted">Inapakia...</p></div>
+    </section>
+
+    <!-- ===== ⚽ Jezi za Simba na Yanga ===== -->
+    <section class="section service-control" data-service-section id="jerseySection" style="background:linear-gradient(160deg,rgba(34,197,94,.06),rgba(239,68,68,.06));">
+        <h2 class="jersey-shop-title">⚽ Duka la Jezi — Simba SC &amp; Young Africans</h2>
+        <p class="muted" style="margin-bottom:16px;font-size:13px;">Jezi za mashabiki — ubora wa hali ya juu.</p>
+        <div id="importJerseyGrid" class="import-grid"><p class="muted">Inapakia jezi...</p></div>
+    </section>
+
+    <!-- ===== MODAL: orodha ya bidhaa zinazofanana + Chagua ===== -->
+    <div class="modal" id="importListModal">
+        <div class="modal-box" style="max-width:640px;">
+            <button type="button" class="close" onclick="closeModal('importListModal')">×</button>
+            <h2 id="importListModalTitle">Bidhaa Zinazofanana</h2>
+            <div id="importListModalGrid" class="import-grid" style="margin-top:12px;"></div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: fomu ya mnunuzi + malipo ===== -->
+    <div class="modal" id="importCheckoutModal">
+        <div class="modal-box">
+            <button type="button" class="close" onclick="closeModal('importCheckoutModal')">×</button>
+            <h2>🛒 Fungua Maelezo Kamili</h2>
+            <div class="banner">Jaza taarifa zako, chagua mpango, kisha lipa ili kufungua gharama za usafiri, ushuru, na mawasiliano ya muuzaji/msafirishaji.</div>
+            <input id="importBuyerName" placeholder="Jina lako kamili" style="margin-bottom:10px;">
+            <input id="importBuyerContact" placeholder="Namba ya simu / WhatsApp" style="margin-bottom:10px;">
+            <input id="importBuyerLocation" placeholder="Eneo unaloishi (Mkoa/Jiji)" style="margin-bottom:14px;">
+            <select id="importPlan" style="margin-bottom:12px;" onchange="onImportPlanChange()">
+                <option value="one_time">Ada ya mara moja — TSH 1,000</option>
+                <option value="weekly">Usajili wa Wiki — TSH 4,000 (bidhaa zote)</option>
+                <option value="monthly">Usajili wa Mwezi — TSH 10,000 (bidhaa zote)</option>
+            </select>
+            <select id="importPaymentMethod" style="margin-bottom:12px;">
+                <option value="">Chagua njia</option>
+                <option value="M-Pesa">M-Pesa</option>
+                <option value="Halotel">Halotel</option>
+                <option value="Airtel Money">Airtel Money</option>
+            </select>
+            <input id="importPaymentAmount" type="text" readonly value="1000" style="margin-bottom:8px;font-weight:800;color:var(--accent1);font-size:18px;text-align:center;">
+            <input id="importPaymentPhone" placeholder="Namba yako ya simu ya kutumia kulipa" style="margin-bottom:14px;">
+            <div id="importPaymentNumbers">Inapakia namba za malipo...</div>
+            <button type="button" class="primary" onclick="requestImportPayment()" style="width:100%;margin-top:12px;padding:14px;">Nimelipa / Endelea</button>
+            <div id="importPaymentStatus"></div>
+        </div>
+    </div>
+
+    <section class="section service-control" data-service-section>
+        <div class="banner">
+            <strong data-i18n="bannerTitle">🤖 UTAFUTAJI WA BIDHAA + WAHUDUMU</strong><br>
+            <span data-i18n-html="bannerBody">Angalia bidhaa zinazopatikana. <strong>Bei, eneo na muuzaji</strong> utapata baada ya kulipa ada <strong>TZS 3,000</strong> — wahudumu watakutumia taarifa.</span>
+        </div>
+        <h2 data-i18n="productsTitle">Bidhaa na Huduma</h2>
+        <h3 class="soko-letu-title">🛒 SOKO LETU — NUNUA HAPA</h3>
+        <div id="productNamePills" class="product-name-pills"></div>
+        <div id="products" class="cards" data-gated></div>
+    </section>
+
+    <section class="section" data-gated>
+        <h2 class="advisory-mega-title" data-i18n="advisoryTitle">🎓 KARIBU NJIAMAUZO — KITENGO CHA USHAURI 💼</h2>
+        <p class="muted" style="text-align:center;margin-top:-8px;margin-bottom:14px;font-size:13px;">Wataalamu wetu wapo tayari kukushauri katika maeneo mbalimbali ya maisha na kazi yako.</p>
+        <div class="advisory">
+            <div class="advisory-media">
+                <span class="advisory-media-badge">🎥 Ushauri wa Kitaalamu</span>
+                <video class="advisory-video" autoplay muted loop playsinline
+                    poster="/static/ushauri.jpg"
+                    onerror="this.style.display='none'; document.getElementById('advisoryImgFallback').style.display='block';">
+                    <source src="/static/ushauri-video.mp4" type="video/mp4">
+                </video>
+                <img id="advisoryImgFallback" src="/static/ushauri.jpg" alt="Ushauri wa Kitaalamu" style="display:none;">
+            </div>
+            <div class="advisory-list">
+                <button type="button" class="advisory-item doclib-btn" onclick="openDoclibModal('biashara','💼 Mashauri kuhusu Biashara')">
+                    <div class="n" style="background:linear-gradient(135deg,#f5576c,#f093fb);">1</div>
+                    <div><strong>💼 Mashauri kuhusu Biashara</strong><br><span class="muted">Mikakati ya kuanzisha, kukuza na kuendesha biashara yako kwa faida.</span></div>
+                </button>
+                <button type="button" class="advisory-item doclib-btn" onclick="openDoclibModal('elimu','🎓 Mashauri kuhusu Elimu')">
+                    <div class="n" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">2</div>
+                    <div><strong>🎓 Mashauri kuhusu Elimu</strong><br><span class="muted">Mwongozo wa masomo, kozi, na fursa za kielimu kwako na familia yako.</span></div>
+                </button>
+                <button type="button" class="advisory-item doclib-btn" onclick="openDoclibModal('mbegu','🌱 Wataalamu wa kilimo cha mbegu')">
+                    <div class="n" style="background:linear-gradient(135deg,#22c55e,#16a34a);">3</div>
+                    <div><strong>🌱 Wataalamu wa kilimo cha mbegu</strong><br><span class="muted">Mbegu bora kwa mavuno bora.</span></div>
+                </button>
+                <button type="button" class="advisory-item doclib-btn" onclick="openDoclibModal('usimamizi','Usimamizi katika maswala ya kilimo')">
+                    <div class="n" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);">4</div>
+                    <div><strong>Usimamizi katika maswala ya kilimo</strong><br><span class="muted">Usimamizi bora huleta matokeo bora.</span></div>
+                </button>
+                <button type="button" class="advisory-item doclib-btn" onclick="openDoclibModal('ushauri_kilimo','Ushauri wa namna bora ya kilimo')">
+                    <div class="n" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);">5</div>
+                    <div><strong>Ushauri wa namna bora ya kilimo</strong><br><span class="muted">Solutions za kilimo kwa maendeleo yako.</span></div>
+                </button>
+                <button class="whatsapp-btn" onclick="openModal('advisoryModal'); loadAdvisoryPaymentNumbers();">
+                    <span data-i18n="advisoryBtn">💬 Omba Ushauri wa Kitaalamu</span>
+                </button>
+                <div id="advisoryTimeAlert" class="advisory-time-alert hidden">⏱ Hakuna muda wa ushauri ulio hai.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 data-i18n="statsTitle">📊 Takwimu za Soko — Afrika Mashariki</h2>
+        <p class="muted" style="margin-bottom:16px;" data-i18n-html="statsDesc">Takwimu za aina za mazao na bidhaa zinaonekana. <strong>Gharama/bei</strong> zinaonekana baada ya kulipa ada.</p>
+        <div class="service-control" data-service-section><div id="marketSummary" class="summary-grid" data-gated></div>
+        <div id="marketCategories" class="cat-stats" data-gated></div></div>
+        <!-- Matangazo: upana kamili sawa na screen/main — lisizidi mfumo -->
+        <div class="ad-fullwidth" style="margin:18px 0 20px;">
+            <h3 style="margin-bottom:12px;font-size:16px;" data-i18n="adsTitle">📢 Matangazo</h3>
+            <div class="ad-slot" id="adSlotMarket">
+                <div class="marquee-wrap" style="width:100%;">
+                    <span class="marquee-track" id="adMarqueeText">📣 Karibu NjiaMauzo Afrika — kitovu cha biashara Afrika Mashariki! Tangaza bidhaa yako hapa leo. Wasiliana nasi kupata nafasi ya tangazo. 🌍</span>
+                </div>
+                <div class="ad-media-box" id="adMediaBox" style="display:none;"></div>
+                <ins class="adsbygoogle"
+                    style="display:block;width:100%;max-width:100%;min-height:100px;overflow:hidden;"
+                    data-ad-client=""
+                    data-ad-slot=""
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <span>Nafasi ya Tangazo — wasiliana nasi kutangaza hapa</span>
+
+                <button type="button" id="adEngageToggle" onclick="toggleAdEngagePanel()"
+                    style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;
+                    padding:11px;border-radius:999px;border:1px solid rgba(79,172,254,.4);
+                    background:linear-gradient(90deg,rgba(245,87,108,.15),rgba(79,172,254,.15));
+                    color:#fff;font-weight:700;font-size:13px;cursor:pointer;">
+                    🔗 Fuata, Penda &amp; Shiriki <span id="adEngageToggleArrow">▾</span>
+                </button>
+
+                <div id="adEngagePanel" class="hidden" style="margin-top:12px;padding:12px;background:rgba(0,0,0,.15);border-radius:14px;">
+                    <div class="social-row">
+                        <a href="https://facebook.com/njiamauzoafrika" target="_blank" rel="noopener" title="Facebook">📘</a>
+                        <a href="https://instagram.com/njiamauzoafrika" target="_blank" rel="noopener" title="Instagram">📷</a>
+                        <a href="https://twitter.com/njiamauzoafrika" target="_blank" rel="noopener" title="X / Twitter">🐦</a>
+                        <a href="https://wa.me/255755248789" target="_blank" rel="noopener" title="WhatsApp">💬</a>
+                        <a href="https://youtube.com/@njiamauzoafrika" target="_blank" rel="noopener" title="YouTube">▶️</a>
+                    </div>
+                    <div class="engage-row" style="margin-top:10px;">
+                        <button type="button" class="engage-btn" onclick="engageAd('like')">👍 Like <span id="engageLike" class="engageLike">0</span></button>
+                        <button type="button" class="engage-btn" onclick="engageAd('follow')">➕ Follow <span id="engageFollow" class="engageFollow">0</span></button>
+                        <button type="button" class="engage-btn" onclick="engageAd('subscribe')">🔔 Sub <span id="engageSub" class="engageSub">0</span></button>
+                        <button type="button" class="engage-btn" onclick="openAdComment()">💬 Comment</button>
+                        <button type="button" class="engage-btn" onclick="engageAd('share')">🔗 Share <span id="engageShare" class="engageShare">0</span></button>
+                    </div>
+                    <div class="engage-counts" id="engageViewsLine">👁 Views: <span id="engageViews" class="engageViews">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 💬 Majadiliano Live — WAZI kwa kila mgeni, si tu wanachama -->
+        <div class="ad-fullwidth" id="chatSection" style="margin:18px 0 20px;">
+            <div id="chatFullscreenCloseBtn">
+                <button type="button" onclick="chatExitFullscreen(); document.getElementById('siteHeader')?.scrollIntoView({behavior:'auto',block:'start'});" style="background:none;border:none;color:inherit;font-weight:800;font-size:14px;padding:0;cursor:pointer;">← Rudi juu</button>
+                <button type="button" onclick="goHome();" style="margin-left:auto;background:none;border:none;color:inherit;font-weight:800;font-size:14px;padding:0;cursor:pointer;">🏠 Nyumbani</button>
+            </div>
+            <h3 style="margin-bottom:6px;font-size:17px;">💬 Majadiliano Live — Jumuiya ya NjiaMauzo Afrika</h3>
+            <div id="chatGroupBadge">👥 <span id="chatMemberCount">0</span>/1000 wanachama</div>
+            <span id="chatStarsBadge" class="hidden" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.4);border-radius:999px;padding:4px 12px;margin-left:6px;">⭐ <span id="chatStarsCount">0</span></span>
+            <div id="chatGroupBar"><div id="chatGroupBarFill" style="width:0%"></div></div>
+            <p class="muted" style="margin-bottom:10px;font-size:13px;" id="chatSabbathNote"></p>
+
+            <div id="chatToolsRow" class="hidden" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+                <button type="button" class="link-btn" onclick="walletOpen()" style="font-size:12px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.4);border-radius:999px;padding:6px 12px;">⭐ Nunua/Tuma Nyota</button>
+                <button type="button" class="link-btn" onclick="groupCreateOpen()" style="font-size:12px;background:rgba(79,172,254,.12);border:1px solid rgba(79,172,254,.4);border-radius:999px;padding:6px 12px;">➕ Tengeneza Group Yangu</button>
+            </div>
+
+            <div id="walletPanel" class="hidden" style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.35);border-radius:14px;padding:14px;margin-bottom:12px;">
+                <b style="font-size:14px;">⭐ Wallet Yangu — <span id="walletBalanceLabel">0</span> nyota</b>
+                <p class="muted" style="font-size:12px;margin:6px 0;">Bei: TSh 100 kwa nyota 1. Nyota 1000 za bure ulipokea ulipojisajili — zinaweza kutumika kupiga video call (dakika 1 = nyota fulani, kulingana na mfumo utakaowekwa) au kutuma zawadi kwa wenzako.</p>
+                <div style="display:grid;gap:8px;margin-top:8px;">
+                    <input id="walletBuyStars" type="number" min="1" placeholder="Idadi ya nyota za kununua" style="padding:9px;border-radius:8px;border:1px solid var(--border);">
+                    <button type="button" class="primary" onclick="walletBuy()" style="border-radius:999px;">💳 Nunua Nyota</button>
+                    <hr style="border-color:rgba(255,255,255,.1);margin:4px 0;">
+                    <input id="walletGiftPhone" placeholder="Namba ya simu ya rafiki/mpendwa" style="padding:9px;border-radius:8px;border:1px solid var(--border);">
+                    <input id="walletGiftStars" type="number" min="1" placeholder="Idadi ya nyota za zawadi" style="padding:9px;border-radius:8px;border:1px solid var(--border);">
+                    <button type="button" onclick="walletGift()" style="border-radius:999px;background:linear-gradient(90deg,#f5576c,#f093fb);border:none;color:#fff;font-weight:700;padding:10px;">🎁 Tuma Zawadi</button>
+                </div>
+                <div id="walletMsg" class="muted" style="margin-top:8px;font-size:13px;"></div>
+            </div>
+
+            <div id="groupCreatePanel" class="hidden" style="background:rgba(79,172,254,.08);border:1px solid rgba(79,172,254,.35);border-radius:14px;padding:14px;margin-bottom:12px;">
+                <b style="font-size:14px;">➕ Tengeneza Group Yako Mwenyewe</b>
+                <p class="muted" style="font-size:12px;margin:6px 0;">Group lako litakuwa na ukomo wa wanachama 1000 waliohai, sawa na hili kuu.</p>
+                <div style="display:grid;gap:8px;margin-top:8px;">
+                    <input id="groupCreateName" placeholder="Jina la group lako" style="padding:9px;border-radius:8px;border:1px solid var(--border);">
+                    <button type="button" class="primary" onclick="groupCreate()" style="border-radius:999px;">✅ Tengeneza Sasa</button>
+                </div>
+                <div id="groupCreateMsg" class="muted" style="margin-top:8px;font-size:13px;"></div>
+
+                <hr style="border-color:rgba(255,255,255,.1);margin:12px 0;">
+                <b style="font-size:13px;">🔗 Jiunge kwa Invite Code</b>
+                <div style="display:flex;gap:6px;margin-top:6px;">
+                    <input id="groupJoinCode" placeholder="Weka invite code" style="flex:1;padding:9px;border-radius:8px;border:1px solid var(--border);">
+                    <button type="button" onclick="groupJoinByCode()" style="border-radius:999px;padding:9px 16px;background:linear-gradient(90deg,#4facfe,#00f2fe);border:none;color:#062;font-weight:700;">Jiunge</button>
+                </div>
+                <div id="groupJoinMsg" class="muted" style="margin-top:6px;font-size:12px;"></div>
+
+                <hr style="border-color:rgba(255,255,255,.1);margin:12px 0;">
+                <b style="font-size:13px;">👥 Group Zangu</b>
+                <div id="myGroupsList" style="margin-top:6px;font-size:13px;"></div>
+            </div>
+
+            <div id="chatInviteBanner" style="border-radius:16px;padding:16px;margin-bottom:14px;">
+                <b style="font-size:16px;color:#fff;">🙌 Jiunge na Jumuiya Yetu!</b>
+                <p style="margin:6px 0 12px;font-size:13px;color:rgba(255,255,255,.92);">Wafanyakazi, wafanyabiashara, wanafunzi na wote — jiunge kwenye group (nafasi 1000 pekee), pata ⭐1000 bure, na uchangie mawazo yako.</p>
+                <div style="display:grid;gap:9px;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <div id="chatRegAvatarPreview" style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;overflow:hidden;border:2px solid rgba(255,255,255,.3);">🙂</div>
+                        <div>
+                            <input type="file" id="chatRegAvatarInput" accept="image/*" class="hidden" onchange="chatRegPreviewAvatar(this.files[0])">
+                            <button type="button" onclick="document.getElementById('chatRegAvatarInput').click()" style="font-size:12px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;">📷 Weka Picha ya Profaili (hiari)</button>
+                        </div>
+                    </div>
+                    <input id="chatRegPhone" placeholder="📱 Namba ya simu — mfano 0755xxxxxx" style="padding:11px;border-radius:10px;">
+                    <input id="chatRegName" placeholder="🙂 Jina lako (hiari)" style="padding:11px;border-radius:10px;">
+                    <select id="chatRegCategory" style="padding:11px;border-radius:10px;">
+                        <option value="Mwingine">Mimi ni... (chagua)</option>
+                        <option value="Mfanyakazi">👔 Mfanyakazi</option>
+                        <option value="Mfanyabiashara">💼 Mfanyabiashara</option>
+                        <option value="Mwanafunzi">🎓 Mwanafunzi</option>
+                        <option value="Mkulima">🌾 Mkulima</option>
+                        <option value="Mwingine">🙋 Mwingine</option>
+                    </select>
+                    <input id="chatRegMkoa" placeholder="📍 Mkoa/eneo lako (hiari — kwa mialiko ya Sabato)" style="padding:11px;border-radius:10px;">
+                    <button type="button" class="primary" onclick="chatRegister()" style="width:100%;border-radius:999px;padding:13px;">✨ Jiunge Sasa — Pata ⭐1000 Bure</button>
+                    <button type="button" class="link-btn" onclick="chatUseLocation()" style="font-size:12px;color:#fff;opacity:.9;">📍 Tumia mahali nilipo (GPS) badala ya mkoa</button>
+                </div>
+                <div id="chatRegMsg" style="margin-top:8px;font-size:13px;color:#fff;position:relative;z-index:1;"></div>
+            </div>
+            <p class="muted" style="font-size:12px;margin:-6px 0 12px;">🌐 Majadiliano ya jumla hapa chini ni <strong>wazi kwa kila mtu</strong> kuona na kuchangia. Group unazounda/kujiunga ni <strong>siri</strong> — ujumbe wake unaonekana kwa wanachama wa group hiyo pekee.</p>
+
+            <div id="chatNotifBanner" class="hidden" style="border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:13px;"></div>
+
+            <div id="chatMessages" style="max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:10px;background:rgba(0,0,0,.18);border-radius:16px;margin-bottom:8px;">
+                <p class="muted" style="text-align:center;">Inapakia majadiliano...</p>
+            </div>
+
+            <div id="peopleSuggestBox" class="hidden" style="margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <b style="font-size:13px;">👥 Watu Unaoweza Kuwafahamu</b>
+                    <button type="button" onclick="document.getElementById('peopleSuggestBox').classList.add('hidden')" style="background:none;border:none;color:inherit;opacity:.6;font-size:16px;">✕</button>
+                </div>
+                <div id="peopleSuggestRow" style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;"></div>
+            </div>
+
+            <div id="chatStickerRow" class="hidden" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('😂')">😂</button>
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('❤️')">❤️</button>
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('🙏')">🙏</button>
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('👏')">👏</button>
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('🔥')">🔥</button>
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('😍')">😍</button>
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('🎉')">🎉</button>
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('🙌')">🙌</button>
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('⭐')">⭐</button>
+                <button type="button" class="sticker-btn" onclick="chatInsertSticker('🌟')">🌟</button>
+            </div>
+
+            <div id="chatCartoonRow" class="hidden" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;background:rgba(255,255,255,.04);border-radius:12px;padding:8px;">
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('🤣')" title="Vichekesho">🤣</button>
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('🙈')" title="Vichekesho">🙈</button>
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('🐒')" title="Vichekesho">🐒</button>
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('🤡')" title="Vichekesho">🤡</button>
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('👻')" title="Vichekesho">👻</button>
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('🥳')" title="Vichekesho">🥳</button>
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('🐸')" title="Vichekesho">🐸</button>
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('🦄')" title="Vichekesho">🦄</button>
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('🐵🎉')" title="Vichekesho">🐵🎉</button>
+                <button type="button" class="sticker-btn" style="font-size:26px;" onclick="chatSendSticker('😹👍')" title="Vichekesho">😹👍</button>
+            </div>
+
+            <input type="file" id="chatAttachInput" accept="image/*,video/*,audio/*,application/pdf" class="hidden" onchange="chatUploadAttachment(this.files[0])">
+            <div id="chatSendRow" class="hidden" style="display:flex;gap:6px;align-items:center;">
+                <button type="button" title="Tuma faili (pdf/picha/sauti/video)" onclick="document.getElementById('chatAttachInput').click()" style="flex-shrink:0;">📎</button>
+                <button type="button" title="Vichekesho" onclick="document.getElementById('chatCartoonRow').classList.toggle('hidden')" style="flex-shrink:0;">🎭</button>
+                <input id="chatMsgInput" placeholder="Andika ujumbe wako..." style="flex:1;" maxlength="500" onkeydown="if(event.key==='Enter')chatSend()" oninput="chatNotifyTyping()" onfocus="chatEnterFullscreen()" onblur="chatExitFullscreenDeferred()">
+                <button type="button" onclick="chatSend()">➤ Tuma</button>
+            </div>
+            <div id="chatAttachStatus" class="muted" style="font-size:12px;margin-top:4px;"></div>
+        </div>
+        <div class="market-columns hidden" style="display:none !important;" aria-hidden="true">
+            <div style="grid-column: 1 / -1;">
+                <h3 style="margin-bottom:12px;font-size:16px;" data-i18n="recentTitle">🆕 Bidhaa Mpya</h3>
+                <div id="recentProducts" data-gated></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global lock banner: IMEONDOLEWA — bango lipo kwenye kila bidhaa; matangazo daima live -->
+    <div id="lockBanner" class="banner hidden" style="display:none !important;" aria-hidden="true"></div>
+    <div id="unlockCountdown" class="muted" style="text-align:center;margin:8px 0;font-weight:700;color:var(--accent1);"></div>
+
+
+    <section class="section service-control" data-service-section>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+            <h2 style="margin:0;" data-i18n="feedTitle">📡 Live Activity Feed</h2>
+            <span style="background:rgba(23,209,160,.15);color:#4fe3bd;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;display:flex;align-items:center;gap:6px;">
+                <span style="width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse 1.4s infinite;"></span>
+                <span data-i18n="feedLive">LIVE 24/7 — Wahudumu</span>
+            </span>
+        </div>
+        <p class="muted" style="margin-bottom:12px;font-size:13px;">
+            <span data-i18n-html="feedDesc">Wahudumu wanatafuta bidhaa kiotomatiki 24/7 katika mikoa ya <strong>Tanzania</strong> na <strong>Afrika Mashariki</strong>.</span>
+        </p>
+        <div id="activityFeed" style="max-height:380px;overflow-y:auto;">
+            <p class="muted">Inapakia matukio...</p>
+        </div>
+    </section>
+
+    <!-- ===== Matangazo — mtindo wa Facebook ===== -->
+    <section class="section service-control" data-service-section>
+        <h2 style="margin-bottom:4px;">📢 Matangazo</h2>
+        <p class="muted" style="margin-bottom:14px;font-size:13px;">Matangazo ya NjiaMauzo Afrika na washirika — bofya, penda, na shiriki.</p>
+        <div id="fbAdsFeed"><p class="muted">Inapakia matangazo...</p></div>
+    </section>
+
+    <!-- ===== Video Reels — mtindo wa Instagram Reels ===== -->
+    <section class="section service-control" data-service-section style="padding:0;overflow:hidden;">
+        <div style="padding:22px 22px 0;">
+            <h2 style="margin-bottom:4px;">🎬 Video Reels</h2>
+            <p class="muted" style="margin-bottom:14px;font-size:13px;">Video fupi za ushauri, bidhaa na matangazo — telezesha juu/chini.</p>
+        </div>
+        <div id="reelsContainer"><p class="muted" style="padding:0 22px 22px;">Inapakia video...</p></div>
+    </section>
+
+
+    <section class="section service-control" data-service-section>
+        <h2 data-i18n="requestTitle">🔎 Kutafutiwa Bidhaa</h2>
+        <p style="margin-bottom:14px;" data-i18n-html="requestDesc">Andika unachotafuta, kwa mfano: <b>Natafuta tani 20 za ufuta Ruvuma</b></p>
+        <button class="primary" 
