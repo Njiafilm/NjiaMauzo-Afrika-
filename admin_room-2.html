@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="sw">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NjiaMauzo Afrika — Admin Room</title>
+<style>
+:root{
+ --navy:#071a31;--navy2:#0b2441;--blue:#2f7df4;--cyan:#19c6c2;
+ --text:#17243a;--muted:#65758a;--white:#fff;--line:#dfe8f2;
+ --bg:#eef5fb;--danger:#d52f3d;--shadow:0 12px 32px rgba(16,39,65,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#071a31 0 150px,#eef5fb 150px);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.topbar{position:sticky;top:0;z-index:60;background:#071a31;color:#fff;border-bottom:1px solid #173b5d;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:20px;font-weight:900}.logout{border:0;border-radius:14px;padding:11px 19px;background:#173d68;color:#fff;font-weight:850}
+.tabs{position:sticky;top:61px;z-index:55;display:flex;gap:10px;overflow-x:auto;padding:13px 18px;background:rgba(7,26,49,.97);border-bottom:1px solid #183b5b}
+.tabs::-webkit-scrollbar{height:0}
+.tab{white-space:nowrap;border:1px solid #1c4368;background:#081d34;color:#9eb3c9;border-radius:28px;padding:11px 17px;font-weight:850}
+.tab.active{color:#fff;background:linear-gradient(100deg,#19c7bc,#367ff4);border-color:transparent;box-shadow:0 8px 22px rgba(37,166,230,.22)}
+main{max-width:1100px;margin:auto;padding:18px}
+.panel{display:none}.panel.active{display:block}
+.card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.card.dark{background:linear-gradient(180deg,#102c4d,#0d2846);color:#fff;border-color:#204a70}
+.card h2{margin:0 0 9px;color:#286ad1;font-size:24px}.dark h2{color:#24c9c0}
+.card h3{margin:0 0 7px;font-size:20px}
+.help{color:var(--muted);line-height:1.65}.dark .help{color:#a9bdd4}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:flex;flex-direction:column;gap:7px}.full{grid-column:1/-1}
+label{font-weight:800;color:#30435a}
+input,textarea,select{width:100%;border:1px solid #d4e0ec;background:#fff;color:#142238;border-radius:16px;padding:14px 15px;outline:none}
+.dark input,.dark textarea,.dark select{background:#071c32;color:#f4f8ff;border-color:#28547d}
+input:focus,textarea:focus,select:focus{border-color:#3685ee;box-shadow:0 0 0 3px rgba(54,133,238,.12)}
+textarea{min-height:110px;resize:vertical}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.primary,.secondary,.danger,.source-btn{border:0;border-radius:15px;padding:13px 18px;font-weight:900}
+.primary{background:linear-gradient(100deg,#18c6b9,#3784f5);color:#fff}
+.secondary{background:#173b63;color:#fff}.danger{background:var(--danger);color:#fff}
+.notice{border-left:5px solid #36a7ff;background:#f0f7ff;padding:14px 16px;border-radius:14px;color:#38536f;line-height:1.6}
+.dark .notice{background:#0a2139;color:#d5e7f8}
+.status{margin-top:12px;padding:12px 14px;border-radius:14px;background:#edf5ff;color:#31506f}
+.dark .status{background:#081a2e;color:#bcd1e8}
+.preview-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}
+.preview{min-height:230px;border:1px dashed #91abc5;border-radius:20px;background:#071728;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#8ca5bd;text-align:center;padding:18px}
+.preview img,.preview video{width:100%;max-height:380px;object-fit:contain}
+.list{display:grid;gap:14px}
+.item{background:#fff;border:1px solid #e1e9f1;color:#17243a;border-radius:20px;padding:18px;box-shadow:0 8px 22px rgba(16,39,65,.08)}
+.item a{color:#2467c8;font-weight:850;word-break:break-word}.meta{color:#6b7b8f;font-size:14px;line-height:1.5}
+.badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:#eaf3ff;color:#2164bf;font-size:12px;font-weight:900}
+.source-grid,.product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.source{background:#fff;border:1px solid #e0e8f1;border-radius:20px;padding:17px;box-shadow:0 8px 22px rgba(16,39,65,.08)}
+.source h3{margin:7px 0 4px}.source p{color:#65758a;line-height:1.5}.source a{color:#2169c9;font-weight:900}
+.product{background:#fff;border:1px solid #e0e8f1;border-radius:20px;overflow:hidden;box-shadow:0 8px 22px rgba(16,39,65,.08)}
+.product .pic{height:170px;background:linear-gradient(135deg,#dff3ff,#eef7ff);display:flex;align-items:center;justify-content:center;font-size:62px}
+.product .body{padding:17px}.product h3{margin:7px 0}.seller{font-size:13px;color:#69788a}.price{font-size:19px;font-weight:900;margin:8px 0;color:#0e3968}
+.paywall{margin-top:12px;padding:12px;border-radius:15px;background:#f0f6ff;border:1px solid #dce8f5;color:#38516d}.small{font-size:13px;line-height:1.5;color:#6b7d90}
+.library-card{background:#fff;border:1px solid #e0e8f1;border-radius:24px;padding:20px;box-shadow:0 10px 28px rgba(16,39,65,.09);margin-bottom:15px}
+.library-head{display:flex;gap:14px;align-items:center}.book-icon{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:#f1e7ff;font-size:31px}
+.source-box{margin-top:15px;background:#f3f7fc;border-radius:17px;padding:15px}.source-box strong{display:block;color:#7a8798;font-size:13px;margin-bottom:8px}.source-box a{display:block;color:#286acb;font-weight:900;margin:8px 0}
+footer{text-align:center;color:#71859a;padding:18px 10px 38px}
+.hidden{display:none!important}
+@media(max-width:720px){
+ body{background:linear-gradient(180deg,#071a31 0 142px,#eef5fb 142px)}
+ .grid,.preview-wrap,.source-grid,.product-grid{grid-template-columns:1fr}
+ main{padding:12px}.card{padding:16px;border-radius:20px}.card h2{font-size:21px}
+ .tabs{top:59px;padding:11px 12px}.topbar{padding:12px 14px}.brand{font-size:17px}
+ .library-card{padding:16px}
+}
+
+/* ===== Targeted Admin improvements: Public mirror + reference sources ===== */
+.public-preview-card{background:#061a31!important;color:#fff!important;border:1px solid #23527d!important;}
+.public-preview-head{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.public-preview-frame{width:100%;height:78vh;min-height:620px;border:2px solid #244d73;border-radius:20px;background:#eef5fb;}
+.library-reference-box{margin:14px 0 0;padding:15px;border-radius:18px;background:linear-gradient(135deg,#4b596b,#27384d);border:1px solid #70839a;box-shadow:inset 0 1px 0 rgba(255,255,255,.12);}
+.library-reference-box .ref-title{color:#7dd3fc;font-weight:900;font-size:16px;margin-bottom:10px;}
+.library-reference-box a{display:inline-block;margin:6px 7px 0 0;padding:9px 13px;border-radius:999px;background:rgba(59,130,246,.22);border:1px solid rgba(96,165,250,.55);color:#dbeafe!important;text-decoration:none!important;font-weight:900;}
+.library-reference-box a:hover{background:linear-gradient(135deg,#14b8a6,#2563eb);color:#fff!important;}
+@media(max-width:720px){.public-preview-frame{height:72vh;min-height:540px;}.public-preview-head .primary{width:100%;}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">NjiaMauzo Afrika — Admin Room</div>
+  <button class="logout" onclick="location.href='/'">Toka</button>
+</header>
+
+<nav class="tabs">
+ <button class="tab active" data-panel="ads">📣 Matangazo</button>
+ <button class="tab" data-panel="payments">💳 Malipo</button>
+ <button class="tab" data-panel="advice">🌱 Ushauri</button>
+ <button class="tab" data-panel="library">📚 Maktaba</button>
+ <button class="tab" data-panel="reels">🎬 Reels</button>
+ <button class="tab" data-panel="markets">🌍 Masoko</button>
+ <button class="tab" data-panel="products">🛒 Bidhaa</button>
+ <button class="tab" data-panel="agent">✉️ Agent</button>
+ <button class="tab" data-panel="publicPreview">👁️ Public</button>
+</nav>
+
+<main>
+<section class="panel active" id="ads">
+ <div class="card dark">
+  <h2>📣 Ongeza Tangazo</h2>
+  <p class="help">Chagua picha/video, pata preview kama ilivyo kwenye Admin Room uliyoomba, kisha bonyeza <b>Pakia Tangazo</b>. Tangazo linapaswa kuhifadhiwa server-side na kuonekana public baada ya kuthibitishwa.</p>
+  <div class="preview-wrap">
+   <div>
+    <div class="grid">
+     <div class="field"><label>Kichwa</label><input id="adTitle" placeholder="Mfano: Bidhaa mpya zimewasili"></div>
+     <div class="field"><label>Aina</label><select id="adType"><option value="image">Picha</option><option value="video">Video</option></select></div>
+     <div class="field full"><label>Maelezo</label><textarea id="adDesc" placeholder="Ujumbe wa tangazo..."></textarea></div>
+     <div class="field"><label>Media</label><input id="adFile" type="file" accept="image/*,video/*"></div>
+     <div class="field"><label>Link ya tangazo</label><input id="adLink" type="url" placeholder="https://..."></div>
+    </div>
+    <div class="actions"><button class="primary" onclick="uploadAd()">⬆️ Pakia Tangazo</button><button class="secondary" onclick="clearAd()">↻ Safisha</button></div>
+    <div class="status" id="adStatus">Tayari.</div>
+   </div>
+   <div><label style="color:#fff">Preview</label><div class="preview" id="adPreview">Chagua picha au video kuona preview.</div></div>
+  </div>
+ </div>
+</section>
+
+<section class="panel" id="payments">
+ <div class="card dark"><h2>💳 Malipo yanayosubiri</h2><p class="help">Oda za mteja zinapaswa kuthibitishwa na backend/payment gateway. Admin hawezi kufungua mawasiliano kwa kubadili HTML.</p><div class="list" id="orders"><div class="item">Inapakia...</div></div></div>
+</section>
+
+<section class="panel" id="advice">
+ <div class="card dark"><h2>🌱 Malipo ya Ushauri</h2><p class="help">Hapa Admin anaona maombi ya ushauri na hali ya malipo.</p><div class="list" id="adviceList"><div class="item">Inapakia...</div></div></div>
+</section>
+
+<section class="panel" id="library">
+ <div class="card">
+  <h2>📚 Maktaba ya Masomo</h2>
+  <p class="help">Muundo huu unafuata picha namba 7: kila somo lina chanzo, link ya <b>Fungua chanzo ↗</b>, PDF ya hiari, ada na uwezo wa kuhariri/kufuta. <b>Vyanzo havionekani public.</b></p>
+ </div>
+ <div class="card">
+  <h2>➕ Ongeza Somo</h2>
+  <div class="grid">
+   <div class="field"><label>Jina la somo</label><input id="lessonTitle" placeholder="Mfano: Mashauri kuhusu Biashara"></div>
+   <div class="field"><label>Kategoria</label><input id="lessonCategory" placeholder="biashara"></div>
+   <div class="field full"><label>Maelezo</label><textarea id="lessonDesc" placeholder="Maelezo ya somo..."></textarea></div>
+   <div class="field"><label>Chanzo rasmi (URL)</label><input id="lessonSource" type="url" placeholder="https://..."></div>
+   <div class="field"><label>PDF (hiari)</label><input id="lessonPdf" type="file" accept="application/pdf"></div>
+   <div class="field"><label>Ada (TZS)</label><input id="lessonFee" type="number" min="0" value="3000"></div>
+  </div>
+  <div class="actions"><button class="primary" onclick="addLesson()">➕ Ongeza</button></div>
+ </div>
+ <div class="list" id="lessons"><div class="item">Inapakia...</div></div>
+</section>
+
+<section class="panel" id="reels">
+ <div class="card dark">
+  <h2>🎬 Video Reels — Simamia Video za Umma</h2>
+  <p class="help">Chagua video, i-preview, kisha pakia. Reel iliyothibitishwa itaonekana kwenye public Video Reels.</p>
+  <div class="preview-wrap">
+   <div>
+    <div class="grid">
+     <div class="field"><label>Jina la Reel</label><input id="reelTitle" placeholder="Mfano: Tutafu Huduma Bora"></div>
+     <div class="field full"><label>Maelezo</label><textarea id="reelDesc" placeholder="Maelezo mafupi..."></textarea></div>
+     <div class="field full"><label>Video</label><input id="reelFile" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-m4v"></div>
+    </div>
+    <div class="actions"><button class="primary" onclick="uploadReel()">⬆️ Pakia Reel</button></div>
+    <div class="status" id="reelStatus">Chagua video.</div>
+   </div>
+   <div><label style="color:#fff">Preview</label><div class="preview" id="reelPreview">Preview itaonekana hapa.</div></div>
+  </div>
+ </div>
+ <div class="card"><h2>📱 Reels zilizopakiwa</h2><div class="list" id="reelList"><div class="item">Inapakia...</div></div></div>
+</section>
+
+<section class="panel" id="markets">
+ <div class="card">
+  <h2>🌍 Vyanzo vya Masoko — Tanzania, Afrika & Dunia</h2>
+  <p class="help">Hivi ni vyanzo vya kuanzia kwa Admin. NjiaMauzo haitangazwi kama agent wa kampuni yoyote bila uthibitisho wa maandishi kutoka kampuni husika.</p>
+  <div class="source-grid" id="sources"></div>
+ </div>
+</section>
+
+<section class="panel" id="products">
+ <div class="card">
+  <h2>🛒 Bidhaa Halisi + Link ya Muuzaji</h2>
+  <p class="help">Bidhaa zilizo hapa zinatoka kwenye vyanzo rasmi/marketplaces zilizokaguliwa. Public page inaweza kuonyesha bidhaa; mteja akibonyeza <b>Fungua Mawasiliano</b> anaelekezwa kwenye ada, na backend pekee ndiyo inathibitisha unlock.</p>
+  <div class="product-grid" id="productGrid"></div>
+ </div>
+ <div class="card">
+  <h2>🔐 Mfumo wa Mteja → Muuzaji</h2>
+  <div class="notice">
+   <b>Hatua 1:</b> Mteja anaona bidhaa → <b>2:</b> anabonyeza bidhaa → <b>3:</b> mfumo unaonyesha ada → <b>4:</b> payment gateway inathibitisha → <b>5:</b> mawasiliano yanafunguka → <b>6:</b> mfumo unatuma purchase request kwa muuzaji → <b>7:</b> live chat/call session inaanzishwa.
+   <br><br>
+   Ruhusa ya mawasiliano, seller phone/email na live session <b>zisihifadhiwe/kuachwa wazi kwenye JavaScript public</b>. Zitoe baada ya backend kuthibitisha malipo.
+  </div>
+ </div>
+</section>
+
+<section class="panel" id="agent">
+ <div class="card">
+  <h2>✉️ Barua ya Ombi la Kuwa Agent / Reseller</h2>
+  <p class="help">Chagua kampuni kwenye Masoko kisha hariri barua. Tuma kwa email rasmi ya kampuni au tumia endpoint ya backend ya partnership request.</p>
+  <div class="grid">
+   <div class="field"><label>Kampuni</label><input id="agentCompany" placeholder="Mfano: Dangote Cement"></div>
+   <div class="field"><label>Email ya kampuni</label><input id="agentEmail" type="email" placeholder="official@example.com"></div>
+   <div class="field full"><label>Barua</label><textarea id="agentMessage" rows="13">Subject: Request for Authorized Agent / Reseller Partnership — NjiaMauzo Afrika
+
+Dear Sir/Madam,
+
+NjiaMauzo Afrika is a Tanzania-based digital marketplace initiative connecting buyers, sellers, suppliers and business opportunities across Tanzania, Africa and the global market.
+
+We would like to explore becoming an authorized agent, reseller, referral partner, sourcing partner or distribution partner for your products, subject to your official approval and territory rules.
+
+Our platform can promote approved products, generate qualified purchase enquiries, support buyer-seller communication, and direct customers to your official sales/checkout channels.
+
+Please share your official requirements, wholesale/reseller pricing, minimum order quantities, territory restrictions, commission structure, payment terms, logistics requirements and the procedure for becoming an authorized partner.
+
+We are ready to provide company information, platform details and any compliance documents required.
+
+Kind regards,
+NjiaMauzo Afrika
+Fikia Masoko, Panua Biashara</textarea></div>
+  </div>
+  <div class="actions"><button class="primary" onclick="sendAgent()">📨 Tuma Ombi</button><button class="secondary" onclick="copyAgent()">📋 Nakili Barua</button></div>
+  <div class="status" id="agentStatus">Tayari.</div>
+ </div>
+</section>
+
+<section class="panel" id="publicPreview">
+ <div class="card public-preview-card">
+  <div class="public-preview-head">
+   <div><h2 style="color:#24c9c0;margin-bottom:5px;">👁️ Ukurasa wa Public — Live Mirror</h2><p class="help" style="color:#c8d8e8;margin:0;">Admin anaweza kukagua ukurasa mzima wa public hapa bila kutoka Admin Room. Kwa sababu admin session ipo, maeneo yaliyolindwa yanaonekana kwa ukaguzi.</p></div>
+   <button class="primary" type="button" onclick="window.open('/','_blank','noopener')">🌍 Fungua Public kwenye tab mpya</button>
+  </div>
+  <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+   <span class="badge">🔐 Admin preview</span><span class="badge">🛒 Bidhaa</span><span class="badge">♻️ Used Market</span><span class="badge">🌍 Import</span><span class="badge">⚽ Jezi</span><span class="badge">💬 Chat</span>
+  </div>
+  <iframe class="public-preview-frame" src="/" title="NjiaMauzo Public Preview"></iframe>
+ </div>
+</section>
+
+<footer>© 2026 NjiaMauzo Afrika Admin • Seller contacts are protected by server-side payment verification.</footer>
+</main>
+
+<script>
+const API={
+ ads:'/api/admin/ads',reels:'/api/reels',lessons:'/api/lessons',
+ orders:'/api/admin/orders',advice:'/api/advisory/admin-orders',products:'/api/admin/import/products-all'
+};
+
+const SOURCES=[
+ {name:'Alibaba.com',region:'🌍 Dunia — B2B',desc:'Sourcing ya suppliers/manufacturers na bidhaa za jumla.',url:'https://www.alibaba.com/'},
+ {name:'Made-in-China.com',region:'🇨🇳 China / 🌍 Dunia',desc:'Manufacturers na suppliers wa viwanda, ujenzi, electronics, apparel na machinery.',url:'https://www.made-in-china.com/'},
+ {name:'TradeKey',region:'🌍 Dunia — B2B',desc:'B2B marketplace kwa agriculture, construction, home & garden, apparel na machinery.',url:'https://www.tradekey.com/'},
+ {name:'Dangote Cement',region:'🇹🇿 Tanzania / 🌍 Afrika',desc:'Bidhaa za ujenzi; cement na distributor information rasmi.',url:'https://cement.dangote.com/our-products/'},
+ {name:'Dangote Tanzania',region:'🇹🇿 Tanzania',desc:'Taarifa rasmi za shughuli, bidhaa na mawasiliano ya Dangote Cement Tanzania.',url:'https://dangotecement.com/tanzania/'},
+ {name:'MeTL Group — Mo Brand',region:'🇹🇿 Tanzania / 🌍 Afrika',desc:'Bidhaa za nyumbani na FMCG: sundries, batteries, pasta, yeast, matches na personal hygiene.',url:'https://metl.net/what-we-do/global-trading/metl-sundries/'},
+ {name:'MeTL Group — Manufacturing',region:'🇹🇿 Tanzania / 🌍 Afrika',desc:'Manufacturing na distribution ya consumer, textile, food, energy na agro-processing.',url:'https://metl.net/what-we-do/manufacturing/'},
+ {name:'Ministry of Agriculture — M-Kilimo',region:'🇹🇿 Tanzania',desc:'Chanzo rasmi cha taarifa za masoko ya mazao na huduma za kilimo.',url:'https://www.kilimo.go.tz/'},
+ {name:'Jumia Tanzania',region:'🇹🇿 Tanzania',desc:'Marketplace ya bidhaa za consumer, electronics, fashion na home.',url:'https://www.jumia.co.tz/'},
+ {name:'Jiji Tanzania',region:'🇹🇿 Tanzania',desc:'Marketplace ya sellers mbalimbali; admin athibitishe seller kabla ya kuwasilisha bidhaa.',url:'https://jiji.co.tz/'},
+ {name:'Simba SC / JayRutty Official Store',region:'🇹🇿 Tanzania — Sports',desc:'Chanzo cha jezi rasmi za Simba SC; home, away, third na kids.',url:'https://jayruttyshop.sicagroup.co.tz/shop'},
+ {name:'Simba SC Official Website',region:'🇹🇿 Tanzania — Sports',desc:'Tovuti rasmi ya Simba Sports Club kwa habari na taarifa za klabu.',url:'https://simbasc.co.tz/'},
+ {name:'Young Africans SC',region:'🇹🇿 Tanzania — Sports',desc:'Chanzo cha klabu cha Young Africans SC; uthibitisho wa shop/stock ufanywe na admin.',url:'https://yangasc.co.tz/'},
+ {name:'Amazon',region:'🇺🇸 USA / 🌍 Dunia',desc:'Marketplace kubwa ya bidhaa za consumer, electronics, home na appliances.',url:'https://www.amazon.com/'},
+ {name:'Samsung Africa',region:'🇿🇦/🌍 Afrika',desc:'Chanzo rasmi cha smartphones na vifaa vya Samsung Africa.',url:'https://www.samsung.com/africa_en/smartphones/'},
+ {name:'Apple',region:'🇺🇸 USA / 🌍 Dunia',desc:'Chanzo rasmi cha iPhone, iPad, AirPods na vifaa vya Apple.',url:'https://www.apple.com/store'}
+];
+
+const PRODUCTS=[
+ {id:'dangote-3x-425',name:'Dangote 3X 42.5R / 42.5N Cement',seller:'Dangote Cement',price:'Bei: wasiliana na distributor',fee:3000,emoji:'🏗️',url:'https://dangotecement.com/our-products/',category:'Ujenzi'},
+ {id:'metl-mo-simba-battery',name:'Mo Simba / Mo Golden Bell Batteries',seller:'MeTL Group — Mo Sundries',price:'Bei: wasiliana na seller',fee:3000,emoji:'🔋',url:'https://metl.net/what-we-do/global-trading/metl-sundries/',category:'Nyumbani'},
+ {id:'metl-mo-spaghetti',name:'MO Spaghetti',seller:'MeTL Group — Mo Sundries',price:'Bei: wasiliana na seller',fee:3000,emoji:'🍝',url:'https://metl.net/what-we-do/global-trading/metl-sundries/',category:'Chakula'},
+ {id:'simba-home-jersey',name:'Simba SC Official Home Jersey',seller:'JayRutty × Simba',price:'TZS 45,000',fee:3000,emoji:'⚽',url:'https://jayruttyshop.sicagroup.co.tz/challenge',category:'Michezo'},
+ {id:'simba-away-jersey',name:'Simba SC Official Away Jersey',seller:'JayRutty × Simba',price:'TZS 45,000',fee:3000,emoji:'⚽',url:'https://jayruttyshop.sicagroup.co.tz/challenge',category:'Michezo'},
+ {id:'simba-third-jersey',name:'Simba SC Limited Third Jersey',seller:'JayRutty × Simba',price:'TZS 45,000',fee:3000,emoji:'⚽',url:'https://jayruttyshop.sicagroup.co.tz/challenge',category:'Michezo'},
+ {id:'alibaba-sourcing',name:'Alibaba Product Sourcing',seller:'Alibaba.com suppliers',price:'Supplier/MOQ dependent',fee:3000,emoji:'🌍',url:'https://www.alibaba.com/',category:'Sourcing'},
+ {id:'mic-sourcing',name:'Made-in-China Product Sourcing',seller:'Made-in-China suppliers',price:'Supplier/MOQ dependent',fee:3000,emoji:'🏭',url:'https://www.made-in-china.com/',category:'Sourcing'}
+];
+
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+ b.classList.add('active');document.getElementById(b.dataset.panel).classList.add('active');
+ if(b.dataset.panel==='payments')loadOrders();
+ if(b.dataset.panel==='advice')loadAdvice();
+ if(b.dataset.panel==='library')loadLessons();
+ if(b.dataset.panel==='reels')loadReels();
+}));
+
+function previewFile(input,target){
+ const f=input.files[0];if(!f)return;
+ const u=URL.createObjectURL(f);target.innerHTML='';target.style.padding='0';
+ if(f.type.startsWith('video/')){const v=document.createElement('video');v.src=u;v.controls=true;v.playsInline=true;target.appendChild(v)}
+ else {const i=document.createElement('img');i.src=u;target.appendChild(i)}
+}
+adFile.addEventListener('change',e=>previewFile(e.target,adPreview));
+reelFile.addEventListener('change',e=>previewFile(e.target,reelPreview));
+
+let CSRF_TOKEN='';
+async function ensureCsrf(){
+ if(CSRF_TOKEN)return CSRF_TOKEN;
+ try{const r=await fetch('/api/csrf',{credentials:'include'});const d=await r.json();CSRF_TOKEN=d.csrf_token||'';}catch(e){}
+ return CSRF_TOKEN;
+}
+async function postForm(url,form){
+ const token=await ensureCsrf();
+ if(token && !form.has('csrf_token')) form.append('csrf_token',token);
+ const headers=token?{'X-CSRF-Token':token}:{};
+ const r=await fetch(url,{method:'POST',body:form,headers,credentials:'include'});
+ if(!r.ok)throw new Error(await r.text());
+ return r.json().catch(()=>({ok:true}));
+}
+async function uploadAd(){
+ const f=adFile.files[0];if(!f){adStatus.textContent='⚠️ Chagua media kwanza.';return}
+ const fd=new FormData();
+ fd.append('title',adTitle.value);fd.append('marquee',adDesc.value);fd.append('type',adType.value);fd.append('link_url',adLink.value);fd.append('file',f);
+ try{await postForm(API.ads,fd);adStatus.textContent='✅ Tangazo limehifadhiwa.'}catch(e){adStatus.textContent='❌ '+e.message}
+}
+function clearAd(){adTitle.value='';adDesc.value='';adLink.value='';adFile.value='';adPreview.innerHTML='Chagua picha au video kuona preview.';adPreview.style.padding='18px'}
+
+async function uploadReel(){
+ const f=reelFile.files[0];if(!f){reelStatus.textContent='⚠️ Chagua video.';return}
+ if(f.size>200*1024*1024){reelStatus.textContent='❌ Video imezidi 200MB.';return}
+ const fd=new FormData();fd.append('title',reelTitle.value);fd.append('description',reelDesc.value);fd.append('video',f);
+ try{await postForm(API.reels,fd);reelStatus.textContent='✅ Reel imepakiwa.';loadReels()}catch(e){reelStatus.textContent='❌ '+e.message}
+}
+async function addLesson(){
+ const fd=new FormData();
+ fd.append('title',lessonTitle.value);fd.append('category',lessonCategory.value);fd.append('description',lessonDesc.value);fd.append('source_url',lessonSource.value);fd.append('fee',lessonFee.value);
+ if(lessonPdf.files[0])fd.append('pdf',lessonPdf.files[0]);
+ try{await postForm(API.lessons,fd);alert('Somo limeongezwa.');loadLessons()}catch(e){alert('Imeshindikana: '+e.message)}
+}
+async function getJSON(url,fallback){try{const r=await fetch(url,{credentials:'include'});if(!r.ok)throw 0;const d=await r.json();return d?.data?.items||d?.data?.orders||d?.orders||d?.ads||d?.lessons||d?.reels||d?.products||d?.outreach||d?.topics||d}catch{return fallback}}
+async function loadOrders(){
+ const d=await getJSON(API.orders,[]);orders.innerHTML=d.length?d.map(o=>`<div class="item"><span class="badge">${esc(o.status||'pending')}</span><h3>${esc(o.product_name||'Oda')}</h3><div class="meta">${esc(o.buyer_name||'Mteja')} • ${esc(o.phone||'')}</div><b>${esc(o.amount||'')}</b></div>`).join(''):'<div class="item">Hakuna order.</div>'
+}
+async function loadAdvice(){
+ const d=await getJSON(API.advice,[]);adviceList.innerHTML=d.length?d.map(o=>`<div class="item"><span class="badge">${esc(o.status||'pending')}</span><h3>${esc(o.subject||'Ushauri')}</h3><div class="meta">${esc(o.buyer_name||'Mteja')}</div><p>${esc(o.message||'')}</p></div>`).join(''):'<div class="item">Hakuna ombi.</div>'
+}
+async function loadLessons(){
+ let d=await getJSON(API.lessons,[]);
+ if(!Array.isArray(d)){
+  try{
+   const r=await fetch('/api/doclib/topics',{credentials:'include'}); const x=await r.json();
+   const topics=x.topics||x.data?.topics||[];
+   if(topics.length){
+    const fallbackSources={
+      biashara:'https://www.ilo.org/skills-and-employment-promotion',
+      elimu:'https://www.unesco.org/en/education',
+      kilimo:'https://www.fao.org/family-farming/en/',
+      afya:'https://www.who.int/'
+    };
+    lessons.innerHTML=topics.map(t=>{const src=fallbackSources[String(t.id||t.label||'').toLowerCase()]||'#';return `<article class="library-card"><div class="library-head"><div class="book-icon">📚</div><div><h3>${esc(t.label||t.id)}</h3><div class="meta">Somo</div></div></div><p class="help">Somo hili linasimamiwa na Admin. PDF huwekwa kwenye Maktaba.</p><div class="source-box"><strong>CHANZO (LINK)</strong><a href="${safe(src)}" target="_blank" rel="noopener">Fungua chanzo ↗</a><div class="actions"><span class="badge">${t.has_document?'✅ PDF ipo':'⚠️ Bado hakuna PDF'}</span></div></div><div class="actions"><input type="file" accept="application/pdf" id="doc_${esc(t.id)}"><button class="primary" onclick="uploadDoclibPdf('${esc(t.id)}')">⬆️ Pakia PDF</button></div></article>`}).join('');
+    return;
+   }
+  }catch(e){}
+  lessons.innerHTML='<div class="item">Maktaba API haijapatikana kwenye backend hii. Sehemu nyingine hazijaguswa.</div>';return;
+ }
+ lessons.innerHTML=d.length?d.map(l=>`<article class="library-card"><div class="library-head"><div class="book-icon">📚</div><div><h3>${esc(l.title)}</h3><div class="meta">${esc(l.category||'somo')}</div></div></div><p class="help">${esc(l.description||'Somo hili linasimamiwa na Admin.')}</p><div class="library-reference-box"><div class="ref-title">🔗 Vyanzo vya rejea</div>${l.source_url?`<a href="${safe(l.source_url)}" target="_blank" rel="noopener">${esc(l.source_name||'Fungua chanzo')} ↗</a>`:''}${l.source_name&&l.source_url?`<a href="${safe(l.source_url)}" target="_blank" rel="noopener">${esc(l.source_name)} ↗</a>`:''}${!l.source_url?'<span class="meta" style="color:#dbeafe">Hakuna chanzo kilichowekwa bado.</span>':''}</div><div class="actions"><b style="padding:12px 0">${Number(l.fee||0).toLocaleString()} TSH+</b>${l.pdf_url?`<a class="secondary" style="text-decoration:none" href="${safe(l.pdf_url)}" target="_blank">📄 Fungua PDF</a>`:'<span class="meta" style="padding:12px 0">⚠️ Bado hakuna PDF</span>'}<button class="danger" onclick="deleteLesson('${esc(l.id)}')">Futa</button></div></article>`).join(''):'<div class="item">Hakuna somo lililowekwa.</div>'
+}
+async function uploadDoclibPdf(topicId){
+ const input=document.getElementById('doc_'+topicId); const file=input?.files?.[0];
+ if(!file){alert('Chagua PDF kwanza.');return;}
+ const fd=new FormData();fd.append('topic_id',topicId);fd.append('file',file);
+ try{const token=await ensureCsrf(); if(token)fd.append('csrf_token',token); const r=await fetch('/api/admin/doclib/upload',{method:'POST',body:fd,headers:token?{'X-CSRF-Token':token}:{},credentials:'include'}); const d=await r.json(); alert(d.message||(d.success?'PDF imepakiwa.':'Imeshindikana.')); if(d.success)loadLessons();}catch(e){alert('Imeshindikana kupakia PDF.');}
+}
+async function loadReels(){
+ const d=await getJSON(API.reels,[]);
+ if(!Array.isArray(d)){reelList.innerHTML='<div class="item">Reels API haijapatikana kwenye backend hii. Upload UI imehifadhiwa bila kuvuruga mfumo wa awali.</div>';return;}
+ reelList.innerHTML=d.length?d.map(r=>`<div class="item"><h3>🎬 ${esc(r.title)}</h3><div class="meta">${esc(r.description||'')}</div>${r.url?`<video src="${safe(r.url)}" controls playsinline style="width:100%;max-height:280px;border-radius:14px;margin-top:10px"></video>`:''}<div class="actions"><button class="danger" onclick="deleteReel('${esc(r.id)}')">🗑️ Futa Reel</button></div></div>`).join(''):'<div class="item">Hakuna Reel iliyopakiwa.</div>'
+}
+async function deleteReel(id){if(!confirm('Futa Reel hii?'))return;await fetch('/api/reels/'+encodeURIComponent(id),{method:'DELETE',credentials:'include'});loadReels()}
+async function deleteLesson(id){if(!confirm('Futa somo hili?'))return;await fetch('/api/lessons/'+encodeURIComponent(id),{method:'DELETE',credentials:'include'});loadLessons()}
+
+function renderSources(){
+ sources.innerHTML=SOURCES.map(s=>`<div class="source"><span class="badge">${esc(s.region)}</span><h3>${esc(s.name)}</h3><p>${esc(s.desc)}</p><a href="${safe(s.url)}" target="_blank" rel="noopener">Fungua chanzo ↗</a><div class="actions"><button class="secondary" onclick="useAgent('${esc(s.name)}')">✉️ Omba Agent</button></div></div>`).join('')
+}
+async function renderProducts(){
+ const box=document.getElementById('productGrid');
+ box.innerHTML='<div class="item">Inapakia bidhaa halisi kutoka kwenye catalogue...</div>';
+ try{
+  const r=await fetch(API.products,{credentials:'include'});
+  if(!r.ok) throw new Error('API haijapatikana');
+  const d=await r.json();
+  const items=d.products||d.data?.products||[];
+  if(!items.length){ box.innerHTML='<div class="item">Hakuna bidhaa zilizoidhinishwa bado.</div>'; return; }
+  box.innerHTML=items.map(p=>{
+   const id=p.id; const title=p.title||'Bidhaa';
+   const img=p.image_url||''; const source=p.supplier_url||p.source_url||'#';
+   const price=p.estimated_price_tzs?('TZS '+Number(p.estimated_price_tzs).toLocaleString()):'Bei: thibitisha';
+   return `<article class="product"><div class="pic">${img?`<img src="${safe(img)}" alt="${esc(title)}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`:'🛒'}</div><div class="body"><span class="badge">${esc(p.category||p.source_country||'Bidhaa')}</span><h3>${esc(title)}</h3><div class="seller">Muuzaji: ${esc(p.seller_name||'Chanzo cha bidhaa')}</div><div class="price">${esc(price)}</div><div class="actions"><a class="secondary" style="text-decoration:none" href="${safe(source)}" target="_blank" rel="noopener">🔗 Fungua kwa muuzaji ↗</a></div><div class="paywall">🔐 Ada ya kufungua mawasiliano: <b>TZS 3,000</b><div class="small">Mawasiliano ya muuzaji yatolewe baada ya backend kuthibitisha malipo.</div><div class="actions"><button class="primary" onclick="unlockProduct(${JSON.stringify(String(id))})">🔓 Fungua Mawasiliano</button></div></div></div></article>`;
+  }).join('');
+ }catch(e){ box.innerHTML='<div class="item">⚠️ Catalogue API haijapatikana. Bidhaa za awali za mfumo hazijabadilishwa.</div>'; }
+}
+async function unlockProduct(id){
+ try{
+  const token=await ensureCsrf();
+  const r=await fetch('/api/products/'+encodeURIComponent(id)+'/unlock',{method:'POST',headers:{'Content-Type':'application/json',...(token?{'X-CSRF-Token':token}:{})},credentials:'include',body:JSON.stringify({product_id:id,fee:3000,csrf_token:token})});
+  const d=await r.json();
+  if(d.payment_url){location.href=d.payment_url;return}
+  alert(d.message||(d.unlocked?'Mawasiliano yamefunguliwa.':'Malipo yanahitajika.'));
+ }catch(e){alert('Mfumo wa malipo haujapatikana kwenye backend hii. Bidhaa na sehemu nyingine za Admin Room zimeachwa salama.')}
+}
+function useAgent(name){agentCompany.value=name;document.querySelector('[data-panel="agent"]').click()}
+function sendAgent(){
+ const email=agentEmail.value.trim(),company=agentCompany.value.trim();
+ if(!email||!company){agentStatus.textContent='⚠️ Weka kampuni na email rasmi.';return}
+ location.href='mailto:'+encodeURIComponent(email)+'?subject='+encodeURIComponent('NjiaMauzo Afrika — Authorized Agent / Reseller Partnership')+'&body='+encodeURIComponent(agentMessage.value)
+ agentStatus.textContent='📨 Email client imeandaliwa.'
+}
+async function copyAgent(){await navigator.clipboard.writeText(agentMessage.value);agentStatus.textContent='✅ Barua imenakiliwa.'}
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function safe(v){try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:'#'}catch{return '#'}}
+renderSources();renderProducts();loadOrders();loadAdvice();loadLessons();loadReels();
+</script>
+</body>
+</html>
