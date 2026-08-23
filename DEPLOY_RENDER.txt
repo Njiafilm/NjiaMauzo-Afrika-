@@ -1,0 +1,13 @@
+NJIA MAUZO AFRIKA — RENDER DEPLOYMENT
+
+1. Upload/push all files in this folder to the Render service repository/root.
+2. Build Command: pip install -r requirements.txt
+3. Start Command: gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120 --graceful-timeout 30 --keep-alive 5
+4. Health Check Path: /
+5. Optional environment variables already supported by the app can be set in Render.
+
+IMPORTANT:
+- app.py is the production Flask entrypoint.
+- index.html and admin.html use the exact filenames expected by the Flask routes.
+- Do not use `python app.py` as the Render production start command.
+- Do not enable debug mode in production.

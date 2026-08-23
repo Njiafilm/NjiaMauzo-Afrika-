@@ -1495,7 +1495,7 @@ def api_site_status():
 
 @app.route("/")
 def index():
-    return send_from_directory(BASE_DIR, "index.html")
+    return send_from_directory(str(BASE_DIR), "index.html")
 
 
 @app.route("/static/<path:filename>")
@@ -5247,4 +5247,4 @@ if __name__ == "__main__":
     print("  http://127.0.0.1:5000")
     print("  Admin login: username only; no admin password is required")
     print("=" * 50)
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
