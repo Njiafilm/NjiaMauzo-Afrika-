@@ -1,6 +1,6 @@
 # 🌾 NjiaMauzo Afrika Pro
 
-**Agricultural marketplace for East Africa**  
+**Mrketplace for Africa**  
 Kitovu cha Biashara · The Hub of Business
 
 Unganisha wakulima na wanunuzi — Tanzania, Kenya, Uganda, Rwanda, Burundi.
