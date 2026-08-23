@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Ujasiriamali na Biashara",
+    "category": "Biashara",
+    "desc": "Mwongozo kamili wa ujasiriamali na uendeshaji wa biashara.",
+    "source": "https://www.ifc.org/en/what-we-do/topics/small-business",
+    "price": 3000
+  },
+  {
+    "name": "Masoko ya Kidijitali",
+    "category": "Masoko",
+    "desc": "Jifunze misingi ya masoko ya kidijitali na ujenzi wa chapa.",
+    "source": "https://learndigital.withgoogle.com/digitalgarage",
+    "price": 3000
+  },
+  {
+    "name": "Usimamizi wa Fedha",
+    "category": "Fedha",
+    "desc": "Misingi ya usimamizi wa fedha kwa biashara ndogo.",
+    "source": "https://www.sba.gov/business-guide/manage-your-business/finance-your-business",
+    "price": 3000
+  },
+  {
+    "name": "Kilimo Bora",
+    "category": "Kilimo",
+    "desc": "Mbinu za kilimo kwa mavuno bora na uendelevu.",
+    "source": "https://www.fao.org/family-farming/detail/en/c/84894/",
+    "price": 3000
+  }
+]
