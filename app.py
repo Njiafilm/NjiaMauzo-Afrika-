@@ -1495,7 +1495,7 @@ def api_site_status():
 
 @app.route("/")
 def index():
-    return send_from_directory(str(BASE_DIR), "index.html")
+    return send_from_directory(BASE_DIR, "index.html")
 
 
 @app.route("/static/<path:filename>")

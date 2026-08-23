@@ -1252,7 +1252,16 @@
     }
     .people-btn.remove{background:rgba(255,255,255,.08);color:inherit;}
     </style>
-<style id="ordinary-store-style">#ordinaryStore .ordinary-toolbar{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:14px}#ordinaryStore .ordinary-cats{display:flex;gap:7px;overflow:auto;padding-bottom:4px}#ordinaryStore .ordinary-cat{border:1px solid var(--card-border);background:var(--bg-soft);color:var(--muted);border-radius:999px;padding:8px 13px;font-weight:700;white-space:nowrap;cursor:pointer}#ordinaryStore .ordinary-cat.active{background:var(--accent-grad);color:#fff}#ordinaryStore .ordinary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:13px}#ordinaryStore .ordinary-card{background:var(--bg-soft);border:1px solid var(--card-border);border-radius:15px;overflow:hidden}#ordinaryStore .ordinary-card img{width:100%;height:190px;object-fit:cover;display:block}#ordinaryStore .ordinary-body{padding:12px}.ordinary-title{font-weight:800;font-size:14px;margin-bottom:5px}.ordinary-price{font-weight:900;color:#4fe3bd;font-size:16px}.ordinary-cat-label{display:inline-block;font-size:10px;padding:3px 8px;border-radius:99px;background:rgba(59,130,246,.15);color:#8db8ff;margin-bottom:6px}@media(max-width:650px){#ordinaryStore .ordinary-toolbar{grid-template-columns:1fr}.ordinary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}</style></head>
+<style id="ordinary-store-style">#ordinaryStore .ordinary-toolbar{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:14px}#ordinaryStore .ordinary-cats{display:flex;gap:7px;overflow:auto;padding-bottom:4px}#ordinaryStore .ordinary-cat{border:1px solid var(--card-border);background:var(--bg-soft);color:var(--muted);border-radius:999px;padding:8px 13px;font-weight:700;white-space:nowrap;cursor:pointer}#ordinaryStore .ordinary-cat.active{background:var(--accent-grad);color:#fff}#ordinaryStore .ordinary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:13px}#ordinaryStore .ordinary-card{background:var(--bg-soft);border:1px solid var(--card-border);border-radius:15px;overflow:hidden}#ordinaryStore .ordinary-card img{width:100%;height:190px;object-fit:cover;display:block}#ordinaryStore .ordinary-body{padding:12px}.ordinary-title{font-weight:800;font-size:14px;margin-bottom:5px}.ordinary-price{font-weight:900;color:#4fe3bd;font-size:16px}.ordinary-cat-label{display:inline-block;font-size:10px;padding:3px 8px;border-radius:99px;background:rgba(59,130,246,.15);color:#8db8ff;margin-bottom:6px}@media(max-width:650px){#ordinaryStore .ordinary-toolbar{grid-template-columns:1fr}.ordinary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}</style>
+<style id="nm-sample-gallery-style">
+.nm-sample-section{padding:18px 14px 20px;margin:10px auto 14px;max-width:1180px;background:linear-gradient(135deg,rgba(14,165,233,.08),rgba(16,185,129,.06));border:1px solid rgba(255,255,255,.10);border-radius:20px;overflow:hidden}.nm-sample-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:12px}.nm-sample-head h2{margin:0;font-size:20px}.nm-sample-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.nm-sample-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.nm-sample-card{position:relative;overflow:hidden;border-radius:15px;background:var(--bg-soft);border:1px solid rgba(255,255,255,.10);min-height:170px;box-shadow:0 8px 22px rgba(0,0,0,.18)}.nm-sample-card img{width:100%;height:190px;object-fit:cover;display:block;transition:transform .35s ease}.nm-sample-card:hover img{transform:scale(1.04)}.nm-sample-caption{position:absolute;left:0;right:0;bottom:0;padding:26px 9px 9px;background:linear-gradient(transparent,rgba(0,0,0,.88));color:#fff;font-size:11px;font-weight:800}.nm-sample-badge{display:inline-block;margin-bottom:4px;padding:3px 7px;border-radius:99px;background:rgba(255,193,7,.92);color:#111;font-size:9px}@media(max-width:850px){.nm-sample-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.nm-sample-card img{height:170px}}@media(max-width:520px){.nm-sample-section{margin-left:8px;margin-right:8px;padding:14px 10px}.nm-sample-head{align-items:start;flex-direction:column}.nm-sample-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:5px}.nm-sample-card{min-width:155px;scroll-snap-align:start}.nm-sample-card img{height:185px}}
+</style>
+
+
+<style id="nm-jersey-blink-style">.nm-jersey-blink{font-weight:1000;letter-spacing:.3px;animation:nmJerseyBlink .85s steps(2,end) infinite;text-shadow:0 0 10px currentColor,0 0 20px rgba(255,193,7,.35)}@keyframes nmJerseyBlink{0%,48%{color:#ff1717}49%,100%{color:#ffd400}}@media(prefers-reduced-motion:reduce){.nm-jersey-blink{animation:none;color:#ffd400}}
+</style>
+
+</head>
 <body oncontextmenu="return false;" ondragstart="return false;">
 
 <header id="siteHeader">
@@ -1344,7 +1353,7 @@
 
     <!-- ===== ⚽ Majezi ya Simba na Yanga ===== -->
     <section class="section service-control" data-service-section id="jerseySection" style="background:linear-gradient(160deg,rgba(34,197,94,.06),rgba(239,68,68,.06));">
-        <h2 style="margin-bottom:4px;">⚽ Duka la Majezi — Simba SC &amp; Young Africans</h2>
+        <h2 style="margin-bottom:4px;"><span class="nm-jersey-blink">⚽ PATA JEZI BORA HAPA</span> <small style="font-size:.55em;opacity:.9;">— Simba SC &amp; Young Africans</small></h2>
         <p class="muted" style="margin-bottom:16px;font-size:13px;">Jezi za mashabiki — ubora wa hali ya juu.</p>
         <div id="importJerseyGrid" class="import-grid"><p class="muted">Inapakia majezi...</p></div>
     </section>
@@ -5382,7 +5391,7 @@ async function init() {
     loadImportProducts(); loadImportJerseys(); loadImportLocalSellers();
     await autoEngageAds("visit");
     startLivePolling();
-    setInterval(loadPublicAds, 60000);
+    setInterval(loadPublicAds, 5000);
     setInterval(refreshAccessStatus, 20000);
     setInterval(refreshAdvisoryStatus, 20000);
     setInterval(loadSiteStatus, 60000);
