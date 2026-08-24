@@ -1,49 +1,25 @@
-# NjiaMauzo Afrika — FIXED 3
+# NjiaMauzo Afrika — Endpoints Update
 
-## Render error iliyorekebishwa
+Imeongezwa bila kubadilisha structure kuu ya index.html:
 
-Error iliyokuwa kwenye log:
+- `/api/reels` GET/POST na `/api/reels/<id>` DELETE kwa tab ya Reels.
+- Akaunti 15 za Admin: Mkurugenzi Mkuu 1, Mhasibu 1, Admin 13.
+- `/api/admin/accounts` na management endpoints.
+- `/api/admin/reports` kwa taarifa za Admin kwenda kwa Mhasibu + Mkurugenzi.
+- `/api/admin/audit-log` kwa Mkurugenzi/Mhasibu.
+- Director-only account review/reset/toggle; review inaingia audit log bila kumjulisha target admin.
+- `index.html` iliyotumika ni ile yenye SOKO LETU, marketplace ya safu mbili, na `#nmContextChat`; haijabadilishwa kuwa index-91.
+- `admin_room.html` ina tabs za Reels, Uongozi, Chat na Public Preview.
 
-`NameError: name 'UPLOAD_DIR' is not defined`
+## Credentials
 
-Chanzo kilikuwa `REELS_DIR = UPLOAD_DIR / "reels"` kilitekelezwa wakati `app.py` inapoload, kabla `UPLOAD_DIR` haijaelezwa.
+Kwa usalama, badilisha credentials za default kupitia Render Environment Variables:
 
-### Marekebisho
-- `UPLOAD_DIR` sasa inawekwa mara moja baada ya kuundwa kwa Flask app, kabla ya routes/blocks zote zinazotumia upload storage.
-- Definition ya zamani ya `UPLOAD_DIR` imeondolewa ili kusiwe na duplicate.
-- Video Reels API zinaendelea kutumia `UPLOAD_DIR / "reels"` bila NameError.
-- `requirements.txt` ina Flask, flask-cors, gunicorn na Werkzeug.
-- `render.yaml` ina build/start/health-check commands.
-- `index.html` na `admin.html` zimehifadhiwa pamoja na marekebisho ya public/admin UI.
+- `ADMIN_DIRECTOR_USER`, `ADMIN_DIRECTOR_PASS`, `ADMIN_DIRECTOR_EMAIL`
+- `ADMIN_ACCOUNTANT_USER`, `ADMIN_ACCOUNTANT_PASS`, `ADMIN_ACCOUNTANT_EMAIL`
+- `ADMIN_1_USER` ... `ADMIN_13_USER`
+- `ADMIN_1_PASS` ... `ADMIN_13_PASS`
+- `ADMIN_1_NAME` ... `ADMIN_13_NAME`
+- `ADMIN_1_EMAIL` ... `ADMIN_13_EMAIL`
 
-## Render
-Build:
-```bash
-pip install -r requirements.txt
-```
-
-Start:
-```bash
-gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
-```
-
-Health check:
-```text
-/health
-```
-
-## Reels
-Admin API:
-- `GET /api/admin/reels`
-- `POST /api/admin/reels`
-- `DELETE /api/admin/reels/<id>`
-
-Public API:
-- `GET /api/reels`
-
-Video files zinawekwa kwenye:
-```text
-static/uploads/reels/
-```
-
-> Kwa production, tumia Persistent Disk au cloud object storage kwa video ikiwa hosting yako ina ephemeral filesystem.
+Default values zipo kwa bootstrap tu; usizitumie production.
