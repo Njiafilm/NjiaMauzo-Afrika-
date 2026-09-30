@@ -16,10 +16,12 @@
 # ukiomba. Kwa sasa, epuka "Manual Deploy" isiyo ya lazima ili usipoteze data.
 
 import os
+import re
 import sqlite3
 import time
 import json
-from flask import Blueprint, request, jsonify, g
+import base64
+from flask import Blueprint, request, jsonify, g, Response
 
 mjueyesu_bp = Blueprint("mjueyesu_api", __name__, url_prefix="/api/mjueyesu")
 
@@ -43,6 +45,8 @@ def init_db():
         text TEXT, hide INTEGER, updated TEXT)""")
     conn.execute("""CREATE TABLE IF NOT EXISTS titles(
         lesson TEXT PRIMARY KEY, title TEXT)""")
+    conn.execute("""CREATE TABLE IF NOT EXISTS images(
+        id TEXT PRIMARY KEY, mime TEXT, data BLOB)""")
     conn.commit()
     conn.close()
 
@@ -145,5 +149,64 @@ def set_title():
                    (d["lesson"], d["title"]))
     else:
         db.execute("DELETE FROM titles WHERE lesson=?", (d["lesson"],))
+    db.commit()
+    return jsonify({"ok": True})
+
+
+# ---------- Picha za ukurasa (SEVA_PICHA_ROUTES.md) ----------
+_DATA_URL_RE = re.compile(r"^data:(image/jpeg|image/png|image/webp);base64,(.+)$", re.S)
+IMAGE_MAX_BYTES = 3 * 1024 * 1024  # 3MB baada ya kuondoa base64
+
+
+@mjueyesu_bp.route("/image", methods=["POST", "OPTIONS"])
+def save_image():
+    if request.method == "OPTIONS":
+        return ("", 204)
+    if not _authed():
+        return jsonify({"ok": False, "error": "auth"}), 401
+    d = request.get_json(silent=True) or {}
+    img_id = str(d.get("id") or "").strip()
+    m = _DATA_URL_RE.match(d.get("data") or "")
+    if not img_id or not m:
+        return jsonify({"ok": False, "error": "data"}), 400
+    try:
+        raw = base64.b64decode(m.group(2))
+    except Exception:
+        return jsonify({"ok": False, "error": "base64"}), 400
+    if len(raw) > IMAGE_MAX_BYTES:
+        return jsonify({"ok": False, "error": "too_large"}), 413
+    db = get_db()
+    db.execute("""INSERT INTO images(id,mime,data) VALUES(?,?,?)
+                  ON CONFLICT(id) DO UPDATE SET mime=excluded.mime, data=excluded.data""",
+               (img_id, m.group(1), raw))
+    db.commit()
+    return jsonify({"ok": True})
+
+
+@mjueyesu_bp.route("/image/<path:img_id>", methods=["GET", "OPTIONS"])
+def get_image(img_id):
+    if request.method == "OPTIONS":
+        return ("", 204)
+    db = get_db()
+    row = db.execute("SELECT mime, data FROM images WHERE id=?", (img_id,)).fetchone()
+    if not row:
+        return ("", 404)
+    resp = Response(row["data"], mimetype=row["mime"])
+    resp.headers["Cache-Control"] = "public, max-age=604800"
+    return resp
+
+
+@mjueyesu_bp.route("/image/delete", methods=["POST", "OPTIONS"])
+def delete_image():
+    if request.method == "OPTIONS":
+        return ("", 204)
+    if not _authed():
+        return jsonify({"ok": False, "error": "auth"}), 401
+    d = request.get_json(silent=True) or {}
+    img_id = str(d.get("id") or "").strip()
+    if not img_id:
+        return jsonify({"ok": False, "error": "id"}), 400
+    db = get_db()
+    db.execute("DELETE FROM images WHERE id=?", (img_id,))
     db.commit()
     return jsonify({"ok": True})
